@@ -1,0 +1,15 @@
+<div class="main-container">
+  <div class="header" *ngIf="lis.currentUser">
+    <mem-nav-bar></mem-nav-bar>
+  </div>
+
+
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+
+
+  <footer *ngIf="lis.currentUser">
+    a wonderful footer will be here soon
+  </footer>
+</div>

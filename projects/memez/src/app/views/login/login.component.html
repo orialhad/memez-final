@@ -1,0 +1,14 @@
+<div class="login-form">
+  <div class="login-form-wrapper">
+    <div class="login-heading">
+      memez
+    </div>
+    <input #user_name
+           (keydown.enter)="lis.loginVerification(user_name.value)"
+           type="text" placeholder="enter your name" class="user-name-input">
+    <button class="login-button" (click)="lis.loginVerification(user_name.value)">login
+    </button>
+    <div class="new-account" (click)="lis.signUpNavigation()">Create New Account</div>
+  </div>
+
+</div>

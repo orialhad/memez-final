@@ -1,0 +1,32 @@
+{
+  "name": "memez-server",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "ts-node-dev index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ori alhadef",
+  "license": "ISC",
+  "dependencies": {
+    "@types/body-parser": "^1.19.0",
+    "@types/cors": "^2.8.8",
+    "@types/express": "^4.17.9",
+    "@types/mongodb": "^3.6.2",
+    "@types/mongoose": "^5.10.2",
+    "@types/node": "^14.14.10",
+    "@types/uuid": "^8.3.0",
+    "body-parser": "^1.19.0",
+    "dayjs": "^1.9.7",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.11.5",
+    "ts-node": "^9.1.1",
+    "ts-node-dev": "^1.0.0",
+    "typescript": "^4.1.2",
+    "uuid": "^8.3.1"
+  }
+}

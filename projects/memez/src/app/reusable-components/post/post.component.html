@@ -1,0 +1,26 @@
+<div class="post-wrapper">
+  <div class="post-user-profile">
+      <div class="post-user-avatar">
+        <img  *ngIf="post.postedBy.avatar" src="{{post.postedBy.avatar}}" >
+      </div>
+    <div class="post-user-name">{{post.postedBy.name}}</div>
+    <div class="post-time-date">
+    <div>{{post.date}}</div>
+    <div>{{post.time}}</div>
+  </div>
+
+  </div>
+  <div class="post-content-wrapper">
+    <div class="post-content">{{post.content}}</div>
+  </div>
+  <div class="post-like-wrapper">
+    <div class="like-btn">
+      <mat-icon (click)="onPostLike(post)"
+                class="like-icon">favorite
+      </mat-icon>
+      <div *ngIf="post.likes.length" class="post-like">{{post.likes.length}}</div>
+    </div>
+
+  </div>
+</div>
+

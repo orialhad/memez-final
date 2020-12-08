@@ -1,0 +1,22 @@
+<div class="user-profile-wrapper">
+
+  <div class="user-card">
+    <div class="user-image">
+      <img src="{{us.root.lis.currentUser.avatar}}">
+    </div>
+    <div class="user-details-all">
+      <div class="user-name">{{us.root.lis.currentUser.name.toUpperCase()}}</div>
+      <div class="user-details">
+        Blah blah blah kishkosh pitpot
+      </div>
+    </div>
+  </div>
+  <div class="posts-container" *mobxAutorun>
+    <mem-post
+      *ngFor="let post of us.root.us.getCurrentUserPosts()"
+      [post]="post"
+      (postLiked)="us.root.lks.handleLike($event)"
+    ></mem-post>
+  </div>
+
+  </div>
