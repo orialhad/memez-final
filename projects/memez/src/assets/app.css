@@ -276,7 +276,17 @@ mem-user-profile {
 .user-image {
   padding: 10px;
   margin-right: 10px;
+  height: 200px;
+  width: 200px;
+  background-image: url("../assets/images/generic-avatar.png");
+  background-repeat: no-repeat;
+  background-size: 200px;
+  background-position: center;
+  background-color: white;
 }
+
+
+
 
 .user-image img {
   height: 200px;
@@ -351,7 +361,7 @@ mem-login {
   width: 80px;
 }
 
-.login-heading {
+.login-heading  {
   font-family: 'Pacifico', cursive;
   padding: 10px;
   font-size: 60px;

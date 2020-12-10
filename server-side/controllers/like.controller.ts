@@ -1,22 +1,16 @@
 import {BaseController, IBaseController} from './base.controller';
-import LikeModel, {ILikeModel} from '../models/like.model';
-import {IUserModel} from '../models/user.model';
-import {IPostModel} from '../models/post.model';
-import {ObjectId} from 'mongodb';
-import * as dayjs from 'dayjs';
+import {ILike} from '../../projects/memez/src/app/types/interfaces/ILike';
+import {IPost} from '../../projects/memez/src/app/types/interfaces/IPost';
 
 
 export interface ILikeController extends IBaseController {
-  getAllLikes(): Promise<ILikeModel[]>;
+  getLikes(): Promise<ILike[]>;
 
-  getLikeById(id: ILikeModel['_id']): Promise<ILikeModel>;
+  getPostLikes(post_id: string): Promise<ILike[]>;
 
-  createLike(user_id: IUserModel['_id'], post_id: IPostModel['_id']): Promise<ILikeModel>;
+  createLike(user): Promise<any>;
 
-  removeLike(like_id: ILikeModel['_id']): Promise<ILikeModel>;
-
-  getPostFromLike(post_id: IPostModel['_id']): Promise<ILikeModel[]>;
-
+  unLike(like): Promise<ILike>
 
 }
 
@@ -28,24 +22,24 @@ export class LikeController extends BaseController implements ILikeController {
   }
 
 
-  async getAllLikes(): Promise<ILikeModel[]> {
-    return await this.main.dbController.getAllLikes();
+  async getLikes(): Promise<ILike[]> {
+    return await this.main.dbController.getLikes();
   };
 
-  async getLikeById(id: ILikeModel['_id']): Promise<ILikeModel> {
-    return await this.main.dbController.getLikeById(id);
+  async getPostLikes(post_id: string): Promise<ILike[]> {
+    return await this.main.dbController.getPostLikes(post_id);
   };
 
-  async createLike(user_id: IUserModel['_id'], post_id: IPostModel['_id']): Promise<ILikeModel> {
-    return await this.main.dbController.createLike(user_id, post_id);
+
+  async createLike(like: ILike): Promise<ILike> {
+    return await this.main.dbController.createLike(like);
   };
 
-  async removeLike(like_id: ILikeModel['_id']): Promise<ILikeModel> {
-    return await this.main.dbController.removeLike(like_id);
+
+  async unLike(like: ILike): Promise<ILike> {
+    return await this.main.dbController.unLike(like);
   };
 
-  async getPostFromLike(post_id: IPostModel['_id']): Promise<ILikeModel[]> {
-    return await this.main.dbController.getPostFromLike(post_id);
-  };
+
 
 }

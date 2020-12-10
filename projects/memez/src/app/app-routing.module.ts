@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: 'feed',
-    component: FeedComponent
+    component: FeedComponent,
   },
   {
     path: 'profile',

@@ -14,7 +14,9 @@ export class PostAdapter extends BaseAjaxAdapter{
   ) {
     super(http);
   }
-  async getAllPosts(): Promise<IPost[]> {
+  async
+
+  getAllPosts(): Promise<IPost[]> {
     return this.request<IPost[]>('posts');
   }
 
@@ -22,6 +24,10 @@ export class PostAdapter extends BaseAjaxAdapter{
     return this.post('posts', postContent)
 
   }
+  // async updatePost(postContent): Promise<IPost> {
+  //   return this.post('posts', postContent)
+  //
+  // }
 
   async deletePost(post_id: string): Promise<IPost> {
     return this.delete(`posts/${post_id}`)

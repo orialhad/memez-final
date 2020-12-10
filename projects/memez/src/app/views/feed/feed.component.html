@@ -7,11 +7,13 @@
 
 
   <div class="posts-container" *mobxAutorun>
-    <mem-post
-      *ngFor="let post of fs.root.ps.reversedPosts"
-      [post]="post"
-      (postLiked)="fs.root.lks.handleLike($event)"
-    ></mem-post>
+
+      <mem-post
+        *ngFor="let post of fs.root.ps.reversedPosts"
+        [post]="post"
+        (postLiked)="fs.root.lks.handleLike($event)"
+      ></mem-post>
+
   </div>
 
 

@@ -1,13 +1,13 @@
 <div class="login-form">
   <div class="login-form-wrapper">
     <div class="login-heading">
-      memez
+      Memez
     </div>
-
-      <input #new_name
-             type="text" placeholder="enter your name" class="user-name-input">
-
-    <button class="signup-button" (click)="sus.signUpUser(new_name)">SignUp
+      <input #new_name type="text"
+             placeholder="enter your name"
+             class="user-name-input"
+             (keydown.enter)="sus.signUpUser(new_name.value)">
+    <button class="signup-button" (click)="sus.signUpUser(new_name.value)">Sign Up
     </button>
 
   </div>

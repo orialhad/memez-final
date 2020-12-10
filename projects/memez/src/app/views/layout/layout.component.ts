@@ -25,10 +25,11 @@ export class LayoutComponent implements OnInit {
     public lis : LoginStore
   ) {
 
-    ( () => {
+    (async () => {
 
-        this.ps.getAllPosts();
-        this.lks.getAllLikes();
+        await this.ps.getAllPosts();
+        await this.lks.getLikes();
+        await this.us.getUsers();
       }
     )();
   }

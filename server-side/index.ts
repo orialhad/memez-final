@@ -1,9 +1,10 @@
-import {LikeController} from "./controllers/like.controller";
+
 import {MainController} from "./controllers/main.controller";
 import {UserController} from "./controllers/user.controller";
 import {PostController} from "./controllers/post.controller";
 import {HttpController} from "./controllers/http.controller";
 import {DBController}   from "./controllers/db.controller";
+import {LikeController} from './controllers/like.controller';
 
 (async () => {
   const

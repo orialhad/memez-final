@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 
 
 export abstract class BaseAjaxAdapter implements IBaseAdapter {
-  BASE_URL = 'http://localhost:4300/';
+  BASE_URL = 'http://localhost:4300';
 
   protected constructor(
     protected http: HttpClient

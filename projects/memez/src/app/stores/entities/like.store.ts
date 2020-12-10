@@ -1,12 +1,10 @@
 import {Injectable} from '@angular/core';
 import {RootStore} from '../root.store';
-import {action, observable} from 'mobx-angular';
+import {action, computed, observable} from 'mobx-angular';
 import {ILike} from '../../types/interfaces/ILike';
-import {MOCK_LIKES} from '../../mocks/MOCK_LIKES';
 import {IPost} from '../../types/interfaces/IPost';
-import {timestamp} from 'rxjs/operators';
-import * as dayjs from 'dayjs';
 import {autorun, toJS} from 'mobx';
+import {IUser} from '../../types/interfaces/IUser';
 
 @Injectable({
   providedIn: 'root'
@@ -20,48 +18,55 @@ export class LikeStore {
     this.root.lks = this;
     window['lks'] = this;
     autorun(() => {
-      let i = 0;
-      console.log(`like store : ${toJS(this.likes.map(like => i++))}`);
+
     });
   }
 
-
   @action
-  async getAllLikes() {
-    return this.likes = await this.root.likeAdapter.getLikes()
+  async getLikes() {
+    return this.likes = await this.root.likeAdapter.getLikes();
 
   }
-  @action
-  async getPostFromLike(post: IPost){
-    return post.likes  = await this.root.likeAdapter.getPostFromLike(post._id)
-  }
+
 
   @action
   async createLike(post: IPost) {
     let likeInput = {
-      user_id: this.root.lis.currentUser._id,
-      post_id: post._id
+      userLiked: this.root.lis.currentUser,
+      postLiked: post
     };
-    return await this.root.likeAdapter.createLike(likeInput);
+    await this.root.likeAdapter.createLike(likeInput);
+    await this.pushLikeToPost(post);//ui
+
   }
   @action
-  async removeLike(like_id: string){
-    await this.root.likeAdapter.removeLike(like_id)
-  }
+  async unLike(user: IUser) {
+    await this.root.likeAdapter.unLike(user._id);
 
+  }
 
 
   @action
   async handleLike(post: IPost) {
-    const postAlreadyLiked: ILike = post.likes.find(like => like._id === this.root.lis.currentUser._id)
+    const current = this.root.lis.currentUser;
+    const postAlreadyLiked = post.likes.find(like => like.userLiked._id === current._id)
     if (postAlreadyLiked) {
-      await this.removeLike(postAlreadyLiked._id)
-      }else {
-      await this.createLike(post)
+        alert(`You already liked this please dont try again `)
+      //   await this.unLike(current)
+      } else {
+      await this.createLike(post);
     }
-    await this.root.ps.getAllPosts()
   }
 
-}
+  //ui
+  @action
+   pushLikeToPost(post: IPost) {
+    let like_arr = this.likes.find(e => e.postLiked._id === post._id)
+    post.likes.push(like_arr)
 
+  }
+
+
+
+}
 

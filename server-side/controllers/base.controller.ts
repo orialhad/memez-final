@@ -9,7 +9,7 @@ export interface IBaseController {
 export abstract class BaseController implements IBaseController {
   main: IMainController;
 
-  protected constructor() {
+  constructor() {
   }
 
   init(): Promise<any> {

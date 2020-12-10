@@ -2,10 +2,10 @@ import {ILike} from './ILike';
 import {IUser} from "./IUser";
 
 export interface IPost {
-	_id: string
+	_id?: string
 	content: string
-	postedBy: IUser
+	postedBy:IUser
 	date: string
 	time: string
-	likes: ILike[]
+	likes?: ILike[]
 }

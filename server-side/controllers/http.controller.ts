@@ -14,7 +14,6 @@ export interface IHttpController extends IBaseController {
 
 
 export class HttpController extends BaseController implements IHttpController {
-  http_server: HTTP.Server | HTTPS.Server;
   app: Express = express();
   events: events.EventEmitter = new events.EventEmitter();
 

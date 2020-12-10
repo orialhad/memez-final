@@ -3,15 +3,16 @@ import {RootStore} from '../root.store';
 import {action, observable} from 'mobx-angular';
 import {IUser} from '../../types/interfaces/IUser';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {MOCK_USERS} from '../../mocks/MOCK_USERS';
-import {Observable} from 'rxjs';
+
+
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginStore {
-  @observable currentUser: IUser;
+  @observable currentUser: IUser
+  @observable user_name: string;
 
 
   constructor(
@@ -23,27 +24,27 @@ export class LoginStore {
   }
 
 
-  @action userLogin(name: string) {
-    if(!name){
-      return alert(`Enter a name`)
-    }
-    else {
-
-    this.router.navigateByUrl(`feed`).then();
-  }}
+  // @action userLogin(name: string) {
+  //   if(!name){
+  //     return alert(`Enter a name`)
+  //   }
+  //   else {this.router.navigateByUrl(`feed`).then();
+  // }}
 
 
-  @action loginVerification(name: string) {
+  @action async loginVerification(name: string) {
+
+    await this.root.us.getUsers()
     const loginUser = this.root.us.users.find(user => user.name.toLowerCase() === name.toLowerCase())
     if (!loginUser) {
-      alert('no such user ')
-    } else {
-      return this.currentUser === loginUser;
+    alert('no such user ')
     }
+    this.currentUser = loginUser;
   }
 
-  @action loginHandler(name: string){
-    this.loginVerification(name)
+
+  @action async loginHandler(name: string){
+    await this.loginVerification(name)
     if(this.currentUser){
       this.router.navigateByUrl(`feed`).then();
     }

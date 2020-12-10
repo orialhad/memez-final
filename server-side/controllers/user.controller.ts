@@ -1,12 +1,11 @@
 import {BaseController, IBaseController} from './base.controller';
-import {IUserModel} from '../models/user.model';
+import {IUser} from '../../projects/memez/src/app/types/interfaces/IUser';
 
 export interface IUserController extends IBaseController {
-  getAllUsers(): Promise<IUserModel[]>;
 
-  getUserById(id: IUserModel['_id']): Promise<IUserModel>
+  getUsers(): Promise<IUser[]>;
 
-  createUser(name: IUserModel['name']): Promise<IUserModel>
+  createUser(user: IUser): Promise<any>
 }
 
 
@@ -17,16 +16,12 @@ export class UserController extends BaseController implements IUserController {
     super();
   }
 
-  async getAllUsers(): Promise<IUserModel[]> {
-    return await this.main.dbController.getAllUsers()
+  async getUsers(): Promise<IUser[]> {
+    return await this.main.dbController.getUsers()
   }
 
-  async getUserById(id: IUserModel['_id']): Promise<IUserModel> {
-    return await this.main.dbController.getUserById(id)
-  }
-  u
-  async createUser(name: IUserModel['name']): Promise<IUserModel> {
-    return await this.main.dbController.createUser(name)
+  async createUser(user: IUser): Promise<IUser> {
+    return await this.main.dbController.createUser(user)
   }
 
 

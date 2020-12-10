@@ -16,8 +16,7 @@ export class UserAdapter extends BaseAjaxAdapter{
     return this.request('users');
   }
 
-  async createNewUser(userName ): Promise<IUser> {
-
+  async createNewUser(userName): Promise<IUser> {
     return this.post('users', userName);
   }
 
