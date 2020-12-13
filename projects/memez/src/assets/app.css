@@ -124,8 +124,8 @@ mem-feed {
 }
 
 .post-user-profile {
-
   display: flex;
+  flex: 1;
   flex-direction: row;
   justify-content: space-evenly;
   padding: 10px 10px 10px 10px;
@@ -156,28 +156,61 @@ mem-feed {
   width: 50px;
   border-radius: 100%;
 }
-
-.post-content {
-  display: flex;
-  width: 80%;
-  padding: 15px 15px 15px 15px;
-  height: 80%;
-  overflow-wrap: break-word;
-  flex-wrap: wrap;
-}
-
-.post-content-wrapper {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
 .post-time-date {
 
   display: flex;
   flex-direction: column;
   justify-content: right;
 }
+
+.post-content-wrapper {
+  display: flex;
+  flex: 2;
+  justify-content: center;
+  width: 100%;
+}
+
+
+.post-content {
+  display: flex;
+  width: 60%;
+  padding: 15px 15px 15px 15px;
+  /*border: solid black;*/
+  overflow-wrap: break-word;
+  flex-wrap: wrap;
+}
+.like-btn-count section{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.post-like-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /*border: solid #00ffff 1px;*/
+  flex: 1;
+  padding: 0px 90px 0 90px;
+}
+
+
+
+
+.post-like{
+  display: flex;
+  align-items: center;
+}
+
+.delete_post{
+  display: flex;
+  align-items: center;
+}
+.delete_post:hover{
+  cursor: pointer;
+}
+
+
 
 
 footer {
@@ -236,12 +269,7 @@ mem-user-posting {
 /* LIKE BUTTON*/
 
 
-.post-like-wrapper {
-  display: flex;
-  /*border: solid cyan 1px;*/
-  justify-content: flex-end;
-  padding: 0px 95px 0 95px;
-}
+
 
 .like-btn:hover {
   cursor: pointer;
@@ -374,3 +402,4 @@ mem-login {
   margin-top: 50px;
   font-size: 20px;
 }
+

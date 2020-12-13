@@ -36,12 +36,12 @@ export class LikeStore {
       postLiked: post
     };
     await this.root.likeAdapter.createLike(likeInput);
-    await this.pushLikeToPost(post);//ui
+
 
   }
   @action
-  async unLike(user: IUser) {
-    await this.root.likeAdapter.unLike(user._id);
+  async unLike(like_id: string) {
+    await this.root.likeAdapter.unLike(like_id);
 
   }
 
@@ -49,23 +49,15 @@ export class LikeStore {
   @action
   async handleLike(post: IPost) {
     const current = this.root.lis.currentUser;
-    const postAlreadyLiked = post.likes.find(like => like.userLiked._id === current._id)
-    if (postAlreadyLiked) {
-        alert(`You already liked this please dont try again `)
-      //   await this.unLike(current)
+    const alreadyLiked = await post.likes.find(like => like.userLiked._id === current._id)
+    if (alreadyLiked) {
+        await this.unLike(alreadyLiked._id)
       } else {
       await this.createLike(post);
     }
+
+    await this.root.ps.getAllPosts();
   }
-
-  //ui
-  @action
-   pushLikeToPost(post: IPost) {
-    let like_arr = this.likes.find(e => e.postLiked._id === post._id)
-    post.likes.push(like_arr)
-
-  }
-
 
 
 }

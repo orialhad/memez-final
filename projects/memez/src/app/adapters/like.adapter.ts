@@ -16,8 +16,8 @@ export class LikeAdapter extends BaseAjaxAdapter{
     return this.post('likes', likeIds)
   }
 
-  async unLike(likeId: string): Promise<ILike> {
-    return this.delete(`likes/${likeId}`)
+  async unLike(like_id: string): Promise<ILike> {
+    return this.delete(`likes/${like_id}`)
   }
 
   async getLikes():Promise<ILike[]> {

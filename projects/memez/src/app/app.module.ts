@@ -18,6 +18,8 @@ import { NavBarComponent } from './views/nav-bar/nav-bar.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatButtonModule,
     MatIconModule,
     FormsModule,
+    MatDialogModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [LayoutComponent]

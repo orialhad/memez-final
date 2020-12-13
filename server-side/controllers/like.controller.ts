@@ -10,7 +10,7 @@ export interface ILikeController extends IBaseController {
 
   createLike(user): Promise<any>;
 
-  unLike(like): Promise<ILike>
+  unLike(like_id:string): Promise<ILike>
 
 }
 
@@ -36,8 +36,8 @@ export class LikeController extends BaseController implements ILikeController {
   };
 
 
-  async unLike(like: ILike): Promise<ILike> {
-    return await this.main.dbController.unLike(like);
+  async unLike(Like_id): Promise<ILike> {
+    return await this.main.dbController.unLike(Like_id);
   };
 
 

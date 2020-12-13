@@ -7,6 +7,8 @@ export interface IPostController extends IBaseController {
 
   createPost(post: IPost): Promise<any>;
 
+  deletePost(post_id: string):Promise<any>;
+
 
 }
 
@@ -24,6 +26,10 @@ export class PostController extends BaseController implements IPostController {
   async createPost(post: IPost): Promise<any> {
     return this.main.dbController.createPost(post);
 
+  }
+
+  deletePost(post_id: string): Promise<any> {
+    return this.main.dbController.deletePost(post_id)
   }
 
 

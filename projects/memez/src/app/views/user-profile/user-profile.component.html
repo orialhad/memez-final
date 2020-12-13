@@ -7,15 +7,21 @@
     <div class="user-details-all">
       <div class="user-name">{{us.root.lis.currentUser.name.toUpperCase()}}</div>
       <div class="user-details">
-        Blah blah blah kishkosh pitpot
+        <mat-list>
+          <mat-list-item>Information</mat-list-item>
+          <mat-list-item>About</mat-list-item>
+          <mat-list-item>User</mat-list-item>
+        </mat-list>
       </div>
     </div>
   </div>
   <div class="posts-container" *mobxAutorun>
     <mem-post
-      *ngFor="let post of us.root.us.getCurrentUserPosts()"
+      *ngFor="let post of us.root.us.currentUserPosts"
       [post]="post"
+      [selected]="us.root.fs.verifyUserLike(post)"
       (postLiked)="us.root.lks.handleLike($event)"
+      (PostToDelete)="us.root.ps.deletePost($event)"
     ></mem-post>
   </div>
 

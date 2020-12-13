@@ -5,8 +5,8 @@ import {IPostController} from './post.controller';
 import {ILikeController} from './like.controller';
 import {IUserController} from './user.controller';
 import {createUserHandler,  getUsersHandler} from '../handlers/user.handler';
-import {createPostHandler, getPostsHandler, } from '../handlers/post.handler';
-import {createLikeHandler, getLikesHandler,} from '../handlers/like.handler';
+import {createPostHandler, deletePostHandler, getPostsHandler,} from '../handlers/post.handler';
+import {createLikeHandler, getLikesHandler, unLikeHandler,} from '../handlers/like.handler';
 
 export interface IMainController extends IBaseController {
   userController: IUserController
@@ -51,14 +51,14 @@ export class MainController extends BaseController implements IMainController {
     this.httpController.events.addListener('all_users', getUsersHandler.bind(this))
     this.httpController.events.addListener('all_posts', getPostsHandler.bind(this))
     this.httpController.events.addListener('upload_post', createPostHandler.bind(this))
+    this.httpController.events.addListener('delete_post', deletePostHandler.bind(this))
     this.httpController.events.addListener('all_likes', getLikesHandler.bind(this))
     this.httpController.events.addListener('create_like', createLikeHandler.bind(this))
+    this.httpController.events.addListener('delete_like', unLikeHandler.bind(this))
     // this.httpController.events.addListener('user', getUserByIdHandler.bind(this))
     // this.httpController.events.addListener('post_likes', getPostLikes.bind(this))
     // this.httpController.events.addListener('post', getPostByIdHandler.bind(this))
-    // this.httpController.events.addListener('delete_post', deletePostHandler.bind(this))
     // this.httpController.events.addListener('like', getLikeByIdHandler.bind(this))
-    // this.httpController.events.addListener('delete_like', removeLikeHandler.bind(this))
     // this.httpController.events.addListener('post_likes', getPostFromLikeHandler.bind(this))
   }
 

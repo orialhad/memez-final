@@ -1,4 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {autorun} from 'mobx';
 
 @Component({
   selector: 'mem-user-posting',
@@ -10,10 +12,16 @@ export class UserPostingComponent implements OnInit {
   @Output() newPost = new EventEmitter()
   // @Output() uploadedFile = new EventEmitter()
 
-  constructor() { }
+
+
+  constructor() {
+
+  }
 
   ngOnInit(): void {
   }
+
+
 
   userNewPost(val){
     this.newPost.emit(val);

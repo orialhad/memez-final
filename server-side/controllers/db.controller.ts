@@ -8,7 +8,9 @@ import {ILike} from '../../projects/memez/src/app/types/interfaces/ILike';
 
 import {config} from '../config/config';
 
-const MongoClinet = require('mongodb').MongoClient();
+const
+  MongoClinet = require('mongodb').MongoClient(),
+  ObjectID = require('mongodb').ObjectID;
 
 export interface IDBController extends IBaseController {
   // run(): Promise<void>;
@@ -25,9 +27,11 @@ export interface IDBController extends IBaseController {
 
   createPost(post: IPost): Promise<any>;
 
+  deletePost(post_id: string): Promise<any>
+
   createLike(like: ILike): Promise<any>;
 
-  unLike(like: ILike): Promise<any>
+  unLike(like_id: string): Promise<any>
 
   close(): Promise<any>
 
@@ -83,16 +87,19 @@ export class DBController extends BaseController implements IDBController {
     return this.likesCollection.find({}).toArray();
   }
 
-  getPostLikes(post_id: string): Promise<ILike[]>{
-    return this.likesCollection.find(x => x._id === post_id).toArray()
+  getPostLikes(post_id: string): Promise<ILike[]> {
+    return this.likesCollection.find({'postLiked._id': post_id}).toArray();
   }
 
   async createLike(like: ILike): Promise<any> {
     return this.likesCollection.insertOne(like);
   }
 
-  async unLike(like: ILike): Promise<any> {
-    return this.likesCollection.deleteOne(x => x._id === like._id);
+  async unLike(like_id: string): Promise<any> {
+    const
+      likeId = new ObjectID(like_id),
+      like = await this.likesCollection.deleteOne({_id: likeId});
+    return like.result;
   }
 
   async createPost(post: IPost): Promise<any> {
@@ -109,11 +116,23 @@ export class DBController extends BaseController implements IDBController {
     }
 
   }
+  async deletePost(post_id: string): Promise<any> {
+    try {
+      const id = new ObjectID(post_id),
+      postToDelete =  await this.postsCollection.deleteOne({_id: id} );
+
+      return postToDelete.result
+    }catch (e) {
+      console.log(e);
+
+    }
+  }
 
 
   close(): Promise<any> {
     return this.client.close();
   }
+
 
 
 }

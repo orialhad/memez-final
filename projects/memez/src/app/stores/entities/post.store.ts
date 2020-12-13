@@ -32,13 +32,6 @@ export class PostStore {
 
   }
 
-  @action getPostsWithLikes(post: IPost): IPost {
-    const postLikes = this.root.lks.likes.find(e => e.postLiked._id === post._id);
-    console.log(postLikes);
-    post.likes.push(postLikes);
-    return post;
-  }
-
 
   @action
   async createPost(content: string) {

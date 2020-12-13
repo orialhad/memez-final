@@ -20,7 +20,7 @@ export const createLikeHandler = async function(this: IMainController, req: Requ
   const like: ILike = {
     userLiked : req.body.userLiked,
     postLiked : req.body.postLiked,
-    timestamp : dayjs().format(`DD.MM.YY ` + `hh.mm.ss` )
+    timestamp : dayjs().format(`DD.MM.YY ` +`HH:mm:ss` )
   };
   try {
     const
@@ -34,18 +34,13 @@ export const createLikeHandler = async function(this: IMainController, req: Requ
 
 
 };
-
-
-
 // Unlike post
 export const unLikeHandler = async function (this: IMainController, req: Request, res: Response) {
   try {
     const deletedLike = await this.likeController.unLike(req.params.id)
-
     res.json(deletedLike).end()
   } catch (e) {
     res.status(404).json({msg: 'like was not deleted ' + e})
   }
-
 }
 

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {RootStore} from '../root.store';
-import {action, observable} from 'mobx-angular';
+import {action, computed, observable} from 'mobx-angular';
 import {IUser} from '../../types/interfaces/IUser';
+import {autorun} from 'mobx';
 
 
 @Injectable({
@@ -15,6 +16,9 @@ export class UserStore {
   ) {
     this.root.us = this;
     window['us'] = this;
+    autorun(() => {
+
+    });
   }
 
 
@@ -23,9 +27,9 @@ export class UserStore {
     return this.users
   }
 
-  @action getCurrentUserPosts(){
+  @computed   get currentUserPosts(){
     const current = this.root.lis.currentUser
-    const currentPosts =  this.root.ps.posts.filter(ele => ele.postedBy._id === current._id)
+    const currentPosts =   this.root.ps.posts.filter(ele => ele.postedBy._id === current._id)
     return currentPosts.reverse()
   }
 
