@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
 import {IMainController} from '../controllers/main.controller';
-import {IUser} from '../../projects/memez/src/app/types/interfaces/IUser';
+import {IUser} from '../../client-side/projects/memez/src/app/types/interfaces/IUser';
 
 
 export const getUsersHandler = async function(this: IMainController, req: Request, res: Response) {
@@ -16,10 +16,12 @@ export const getUsersHandler = async function(this: IMainController, req: Reques
 };
 
 
+
+
 export const createUserHandler = async function(this: IMainController, req: Request, res: Response) {
-  const user_name: IUser = {name: req.body.name};
+  const user: IUser = {userName: req.body.userName, password: req.body.password};
   try {
-    const newUser = await this.userController.createUser(user_name);
+    const newUser = await this.userController.createUser(user);
     return res.json(newUser).end();
   } catch (e) {
     return res.status(404).json({msg: 'no user was added' + e});

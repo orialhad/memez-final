@@ -1,4 +1,4 @@
-import {IDBController} from './db.controller';
+import {IMongoDBController} from './mongoDBController';
 import {IHttpController} from './http.controller';
 import {BaseController, IBaseController} from './base.controller';
 import {IPostController} from './post.controller';
@@ -7,13 +7,17 @@ import {IUserController} from './user.controller';
 import {createUserHandler,  getUsersHandler} from '../handlers/user.handler';
 import {createPostHandler, deletePostHandler, getPostsHandler,} from '../handlers/post.handler';
 import {createLikeHandler, getLikesHandler, unLikeHandler,} from '../handlers/like.handler';
+import {IUploadController} from './upload.controller';
+import { uploadPhotoHandler} from '../handlers/upload.handler';
+import {loginHandler} from '../handlers/login.handler';
 
 export interface IMainController extends IBaseController {
   userController: IUserController
   postController: IPostController
+  uploadController: IUploadController
   likeController: ILikeController
   httpController: IHttpController
-  dbController: IDBController
+  mongoDbController: IMongoDBController
 
 }
 
@@ -24,21 +28,23 @@ export class MainController extends BaseController implements IMainController {
     public userController: IUserController,
     public likeController: ILikeController,
     public postController: IPostController,
+    public uploadController: IUploadController,
     public httpController: IHttpController,
-    public dbController: IDBController
+    public mongoDbController: IMongoDBController
   ) {
     super();
 
     this.userController.main = this;
     this.likeController.main = this;
     this.postController.main = this;
+    this.uploadController.main = this;
     this.httpController.main = this;
-    this.dbController.main = this;
+    this.mongoDbController.main = this;
 
   }
   async init(): Promise<void> {
     await this.httpController.init()
-    await this.dbController.init()
+    await this.mongoDbController.init()
 
 
     this.addEventListeners()
@@ -55,6 +61,8 @@ export class MainController extends BaseController implements IMainController {
     this.httpController.events.addListener('all_likes', getLikesHandler.bind(this))
     this.httpController.events.addListener('create_like', createLikeHandler.bind(this))
     this.httpController.events.addListener('delete_like', unLikeHandler.bind(this))
+    this.httpController.events.addListener('upload_file', uploadPhotoHandler.bind(this))
+    this.httpController.events.addListener('login', loginHandler.bind(this))
     // this.httpController.events.addListener('user', getUserByIdHandler.bind(this))
     // this.httpController.events.addListener('post_likes', getPostLikes.bind(this))
     // this.httpController.events.addListener('post', getPostByIdHandler.bind(this))

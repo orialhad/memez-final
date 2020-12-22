@@ -1,28 +1,40 @@
 import {BaseController, IBaseController} from './base.controller';
-import {IUser} from '../../projects/memez/src/app/types/interfaces/IUser';
+import {IUser} from '../../client-side/projects/memez/src/app/types/interfaces/IUser';
 
 export interface IUserController extends IBaseController {
 
-  getUsers(): Promise<IUser[]>;
+    getUsers(): Promise<IUser[]>;
 
-  createUser(user: IUser): Promise<any>
+    getUser(id: string): Promise<IUser>
+
+    getUserByUserName(userName): Promise<IUser>
+
+    createUser(user: IUser): Promise<any>
 }
 
 
 export class UserController extends BaseController implements IUserController {
 
 
-  constructor() {
-    super();
-  }
+    constructor() {
+        super();
+    }
 
-  async getUsers(): Promise<IUser[]> {
-    return await this.main.dbController.getUsers()
-  }
+    async getUsers(): Promise<IUser[]> {
+        return await this.main.mongoDbController.getUsers();
+    }
 
-  async createUser(user: IUser): Promise<IUser> {
-    return await this.main.dbController.createUser(user)
-  }
+    async getUser(id: string): Promise<IUser> {
+        return await this.main.mongoDbController.getUser(id);
+    }
+
+    async createUser(user: IUser): Promise<IUser> {
+        return await this.main.mongoDbController.createUser(user);
+    }
+
+    async getUserByUserName(userName): Promise<IUser> {
+        return await this.main.mongoDbController.getUserByUserName(userName);
+    }
 
 
 }

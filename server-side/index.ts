@@ -14,14 +14,14 @@ import {UploadController} from './controllers/upload.controller';
     userController = new UserController(),
     uploadController = new UploadController(),
     httpController = new HttpController(),
-    dbController   = new MongoDBController(),
+    mongoDBController   = new MongoDBController(),
     mainController = new MainController(
       userController,
       likeController,
       postController,
       uploadController,
       httpController,
-      dbController
+      mongoDBController
     );
   try {
     await mainController.init()
