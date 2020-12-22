@@ -1,7 +1,7 @@
 import {Request, Response} from 'express';
 import {IMainController} from '../controllers/main.controller';
 import dayjs = require('dayjs');
-import {IPost} from '../../projects/memez/src/app/types/interfaces/IPost';
+import {IPost} from '../../client-side/projects/memez/src/app/types/interfaces/IPost';
 
 
 
@@ -37,6 +37,8 @@ export const createPostHandler = async function(this: IMainController, req: Requ
     return res.json(newPost).end();
   } catch
     (err) {
+
+
     return res.status(404).json({msg: 'No post added' + err});
   }
 };

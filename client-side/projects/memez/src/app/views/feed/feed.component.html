@@ -1,0 +1,25 @@
+<div class="new-post">
+  <mem-user-posting
+    (newPost)="fs.root.ps.createPost($event)"
+  ></mem-user-posting>
+
+  <mem-upload
+    (uploadedFiles)="fs.root.ups.onUpload($event)"
+  >
+  </mem-upload>
+</div>
+
+
+<div class="posts-container" *mobxAutorun>
+
+  <mem-post
+    *ngFor="let post of fs.root.ps.reversedPosts"
+    [post]="post"
+    [selected]="fs.verifyUserLike(post)"
+    (postLiked)="fs.root.lks.handleLike($event)"
+    (PostToDelete)="fs.root.ps.deletePost($event)"
+  ></mem-post>
+
+</div>
+
+

@@ -1,6 +1,6 @@
 import {BaseController, IBaseController} from './base.controller';
-import {ILike} from '../../projects/memez/src/app/types/interfaces/ILike';
-import {IPost} from '../../projects/memez/src/app/types/interfaces/IPost';
+import {ILike} from '../../client-side/projects/memez/src/app/types/interfaces/ILike';
+import {IPost} from '../../client-side/projects/memez/src/app/types/interfaces/IPost';
 
 
 export interface ILikeController extends IBaseController {
@@ -23,21 +23,21 @@ export class LikeController extends BaseController implements ILikeController {
 
 
   async getLikes(): Promise<ILike[]> {
-    return await this.main.dbController.getLikes();
+    return await this.main.mongoDbController.getLikes();
   };
 
   async getPostLikes(post_id: string): Promise<ILike[]> {
-    return await this.main.dbController.getPostLikes(post_id);
+    return await this.main.mongoDbController.getPostLikes(post_id);
   };
 
 
   async createLike(like: ILike): Promise<ILike> {
-    return await this.main.dbController.createLike(like);
+    return await this.main.mongoDbController.createLike(like);
   };
 
 
   async unLike(Like_id): Promise<ILike> {
-    return await this.main.dbController.unLike(Like_id);
+    return await this.main.mongoDbController.unLike(Like_id);
   };
 
 

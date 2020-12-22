@@ -1,6 +1,6 @@
 import {BaseController, IBaseController} from './base.controller';
 
-import {IPost} from '../../projects/memez/src/app/types/interfaces/IPost';
+import {IPost} from '../../client-side/projects/memez/src/app/types/interfaces/IPost';
 
 export interface IPostController extends IBaseController {
   getPosts(): Promise<IPost[]>;
@@ -20,16 +20,16 @@ export class PostController extends BaseController implements IPostController {
   }
 
   async getPosts(): Promise<IPost[]> {
-    return await this.main.dbController.getPosts();
+    return await this.main.mongoDbController.getPosts();
   }
 
   async createPost(post: IPost): Promise<any> {
-    return this.main.dbController.createPost(post);
+    return this.main.mongoDbController.createPost(post);
 
   }
 
   deletePost(post_id: string): Promise<any> {
-    return this.main.dbController.deletePost(post_id)
+    return this.main.mongoDbController.deletePost(post_id)
   }
 
 

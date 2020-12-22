@@ -1,0 +1,28 @@
+<div class="user-profile-wrapper">
+
+  <div class="user-card">
+    <div class="user-image">
+      <img src="{{us.root.lis.currentUser.avatar}}">
+    </div>
+    <div class="user-details-all">
+      <div class="user-name">{{us.root.lis.currentUser.userName.toUpperCase()}}</div>
+      <div class="user-details">
+        <mat-list>
+          <mat-list-item>Information</mat-list-item>
+          <mat-list-item>About</mat-list-item>
+          <mat-list-item>User</mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </div>
+  <div class="posts-container" *mobxAutorun>
+    <mem-post
+      *ngFor="let post of us.root.us.currentUserPosts"
+      [post]="post"
+      [selected]="us.root.fs.verifyUserLike(post)"
+      (postLiked)="us.root.lks.handleLike($event)"
+      (PostToDelete)="us.root.ps.deletePost($event)"
+    ></mem-post>
+  </div>
+
+  </div>

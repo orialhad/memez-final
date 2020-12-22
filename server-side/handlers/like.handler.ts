@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
 import {IMainController} from '../controllers/main.controller';
-import {ILike} from '../../projects/memez/src/app/types/interfaces/ILike';
+import {ILike} from '../../client-side/projects/memez/src/app/types/interfaces/ILike';
 import * as dayjs          from "dayjs";
 
 
