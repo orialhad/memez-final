@@ -11,7 +11,7 @@ import {LoginStore} from './views/login.store';
 import {SignupStore} from './views/signup.store';
 import {UploadAdapter} from '../adapters/upload.adapter';
 import {UploadStore} from './entities/upload.store';
-import {LoginAdapter} from '../adapters/login.adapter';
+import {AuthAdapter} from '../adapters/auth.adapter';
 import {AuthService} from './entities/auth.service';
 import {AuthGuardService} from './entities/auth-gurad.service';
 
@@ -35,7 +35,7 @@ export class RootStore {
     public postAdapter: PostAdapter,
     public userAdapter: UserAdapter,
     public likeAdapter: LikeAdapter,
-    public loginAdapter: LoginAdapter,
+    public authAdapter: AuthAdapter,
     public uploadAdapter: UploadAdapter
 
   ) {

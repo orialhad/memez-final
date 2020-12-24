@@ -4,37 +4,23 @@ import GridFsStorage = require('multer-gridfs-storage');
 import {config} from '../config/config';
 import {IMainController} from '../controllers/main.controller';
 import {Request, Response} from 'express';
+import {storage, upload, } from '../config/upload_storage';
 
 
 
 
 export const uploadPhotoHandler = async function(this: IMainController, req: Request, res: Response) {
+     async function uploadFile(req, res) {
+         try {
+             await upload(req, res);
+             if (req.file === undefined) {
+                 return res.send(`You must select a file.`);
+             }
+             return res.send(`File has been uploaded.`);
+         } catch (error) {
+             return res.send(`Error when trying upload image: ${error}`);
+         }
+    } const fileUpload1 = await this.uploadController.uploadPhoto(uploadFile)
+    return  res.sendFile('api/photos',fileUpload1)
 
-  // var storage = new GridFsStorage({
-  //   url: config.URL + `/photos`,
-  //   options: {useNewUrlParser: true, useUnifiedTopology: true},
-  //   file: (req, file) => {
-  //     const match = ["image/png", "image/jpeg"];
-  //
-  //     if (match.indexOf(file.mimetype) === -1) {
-  //       const filename = `${Date.now()}-memez-${file.originalname.trim().replace(/ /g, '')}`;
-  //       return filename;
-  //     }
-  //
-  //     return {
-  //       bucketName: "photos",
-  //       filename: `${Date.now()}-memez-${file.originalname.trim().replace(/ /g, '')}`
-  //     };
-  //   }
-  // });
-  //
-  // let uploadFile = multer({storage: storage}).single("file")
-  // let uploadFilesMiddleware = util.promisify(uploadFile);
-  //
-  // try {
-  //   const newUpload = await this.uploadController.uploadPhoto(uploadFilesMiddleware);
-  //   return res.sendFile(`/photos`)
-  // }catch (e) {
-  //   return res.status(404).send({msg: 'filed did not upload ' + e});
-  // }
 }

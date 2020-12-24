@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {RootStore} from '../root.store';
+import { Router} from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,8 @@ export class AuthService {
 
   loggedInUserInfo : {};
   constructor(
-    public root: RootStore
+    public root: RootStore,
+    private router: Router
   ) {
     this.root.authService = this;
     window['auth'] = this;
@@ -24,12 +27,20 @@ export class AuthService {
     return false;
   }
 
+  public async logout()  {
+    await this.root.authAdapter
+    await this.router.navigate(['login']);
+  }
+
   public setUserInfo(user){
     localStorage.setItem('userInfo', JSON.stringify(user));
   }
 
-  // public validate(userName, password) {
-  //   return this.root.loginAdapter.validate(userName,password)
-  // }
+  public async validate(userName, password) {
+    return await this.root.authAdapter.validate(userName, password)
+  }
 
+  public async signup(userName, password) {
+    return await this.root.authAdapter.signup(userName, password)
+  }
 }

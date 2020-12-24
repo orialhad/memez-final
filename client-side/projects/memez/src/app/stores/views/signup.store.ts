@@ -23,19 +23,23 @@ export class SignupStore {
   }
 
   @action async signUpUser(userName: string,password:string){
-    const newUser :IUser = {userName: userName.toLowerCase(), password:password.trim()}
-    console.log(newUser)
-
-    const exist = this.root.us.users.some(user => user.userName.toLowerCase() === newUser.name)
-    if(exist){
-     alert(`user already exist - choose different name`)
-    }else{
-      await this.root.userAdapter.createNewUser(newUser)
-      await this.router.navigateByUrl(`login`)
-
-    }
+    console.log(userName,password)
+    return  await this.root.authService.signup(userName,password)
   }
 
+
+
+// const newUser :IUser = {userName: userName.toLowerCase(), password:password.trim()}
+  // console.log(newUser)
+  //
+  // const exist = this.root.us.users.some(user => user.userName.toLowerCase() === newUser.name)
+  // if(exist){
+  //  alert(`user already exist - choose different name`)
+  // }else{
+  //   await this.root.userAdapter.createNewUser(newUser)
+  //   await this.router.navigateByUrl(`login`)
+  //
+  // }
 
 
 

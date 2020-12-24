@@ -22,12 +22,12 @@ const routes: Routes = [
   {
     path: 'feed',
     component: FeedComponent,
-    // canActivate : [AuthGuardService]
+    canActivate : [AuthGuardService]
   },
   {
     path: 'profile',
     component: UserProfileComponent,
-    // canActivate : [AuthGuardService]
+    canActivate : [AuthGuardService]
   },
   {
     path: 'signup',
@@ -37,7 +37,7 @@ const routes: Routes = [
   {
     path: 'upload',
     component: UploadComponent,
-    // canActivate : [AuthGuardService]
+    canActivate : [AuthGuardService]
   },
 
 ];
