@@ -6,13 +6,18 @@ import * as cors from 'cors';
 import {BaseController, IBaseController} from './base.controller';
 import * as events from 'events';
 import {config} from '../config/config';
-import * as passport from  'passport';
+import * as passport from 'passport';
 import {local_Strategy} from '../config/passport-local';
+import session = require("express-session");
+const expressSanitizer = require('express-sanitizer');
+
+// import * as PassportLocal from 'passport-local';
+// const LocalStrategy = PassportLocal.Strategy;
+
+const LocalStrategy = require('passport-local').Strategy;
 
 
 //endregion
-
-
 
 
 export interface IHttpController extends IBaseController {
@@ -29,12 +34,31 @@ export class HttpController extends BaseController implements IHttpController {
     }
 
     async init() {
+        this.express_app.use(session({ secret: 'anything', resave: true, saveUninitialized: true }));
 
+        this.express_app.use(bodyParser.urlencoded({ extended: false }))
         this.express_app.use(bodyParser.json());
+
         this.express_app.use(cors());
         this.express_app.use(passport.initialize());
         this.express_app.use(passport.session());
-        passport.use(local_Strategy)
+        this.express_app.use(expressSanitizer());
+
+        console.log("local_Strategy " + local_Strategy);
+
+        passport.use(new LocalStrategy(function (user, pass, done) {
+            console.log('HEY HEY HEY HEY!');
+        }))
+
+        passport.serializeUser(function (user, done) {
+            if (user) done(null, user);
+        });
+
+        passport.deserializeUser(function (id, done) {
+            done(null, id);
+        });
+
+
         this.registerEndpoints();
         await this.runServer();
 
@@ -45,28 +69,27 @@ export class HttpController extends BaseController implements IHttpController {
             console.log(`server is up on port ${config.port} `);
         });
     }
-        ///this is not the correct place for this function - but not working at all right now so tried without abstraction
-       auth= () =>{
-        return  (req :Request, res:Response, next) => {
+
+    ///this is not the correct place for this function - but not working at all right now so tried without abstraction
+    auth = () => {
+        return function (req, res, next) {
             console.log("Authenticating... (username and password)")
-
-
-              passport.authenticate('local',  (error, user , info) => {
-                  user = {userName:req.body.userName, password:req.body.password}
-                 if (error) res.status(400).json({"statusCode": 400, "message": error});
-                 req.login(user, function(error) {
-                     if (error) return next(error);
-                     next();
-                 });
-             })(req, res, next)
+            passport.authenticate('local', (error, user, info) => {
+                if (error) {
+                    return res.status(400).json({"statusCode": 400, "message": error});
+                }
+                req.login(user, function(error) {
+                    if (error) {
+                        return next(error)
+                    }
+                    next();
+                });
+            })(req, res, next);
         }
     }
 
 
-
-
     registerEndpoints() {
-
         //get all users
         this.express_app.get('/api/users', (req: Request, res: Response) => {
             this.events.emit('all_users', req, res);
@@ -123,7 +146,7 @@ export class HttpController extends BaseController implements IHttpController {
         });
 
         //login
-        this.express_app.post('/api/auth/login',this.auth(), (req: Request, res: Response) => {
+        this.express_app.post('/api/auth/login', this.auth(), (req: Request, res: Response) => {
             // this.events.emit('login', req, res);
             res.status(200).json({"statusCode": 200, "user": req.user});
         });

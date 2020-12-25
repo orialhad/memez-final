@@ -1,9 +1,8 @@
 import {BaseController, IBaseController} from './base.controller';
-import * as passport from 'passport';
-import {IUser} from '../../client-side/projects/memez/src/app/types/interfaces/IUser';
 
+
+import * as bcrypt from 'bcrypt';
 const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 export interface IAuthController extends IBaseController {
@@ -12,7 +11,7 @@ export interface IAuthController extends IBaseController {
 
     generateHash(password: string): Promise<any>
 
-    validatePassword(password, req, res): Promise<any>
+    validatePassword(userName, password): Promise<any>
 
     isLoggedIn(req, res): Promise<null>
 
@@ -31,12 +30,9 @@ export class AuthController extends BaseController implements IAuthController {
         });
     }
 
-    async validatePassword(password, req, res) {
-        return bcrypt.compare(req.body.password, password).then(function(result) {
-            //console.log('Hashed password comparison: ' + result);
-            return result;
-        });
-
+    async validatePassword(userName, password) {
+        const dbPasswordHash = await this.main.userController.getUserByName(userName);
+        return bcrypt.compare(password, dbPasswordHash.password)
     }
 
     isLoggedIn(req, res) {
@@ -46,9 +42,6 @@ export class AuthController extends BaseController implements IAuthController {
         }
         return res.status(400).json({'statusCode': 400, "message": "not authenticated"})
     }
-
-
-
 
 
 }

@@ -1,5 +1,5 @@
 import {IBaseAdapter} from '../types/interfaces/IBaseAdapter';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {IUser} from '../types/interfaces/IUser';
 
 
@@ -18,9 +18,14 @@ export abstract class BaseAjaxAdapter implements IBaseAdapter {
       .toPromise<T>();
   }
 
+  httpOptions = {
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
+  };
+
+
   async post(path: string, body: string | IUser | FormData): Promise<any> {
     return this.http
-      .post(`${this.BASE_URL}/${path}`, body || FormData )
+      .post(`${this.BASE_URL}/${path}`, body || FormData, this.httpOptions)
       .toPromise()
   }
 
