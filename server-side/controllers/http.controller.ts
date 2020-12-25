@@ -20,6 +20,8 @@ const LocalStrategy = require('passport-local').Strategy;
 //endregion
 
 
+
+
 export interface IHttpController extends IBaseController {
     events: events.EventEmitter
 }
@@ -34,20 +36,19 @@ export class HttpController extends BaseController implements IHttpController {
     }
 
     async init() {
-        this.express_app.use(session({ secret: 'anything', resave: true, saveUninitialized: true }));
-
-        this.express_app.use(bodyParser.urlencoded({ extended: false }))
+        // this.express_app.use(session({ secret: 'anything', resave: true, saveUninitialized: true }));
+        // this.express_app.use(bodyParser.urlencoded({ extended: false }))
         this.express_app.use(bodyParser.json());
 
         this.express_app.use(cors());
         this.express_app.use(passport.initialize());
         this.express_app.use(passport.session());
-        this.express_app.use(expressSanitizer());
+        // this.express_app.use(expressSanitizer());
 
-        console.log("local_Strategy " + local_Strategy);
 
         passport.use(new LocalStrategy(function (user, pass, done) {
             console.log('HEY HEY HEY HEY!');
+            // return done(null, user)
         }))
 
         passport.serializeUser(function (user, done) {
@@ -64,6 +65,22 @@ export class HttpController extends BaseController implements IHttpController {
 
     }
 
+    auth() {
+        return (req, res, next) => {
+
+            console.log("Authenticating... (username and password)")
+            passport.authenticate('local', (error, user, info) => {
+                console.log('B4')
+                if(error) res.status(400).json({"statusCode" : 400 ,"message" : error});
+                req.login(user, function(error) {
+
+                    if (error) return next(error);
+                    next();
+                });
+            })(req, res, next);
+        }
+    }
+
     async runServer() {
         await this.express_app.listen(config.port, () => {
             console.log(`server is up on port ${config.port} `);
@@ -71,22 +88,6 @@ export class HttpController extends BaseController implements IHttpController {
     }
 
     ///this is not the correct place for this function - but not working at all right now so tried without abstraction
-    auth = () => {
-        return function (req, res, next) {
-            console.log("Authenticating... (username and password)")
-            passport.authenticate('local', (error, user, info) => {
-                if (error) {
-                    return res.status(400).json({"statusCode": 400, "message": error});
-                }
-                req.login(user, function(error) {
-                    if (error) {
-                        return next(error)
-                    }
-                    next();
-                });
-            })(req, res, next);
-        }
-    }
 
 
     registerEndpoints() {
@@ -149,6 +150,7 @@ export class HttpController extends BaseController implements IHttpController {
         this.express_app.post('/api/auth/login', this.auth(), (req: Request, res: Response) => {
             // this.events.emit('login', req, res);
             res.status(200).json({"statusCode": 200, "user": req.user});
+
         });
 
         //logout
