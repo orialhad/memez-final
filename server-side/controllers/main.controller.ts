@@ -7,10 +7,11 @@ import {IUserController} from './user.controller';
 import {getUsersHandler} from '../handlers/user.handler';
 import {createPostHandler, deletePostHandler, getPostsHandler,} from '../handlers/post.handler';
 import {createLikeHandler, getLikesHandler, unLikeHandler,} from '../handlers/like.handler';
-import {IUploadController} from './upload.controller';
-import { uploadPhotoHandler} from '../handlers/upload.handler';
-import {loginHandler, signupHandler} from '../handlers/authHandler';
+// import {IUploadController} from './upload.controller';
+import {signupHandler} from '../handlers/authHandler';
 import {IAuthController} from './auth.controller';
+import {uploadPhotoHandler} from '../handlers/upload.handler';
+import {IUploadController} from './upload.controller';
 
 export interface IMainController extends IBaseController {
   userController: IUserController
@@ -57,7 +58,7 @@ export class MainController extends BaseController implements IMainController {
   }
 
   addEventListeners() {
-    this.httpController.events.addListener('login', loginHandler.bind(this))
+    // this.httpController.events.addListener('login', loginHandler.bind(this))
     this.httpController.events.addListener('signup', signupHandler.bind(this))
     this.httpController.events.addListener('all_users', getUsersHandler.bind(this))
     this.httpController.events.addListener('all_posts', getPostsHandler.bind(this))

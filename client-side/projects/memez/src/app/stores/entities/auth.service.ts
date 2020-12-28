@@ -36,11 +36,11 @@ export class AuthService {
     localStorage.setItem('userInfo', JSON.stringify(user));
   }
 
-  public async validate(userName, password) {
-    return await this.root.authAdapter.validate(userName, password);
+  public async validate(username, password) {
+    return await this.root.authAdapter.validate(username, password);
   }
 
-  public async signup(userName, password) {
-    return await this.root.authAdapter.signup(userName, password);
+  public async signup(username, password) {
+    return await this.root.authAdapter.signup(username, password);
   }
 }

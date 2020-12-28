@@ -1,18 +1,19 @@
-import * as dayjs from 'dayjs';
 import {BaseController, IBaseController} from './base.controller';
-import {Collection, Db, MongoClient, ObjectId,} from 'mongodb';
+import {Collection, Db, MongoClient,} from 'mongodb';
 import {IUser} from '../../client-side/projects/memez/src/app/types/interfaces/IUser';
 import {IPost} from '../../client-side/projects/memez/src/app/types/interfaces/IPost';
-import {ILike} from '../../client-side/projects/memez/src/app/types/interfaces/ILike';
 
+import {ILike} from '../../client-side/projects/memez/src/app/types/interfaces/ILike';
 import {config} from '../config/config';
 
+
 const
-    MongoClinet = require('mongodb').MongoClient(),
-    ObjectID = require('mongodb').ObjectID;
+    mongo       = require('mongodb'),
+    mongoClient = mongo.MongoClient(),
+    ObjectID    = mongo.ObjectID,
+    Grid        = mongo.Grid;
 
-
-
+let gfs;
 
 export interface IMongoDBController extends IBaseController {
     // run(): Promise<void>;
@@ -39,7 +40,7 @@ export interface IMongoDBController extends IBaseController {
 
     unLike(like_id: string): Promise<any>
 
-    uploadPhoto(photo: any): Promise<any>
+    uploadFile(file): Promise<any>
 
     close(): Promise<any>
 
@@ -52,13 +53,13 @@ export class MongoDBController extends BaseController implements IMongoDBControl
     likesCollection: Collection;
     postsCollection: Collection;
     usersCollection: Collection;
-    photosCollection: Collection;
-
+    uploadCollection: Collection;
 
 
     constructor() {
         super();
     }
+
 
     async init(): Promise<void> {
         const This = this;
@@ -76,38 +77,80 @@ export class MongoDBController extends BaseController implements IMongoDBControl
                 console.log('Connected successfully to Mongo');
                 This.db = This.client.db(config.dbName);
 
+
                 This.likesCollection = This.db.collection('likes');
                 This.postsCollection = This.db.collection('posts');
                 This.usersCollection = This.db.collection('users');
-                This.photosCollection = This.db.collection(`photos`);
+
+                // const buffer = new Buffer('Hello world');
+
+                gfs = Grid(This.db, 'fs');
+
+                This.uploadCollection = gfs.collection(`uploads`);
+
+
+                // gfs.put(buffer, {metadata: {category: 'text'}, content_type: 'text'}, function(err, fileInfo) {
+                //     if (!err) {
+                //         console.log('Finished writing file to Mongo');
+                //     }
+                // });
 
                 resolve();
             });
         });
     }
 
-
-    async getPosts(): Promise<IPost[]> {
-        return this.postsCollection.find({}).toArray();
+    //users
+    async createUser(user: IUser): Promise<any> {
+        try {
+            return this.usersCollection.insertOne(user);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     async getUsers(): Promise<IUser[]> {
         return this.usersCollection.find({}).toArray();
     }
+
     async getUser(id): Promise<IUser> {
-        const userId = new ObjectID(id)
-        return await this.usersCollection.findOne({_id :userId});
+        const userId = new ObjectID(id);
+        return await this.usersCollection.findOne({_id: userId});
     }
 
     async getUserByName(username): Promise<IUser> {
         return await this.usersCollection.findOne({username});
     }
 
+
+    //posts
+
+    async createPost(post: IPost): Promise<any> {
+        return await this.postsCollection.insertOne(post);
+    }
+
+    async getPosts(): Promise<IPost[]> {
+        return this.postsCollection.find({}).toArray();
+    }
+
+    async deletePost(post_id: string): Promise<any> {
+        try {
+            const id           = new ObjectID(post_id),
+                  postToDelete = await this.postsCollection.deleteOne({_id: id});
+            await this.deletePostLikes(post_id);
+            return postToDelete.result;
+        } catch (e) {
+            console.log(e);
+
+        }
+    }
+
+    //likes
     async getLikes(): Promise<ILike[]> {
         return this.likesCollection.find({}).toArray();
     }
 
-   async getPostLikes(post_id: string): Promise<ILike[]> {
+    async getPostLikes(post_id: string): Promise<ILike[]> {
         return this.likesCollection.find({'postLiked._id': post_id}).toArray();
     }
 
@@ -118,41 +161,18 @@ export class MongoDBController extends BaseController implements IMongoDBControl
     async unLike(like_id: string): Promise<any> {
         const
             likeId = new ObjectID(like_id),
-            like = await this.likesCollection.deleteOne({_id: likeId});
+            like   = await this.likesCollection.deleteOne({_id: likeId});
         return like.result;
     }
 
-    async createPost(post: IPost): Promise<any> {
-        return await this.postsCollection.insertOne(post);
+    async deletePostLikes(post_id: string): Promise<any> {
+        return await this.likesCollection.deleteMany({'postLiked._id': post_id});
     }
 
 
-    async createUser(user: IUser): Promise<any> {
-        try {
-            return this.usersCollection.insertOne(user);
-        } catch (e) {
-            console.log(e);
+    async uploadFile(file): Promise<any> {
+        console.log(file);
 
-        }
-
-    }
-
-    async deletePost(post_id: string): Promise<any> {
-        try {
-            const id = new ObjectID(post_id),
-                postToDelete = await this.postsCollection.deleteOne({_id: id});
-                // relevantLikesToDelete = await this.likesCollection.deleteMany({'postLiked[_id]': id});
-            return postToDelete.result;
-
-
-        } catch (e) {
-            console.log(e);
-
-        }
-    }
-
-    uploadPhoto(photo: any): Promise<any> {
-        return this.photosCollection.insertOne(photo);
     }
 
 

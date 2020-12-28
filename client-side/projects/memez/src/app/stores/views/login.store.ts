@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {RootStore} from '../root.store';
 import {action, observable} from 'mobx-angular';
 import {IUser} from '../../types/interfaces/IUser';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
+import {Router} from '@angular/router';
 
 
 @Injectable({
@@ -39,16 +39,14 @@ export class LoginStore {
 
   @action
   async loginHandler(username) {
-    // await this.root.us.getUsers()
-    // const loginUser = this.root.us.users.find(user => user?.username?.toLowerCase() === username?.toLowerCase())
-    //
-    // if (!loginUser) {
-    //   alert('no such user ')
-    // }
-    // this.currentUser = loginUser;
+    await this.root.us.getUsers()
+    this.currentUser =  this.root.us.users.find(user => user.username.toLowerCase() === username.toLowerCase());
     await this.loginVerification(username)
 
 
+    // if (!loginUser) {
+    // }
+    //   alert('no such user ')
   }
 
   // if(this.currentUser){

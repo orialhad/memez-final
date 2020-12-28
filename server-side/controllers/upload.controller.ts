@@ -15,7 +15,7 @@ export class UploadController extends BaseController implements IUploadControlle
     super();
   }
 
-  async uploadPhoto(photo: any): Promise<any> {
-    return await this.main.mongoDbController.uploadPhoto(photo);
+  async uploadPhoto(file): Promise<any> {
+    return await this.main.mongoDbController.uploadFile(file);
   }
 }

@@ -1,5 +1,7 @@
 //region Imports
 import * as express from 'express';
+import {upload} from '../config/upload_storage';
+import multer = require('multer');
 import {Express, Request, Response} from 'express';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
@@ -27,6 +29,7 @@ export class HttpController extends BaseController implements IHttpController {
 
     async init() {
         this.express_app.use(session({secret: 'blahblahblah', resave: true, saveUninitialized: true}));
+        // this.express_app.use(multer)
         this.express_app.use(bodyParser.urlencoded({extended: false}));
         this.express_app.use(bodyParser.json());
         this.express_app.use(cors());
@@ -120,9 +123,11 @@ export class HttpController extends BaseController implements IHttpController {
             this.events.emit('post_likes', req, res);
         });
 
-        //upload a file
-        this.express_app.post('/api/photos', (req: Request, res: Response,) => {
+        // upload a file
+        this.express_app.post('/api/uploads',upload, (req: Request, res: Response,) => {
+            console.log('httpC : ' + req.file)
             this.events.emit('upload_file', req, res);
+
         });
 
         //login

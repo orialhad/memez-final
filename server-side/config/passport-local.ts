@@ -11,29 +11,29 @@ const LocalStrategy = PassportLocal.Strategy;
 
 //endregion
 
-let mock_users = [{username: 'orial', password: '$2b$10$2PfxUfeV2DAYfvOAorumNudsUqJ2Lw4.AwzQ4BoqPWvZuRyLz6b5.'}];
-
-
-
+let mock_users =
+        [
+            {username: 'orial', password: '$2b$10$2PfxUfeV2DAYfvOAorumNudsUqJ2Lw4.AwzQ4BoqPWvZuRyLz6b5.'},
+            {username: 'dani', password: '$2b$10$25HciLh1GqrRW/PelXJu.unQThh//Q.xOPcXg75HIYYfDuom/gXX6'}
+        ];
 
 
 export const local_Strategy = new LocalStrategy(
-
     async function(username, password, done) {
 
         // console.log('checking username: ');
         // const
-            // users: IUser[] = await This.userController.getUsers(),
-            // user           = users.find(user => user.username === username);
-        console.log('checking username: ' );
+        // users: IUser[] = await This.userController.getUsers(),
+        // user           = users.find(user => user.username === username);
+        console.log('checking username: ');
 
-        const user = ""; //Get user from DB
+        const user = mock_users.find(user => user.username === username)
 
-        if (!mock_users[0]) {
+        if (!user) {
             console.log('ERROR: no user found');
             return done('unauthorized access', false);
         }
-        const validatePassword = async (password) => bcrypt.compare(password,mock_users[0].password );
+        const validatePassword = async (password) => bcrypt.compare(password, user.password);
 
         if (validatePassword(password)
             .then((isValid) => {
@@ -42,7 +42,7 @@ export const local_Strategy = new LocalStrategy(
                     return done('unauthorized access: password problem', false);
                 } else {
                     // all is well, return successful user
-                    return done(null, mock_users[0]);
+                    return done(null, user);
                 }
             })
         ) {

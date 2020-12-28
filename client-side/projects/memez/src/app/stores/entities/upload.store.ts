@@ -10,7 +10,7 @@ import {action, observable} from 'mobx-angular';
 })
 export class UploadStore {
 
-  file: File
+  @observable file: File
 
   constructor(
     public root: RootStore
@@ -30,8 +30,10 @@ export class UploadStore {
   @action async onUpload(file){
     // file.name = file.name.replace(/ /g,'')
     this.file = file
+    const formData = new FormData();
+    formData.append('file', this.file);
     console.log(`Upload Store: `,this.file)
-    await this.root.uploadAdapter.uploadImage(file)
+    await this.root.uploadAdapter.uploadFile(formData)
   }
 
 }

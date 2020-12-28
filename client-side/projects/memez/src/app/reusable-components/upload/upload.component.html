@@ -1,7 +1,9 @@
 <h1>file upload</h1>
-<input #ImageInput
-       type="file"
-       name="file"
-       accept="image/*"
-       (change)="onSelect($event)">
-<button type="button" (click)="onUpload()">submit</button>
+<form action="/uploads" method="post" enctype="multipart/form-data">
+  <input #ImageInput
+         type="file"
+         name="file"
+         accept="image/*"
+         (change)="onSelect($event)">
+  <button type="button" (click)="onUpload()">submit</button>
+</form>

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BaseAjaxAdapter} from './base.ajax.adapter';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 
@@ -9,6 +9,7 @@ import {Observable} from 'rxjs';
 })
 export class UploadAdapter extends BaseAjaxAdapter {
 
+
   constructor(
     http: HttpClient
   ) {
@@ -16,11 +17,14 @@ export class UploadAdapter extends BaseAjaxAdapter {
   }
 
 
-  async uploadImage(image: File): Promise<Response> {
-    const formData = new FormData();
-    formData.append('image', image);
 
-    return await this.post('photos', formData);
+
+  async uploadFile(file: FormData): Promise<Response> {
+
+    console.log(`form data: ` + file)
+    return await this.post_data('uploads',file);
+    // console.log(`adapter `+ file)
+    // return
   }
 
 }

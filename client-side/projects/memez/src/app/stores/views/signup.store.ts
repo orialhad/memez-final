@@ -22,9 +22,10 @@ export class SignupStore {
     window['lis'] = this;
   }
 
-  @action async signUpUser(userName: string,password:string){
-    console.log(userName,password)
-    return  await this.root.authService.signup(userName,password)
+  @action async signUpUser(username: string,password:string){
+    console.log(username,password)
+    await this.root.authService.signup(username,password)
+    await this.router.navigateByUrl(`login`)
   }
 
 

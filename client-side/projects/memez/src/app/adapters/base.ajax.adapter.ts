@@ -23,9 +23,14 @@ export abstract class BaseAjaxAdapter implements IBaseAdapter {
   };
 
 
-  async post(path: string, body: string | IUser | FormData): Promise<any> {
+  async post(path: string, body: string | IUser  ): Promise<any> {
     return this.http
-      .post(`${this.BASE_URL}/${path}`, body || FormData, this.httpOptions)
+      .post(`${this.BASE_URL}/${path}`, body || FormData, this.httpOptions )
+      .toPromise();
+  }
+  async post_data(path: string, body: string | IUser | File | FormData): Promise<any> {
+    return this.http
+      .post(`${this.BASE_URL}/${path}`, body || FormData )
       .toPromise();
   }
 
