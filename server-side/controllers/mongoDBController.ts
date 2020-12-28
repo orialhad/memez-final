@@ -11,7 +11,8 @@ const
     MongoClinet = require('mongodb').MongoClient(),
     ObjectID = require('mongodb').ObjectID;
 
-// gridFS = require('gridfs');
+
+
 
 export interface IMongoDBController extends IBaseController {
     // run(): Promise<void>;
@@ -20,7 +21,7 @@ export interface IMongoDBController extends IBaseController {
 
     getUser(id): Promise<IUser>;
 
-    getUserByUserName(userName): Promise<IUser>;
+    getUserByName(userName): Promise<IUser>;
 
     getPosts(): Promise<IPost[]>;
 
@@ -52,6 +53,8 @@ export class MongoDBController extends BaseController implements IMongoDBControl
     postsCollection: Collection;
     usersCollection: Collection;
     photosCollection: Collection;
+
+
 
     constructor() {
         super();
@@ -96,8 +99,8 @@ export class MongoDBController extends BaseController implements IMongoDBControl
         return await this.usersCollection.findOne({_id :userId});
     }
 
-    async getUserByUserName(userName): Promise<IUser> {
-        return await this.usersCollection.findOne({userName});
+    async getUserByName(username): Promise<IUser> {
+        return await this.usersCollection.findOne({username});
     }
 
     async getLikes(): Promise<ILike[]> {

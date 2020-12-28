@@ -1,5 +1,6 @@
 {
   "name": "memez-server",
+  "module": "esnext",
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
@@ -38,6 +39,7 @@
     "multer-gridfs-storage": "^4.2.0",
     "ng2-file-upload": "^1.4.0",
     "passport": "^0.4.1",
+    "passport-custom": "^1.1.1",
     "passport-local": "^1.0.0",
     "ts-node": "^9.1.1",
     "ts-node-dev": "^1.0.0",

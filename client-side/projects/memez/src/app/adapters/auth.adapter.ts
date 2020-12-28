@@ -22,14 +22,13 @@ export class AuthAdapter extends BaseAjaxAdapter {
   //   return this.request('logout');
   // }
 
-  async validate(userName, password) {
-    return await this.post(`auth/login`, {'userName': userName, 'password': password});
+  async validate(username, password) {
+    return await this.post(`auth/login`, {'username': username, 'password': password});
   }
 
-  async signup(userName, password){
-    return await this.post('auth/signup', {'userName' : userName, 'password' : password},)
+  async signup(username, password) {
+    return await this.post('auth/signup', {'username': username, 'password': password},);
   }
-
 
 
 }

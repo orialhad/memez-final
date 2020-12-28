@@ -22,6 +22,7 @@ export class UserController extends BaseController implements IUserController {
 
     async getUsers(): Promise<IUser[]> {
         return await this.main.mongoDbController.getUsers();
+
     }
 
     async getUser(id: string): Promise<IUser> {
@@ -33,7 +34,7 @@ export class UserController extends BaseController implements IUserController {
     }
 
     async getUserByName(userName): Promise<IUser> {
-        return await this.main.mongoDbController.getUserByUserName(userName);
+        return await this.main.mongoDbController.getUserByName(userName);
     }
 
 

@@ -4,12 +4,12 @@ import {CanActivate, Router} from '@angular/router';
 import {RootStore} from '../root.store';
 
 @Injectable({
-  providedIn: 'root'
-})
+              providedIn: 'root'
+            })
 export class AuthGuardService implements CanActivate {
 
   constructor(
-    public root : RootStore,
+    public root: RootStore,
     private route: Router
   ) {
     this.root.authGuard = this;
@@ -19,7 +19,7 @@ export class AuthGuardService implements CanActivate {
     if (this.root.authService.isAuthenticated()) {
       return true;
     }
-    this.route.navigate(['login']).then()
+    this.route.navigate(['login']).then();
     return false;
   }
 }

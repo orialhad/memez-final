@@ -3,7 +3,7 @@
     <div class="login-heading">
       Memez
     </div>
-    <input [(ngModel)]="lis.userName"
+    <input [(ngModel)]="lis.username"
            name="userName"
            type="text" placeholder="enter your name" class="user-name-input">
     <input [(ngModel)]="lis.password"
@@ -11,7 +11,7 @@
            type="text" placeholder="enter your password" class="user-name-input">
 
 
-    <button class="login-button" (click)="lis.loginHandler(lis.userName)">login
+    <button class="login-button" (click)="lis.loginHandler(lis.username)">login
     </button>
     <div class="new-account" (click)="lis.signUpNavigation()">Create New Account</div>
   </div>

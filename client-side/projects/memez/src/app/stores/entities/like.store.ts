@@ -18,16 +18,13 @@ export class LikeStore {
     this.root.lks = this;
     window['lks'] = this;
     autorun(() => {
-
     });
   }
 
   @action
   async getLikes() {
     return this.likes = await this.root.likeAdapter.getLikes();
-
   }
-
 
   @action
   async createLike(post: IPost) {
@@ -36,29 +33,23 @@ export class LikeStore {
       postLiked: post
     };
     await this.root.likeAdapter.createLike(likeInput);
-
-
   }
+
   @action
   async unLike(like_id: string) {
     await this.root.likeAdapter.unLike(like_id);
-
   }
-
 
   @action
   async handleLike(post: IPost) {
     const current = this.root.lis.currentUser;
-    const alreadyLiked = await post.likes.find(like => like.userLiked._id === current._id)
+    const alreadyLiked = await post.likes.find(like => like.userLiked._id === current._id);
     if (alreadyLiked) {
-        await this.unLike(alreadyLiked._id)
-      } else {
+      await this.unLike(alreadyLiked._id);
+    } else {
       await this.createLike(post);
     }
-
     await this.root.ps.getAllPosts();
   }
-
-
 }
 

@@ -3,31 +3,31 @@ import {IPost} from '../../types/interfaces/IPost';
 
 
 @Component({
-  selector: 'mem-post',
+  selector   : 'mem-post',
   templateUrl: './post.component.html',
-  styleUrls: ['./post.component.css']
+  styleUrls  : ['./post.component.css']
 })
 export class PostComponent implements OnInit {
-  @Input() post: IPost
+  @Input() post: IPost;
   @Output() postLiked = new EventEmitter();
   @Output() PostToDelete = new EventEmitter();
+
 
   @Input() selected: boolean;
   @Output() selectedChange = new EventEmitter<boolean>();
 
 
-
-
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
 
-  onPostLike(post:IPost){
+  onPostLike(post: IPost) {
     this.postLiked.emit(post);
   }
 
-  deletePost(post:IPost){
+  deletePost(post: IPost) {
     this.PostToDelete.emit(post);
   }
 
@@ -35,8 +35,6 @@ export class PostComponent implements OnInit {
     this.selected = !this.selected;
     this.selectedChange.emit(this.selected);
   }
-
-
 
 
 }

@@ -5,7 +5,7 @@
 
 
   <div class="nav-user-profile">
-    <button mat-button [matMenuTriggerFor]="menu">{{log.currentUser.userName.toUpperCase()}}</button>
+    <button mat-button [matMenuTriggerFor]="menu">{{log.currentUser.username.toUpperCase()}}</button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="log.root.lys.userProfileNavigation()" >User Profile</button>
       <button mat-menu-item (click)="log.signOutNavigation()" >Sign Out</button>

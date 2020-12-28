@@ -10,7 +10,7 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTre
 })
 export class LoginStore {
   @observable currentUser: IUser
-  @observable userName: string;
+  @observable username: string;
   @observable password: string;
 
 
@@ -24,28 +24,31 @@ export class LoginStore {
 
 
   @action
-  async loginVerification() {
-    this.root.authService.validate(this.userName, this.password)
+  async loginVerification(username) {
+    this.root.authService.validate(this.username, this.password)
       .then((response) => {
         this.root.authService.setUserInfo({'user': response['user']});
         this.router.navigate(['feed']);
-
       })
     return
   }
 
   // await this.root.us.getUsers()
-  // const loginUser = this.root.us.users.find(user => user.userName.toLowerCase() === userName.toLowerCase())
-  // if (!loginUser) {
-  //   alert('no such user ')
-  // }
-  // this.currentUser = loginUser;
+  // this.root.us.users.find(user => user?.username?.toLowerCase() === username?.toLowerCase())
 
 
   @action
-  async loginHandler(userName) {
-    await this.loginVerification();
-    this.currentUser = this.root.us.users.find(user => user?.userName?.toLowerCase() === userName?.toLowerCase())
+  async loginHandler(username) {
+    // await this.root.us.getUsers()
+    // const loginUser = this.root.us.users.find(user => user?.username?.toLowerCase() === username?.toLowerCase())
+    //
+    // if (!loginUser) {
+    //   alert('no such user ')
+    // }
+    // this.currentUser = loginUser;
+    await this.loginVerification(username)
+
+
   }
 
   // if(this.currentUser){

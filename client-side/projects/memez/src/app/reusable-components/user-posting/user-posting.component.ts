@@ -1,16 +1,13 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
-import {autorun} from 'mobx';
-import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
-  selector: 'mem-user-posting',
+  selector   : 'mem-user-posting',
   templateUrl: './user-posting.component.html',
-  styleUrls: ['./user-posting.component.css'],
+  styleUrls  : ['./user-posting.component.css'],
 
 })
 export class UserPostingComponent implements OnInit {
-  @Output() newPost = new EventEmitter()
+  @Output() newPost = new EventEmitter();
 
 
   constructor() {
@@ -20,7 +17,7 @@ export class UserPostingComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  userNewPost(val){
+  userNewPost(val) {
     this.newPost.emit(val);
 
   }

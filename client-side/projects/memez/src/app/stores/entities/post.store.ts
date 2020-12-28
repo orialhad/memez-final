@@ -35,14 +35,14 @@ export class PostStore {
   @action
   async createPost(content: string) {
     let newPost = {
-      content: content,
+      content : content,
       postedBy: this.root.lis.currentUser,
-      date: dayjs().format('DD.MM.YY'),
-      time: dayjs().format('hh:mm:ss'),
-      likes: []
+      date    : dayjs().format('DD.MM.YY'),
+      time    : dayjs().format('hh:mm:ss'),
+      likes   : []
     };
     await this.root.postAdapter.createPost(newPost);
-   await this.getAllPosts()
+    await this.getAllPosts();
   }
 
   @action
@@ -58,8 +58,8 @@ export class PostStore {
 
   @computed get reversedPosts() {
     return this.posts
-      .slice()
-      .reverse();
+               .slice()
+               .reverse();
   }
 
 }

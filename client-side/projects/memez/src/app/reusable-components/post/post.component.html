@@ -3,7 +3,7 @@
     <div class="post-user-avatar">
       <img *ngIf="post.postedBy.avatar" src="{{post.postedBy.avatar}}">
     </div>
-    <div class="post-user-name">{{post.postedBy.userName}}</div>
+    <div class="post-user-name">{{post.postedBy.username}}</div>
     <div class="post-time-date">
       <div>{{post.date}}</div>
       <div>{{post.time}}</div>
@@ -16,8 +16,8 @@
 
     <div class="like-btn-count">
       <section>
-      <button mat-icon-button (click)="toggleSelected()"
-              class="like-btn">
+        <button mat-icon-button (click)="toggleSelected()"
+                class="like-btn">
 
           <mat-icon (click)="onPostLike(post)"
                     *ngIf="selected"
@@ -29,8 +29,8 @@
                     class="like-icon">favorite_border
           </mat-icon>
 
-      </button>
-      <div class="post-like" *ngIf="post.likes.length">{{post.likes.length}}</div>
+        </button>
+        <div class="post-like" *ngIf="post.likes.length">{{post.likes.length}}</div>
       </section>
     </div>
 

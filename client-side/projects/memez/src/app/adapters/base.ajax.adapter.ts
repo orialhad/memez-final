@@ -26,12 +26,12 @@ export abstract class BaseAjaxAdapter implements IBaseAdapter {
   async post(path: string, body: string | IUser | FormData): Promise<any> {
     return this.http
       .post(`${this.BASE_URL}/${path}`, body || FormData, this.httpOptions)
-      .toPromise()
+      .toPromise();
   }
 
   async delete(path: string): Promise<any> {
     return this.http
       .delete(`${this.BASE_URL}/${path}`)
-      .toPromise()
+      .toPromise();
   }
 }

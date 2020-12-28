@@ -1,19 +1,15 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {element} from 'protractor';
-import {formatDate} from '@angular/common';
 
 
 @Component({
-  selector: 'mem-upload',
+  selector   : 'mem-upload',
   templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.css']
+  styleUrls  : ['./upload.component.css']
 })
 export class UploadComponent implements OnInit {
 
   newFile: File;
-
-  @Output() uploadedFiles = new EventEmitter ();
-
+  @Output() uploadedFiles = new EventEmitter();
 
   constructor() {
   }
@@ -22,8 +18,8 @@ export class UploadComponent implements OnInit {
     this.newFile = file.target.files[0];
   }
 
-  onUpload(){
-    this.uploadedFiles.emit(this.newFile)
+  onUpload() {
+    this.uploadedFiles.emit(this.newFile);
   }
 
 

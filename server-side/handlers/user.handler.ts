@@ -19,7 +19,7 @@ export const getUsersHandler = async function(this: IMainController, req: Reques
 
 
 export const createUserHandler = async function(this: IMainController, req: Request, res: Response) {
-  const user: IUser = {userName: req.body.userName, password: req.body.password};
+  const user: IUser = {username: req.body.userName, password: req.body.password};
   try {
     const newUser = await this.userController.createUser(user);
     return res.json(newUser).end();
