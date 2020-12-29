@@ -13,7 +13,7 @@ export interface IAuthController extends IBaseController {
 
     validatePassword(userName, password): Promise<any>
 
-    isLoggedIn(req, res): Promise<null>
+    isLoggedIn(req, res): boolean
 
 }
 
@@ -36,10 +36,10 @@ export class AuthController extends BaseController implements IAuthController {
     }
 
 
-    isLoggedIn(req, res) {
+    isLoggedIn(req, res): boolean {
         console.log('session ', req.session);
         if (req.isAuthenticated()) {
-            return null;
+            return true;
         }
         return res.status(400).json({'statusCode': 400, "message": "not authenticated"})
     }

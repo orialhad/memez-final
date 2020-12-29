@@ -1,7 +1,9 @@
 <div class="main-container">
-  <div class="header" *ngIf="lis.currentUser">
-    <mem-nav-bar></mem-nav-bar>
-  </div>
+  <ng-container *mobxAutorun>
+    <div class="header" *ngIf="lis.currentUser">
+      <mem-nav-bar></mem-nav-bar>
+    </div>
+  </ng-container>
 
 
   <div class="content" >
@@ -9,7 +11,9 @@
   </div>
 
 
-  <footer *ngIf="lis.currentUser">
+  <ng-container *mobxAutorun>
+    <footer *ngIf="lis.currentUser">
 
-  </footer>
+    </footer>
+  </ng-container>
 </div>

@@ -12,6 +12,13 @@ import * as passport from 'passport';
 import session = require('express-session');
 import {getLocalStrategy} from "../config/passport-local";
 const expressSanitizer = require('express-sanitizer');
+
+// socket.io
+import {Server as IOServer, Socket as SocketIO_Socket} from "socket.io";
+import * as http from "http";
+import * as socketio from "socket.io";
+
+
 //endregion
 
 export interface IHttpController extends IBaseController {
@@ -20,6 +27,10 @@ export interface IHttpController extends IBaseController {
 
 
 export class HttpController extends BaseController implements IHttpController {
+    private sockets: SocketIO_Socket[] = [];
+    private io_server: IOServer;
+    private http_server: http.Server;
+
     express_app: Express = express();
     events: events.EventEmitter = new events.EventEmitter();
 
@@ -41,7 +52,39 @@ export class HttpController extends BaseController implements IHttpController {
         passport.use(getLocalStrategy(this.main.mongoDbController));
 
         this.registerEndpoints();
-        await this.runServer();
+
+
+        this.http_server = this.runServer();
+        this.initSocketIO();
+
+
+    }
+
+    initSocketIO() {
+        const This = this;
+        // @ts-ignore
+        this.io_server = socketio(this.http_server);
+
+        this.io_server.on('connection',function(socket: SocketIO_Socket){
+            this.socket.push(socket)
+            const idx = This.sockets.indexOf(socket)
+            socket.send('Hi There How R U today ? ')
+            console.log(`SOCKET CONNECTED to slot ${idx}. Total ${This.sockets.length} clients connected`);
+            console.log(socket.connected,'socket.connected');
+
+            socket.on('disconnected',()=>{
+                This.sockets.splice(idx,1);
+                console.log(`SOCKET CONNECTED to slot ${idx}. Total ${This.sockets.length} clients connected`);
+
+            })
+
+            socket.on('ping',()=>{
+
+                console.log('pong');
+            })
+        })
+
+
     }
 
     auth() {
@@ -62,8 +105,8 @@ export class HttpController extends BaseController implements IHttpController {
         };
     }
 
-    async runServer() {
-        await this.express_app.listen(config.port, () => {
+     runServer(): http.Server {
+         return this.express_app.listen(config.port, () => {
             console.log(`server is up on port ${config.port} `);
         });
     }
@@ -76,6 +119,10 @@ export class HttpController extends BaseController implements IHttpController {
         // get specific user
         this.express_app.get('/api/users/:id', (req: Request, res: Response) => {
             this.events.emit('user', req, res);
+        });
+        // get current user
+        this.express_app.get('/api/users/:id', (req: Request, res: Response) => {
+            this.events.emit('get_current', req, res);
         });
         //create new user
         this.express_app.post('/api/auth/signup', (req: Request, res: Response) => {
@@ -122,6 +169,11 @@ export class HttpController extends BaseController implements IHttpController {
         // upload a file
         this.express_app.post('/api/uploads', (req: Request, res: Response,) => {
             this.events.emit('upload_file', req, res);
+
+        });
+        // get all files
+        this.express_app.get('/api/images/:filename', (req: Request, res: Response,) => {
+            this.events.emit('all_files', req, res);
 
         });
 

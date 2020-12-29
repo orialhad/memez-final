@@ -111,7 +111,11 @@ export class MongoDBController extends BaseController implements IMongoDBControl
     }
 
     async getUserByName(username): Promise<IUser> {
-        return await this.usersCollection.findOne({username});
+        try {
+            return await this.usersCollection.findOne({username});
+        }catch (err){
+            console.log('no such user ', err)
+        }return
     }
 
 

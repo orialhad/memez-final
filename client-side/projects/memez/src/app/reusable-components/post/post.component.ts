@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IPost} from '../../types/interfaces/IPost';
+import {IUser} from '../../types/interfaces/IUser';
 
 
 @Component({
@@ -9,6 +10,7 @@ import {IPost} from '../../types/interfaces/IPost';
 })
 export class PostComponent implements OnInit {
   @Input() post: IPost;
+  @Input() currentUser :IUser;
   @Output() postLiked = new EventEmitter();
   @Output() PostToDelete = new EventEmitter();
 

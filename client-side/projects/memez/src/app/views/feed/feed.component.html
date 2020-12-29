@@ -16,6 +16,7 @@
     *ngFor="let post of fs.root.ps.reversedPosts"
     [post]="post"
     [selected]="fs.verifyUserLike(post)"
+    [currentUser]="fs.root.lis.currentUser"
     (postLiked)="fs.root.lks.handleLike($event)"
     (PostToDelete)="fs.root.ps.deletePost($event)"
   ></mem-post>

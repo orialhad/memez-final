@@ -27,6 +27,10 @@ export class UserStore {
     return this.users
   }
 
+
+  @action getCurrentUser(){
+    this.root.lis.currentUser =  JSON.parse(localStorage.getItem('userInfo')).user
+  }
   @computed   get currentUserPosts(){
     const current = this.root.lis.currentUser
     if(current) {

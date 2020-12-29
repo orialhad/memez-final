@@ -15,6 +15,8 @@ export class FeedComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.fs.root.us.getCurrentUser()
+
   };
 
 }

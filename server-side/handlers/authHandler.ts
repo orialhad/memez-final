@@ -19,23 +19,28 @@ export const signupHandler = async function(this: IMainController, req: Request,
     try {
         //chek if already exist
         const exist = await this.userController.getUserByName(req.body.username);
-
-
         if (!exist) {
             user.password = await this.authController.generateHash(req.body.password);
-            return await this.userController.createUser(user);
-        } else {
-            res.status(400).json({'statusCode': 400, 'message': 'Can\'t create user'});
-        }
+            res.status(200).json({'statusCode': 400,msg: "user created"})
+            if(user.password) {
+                return await this.userController.createUser(user);
+            }res.status(400).json({'statusCode': 400, 'message': 'password is empty'});
+        } res.status(400).json({'statusCode': 400, 'message': 'Choose a different username'});
+
     } catch (e) {
         return res.status(404).send('error' + e);
     }
 };
-
-export const getCurrUSerHandler = async function(this: IMainController, req: Request, res: Response) {
-
-
-
-
-};
+//
+// export const getCurrUSerHandler = async function(this: IMainController, req: Request, res: Response) {
+//     const user: IUser = {username: req.body.username, password: req.body.password};
+//
+//     try{
+//         if(this.authController.isLoggedIn){
+//             res.json(this.userController.getUserByName(req.body.username)).end()
+//         }
+//     }catch (e) {
+//         console.log(e)
+//     }
+// };
 

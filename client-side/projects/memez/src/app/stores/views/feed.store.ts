@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {RootStore} from '../root.store';
 import {IPost} from '../../types/interfaces/IPost';
+import {autorun} from 'mobx';
+import {action} from 'mobx-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,10 @@ export class FeedStore {
   ) {
     this.root.fs = this;
     window['fs'] = this;
+
   }
+
+
 
 
  verifyUserLike(post: IPost):boolean {

@@ -13,7 +13,16 @@
            placeholder="enter your password"
            class="user-name-input"
     >
-    <button class="signup-button" (click)="sus.signUpUser(new_name.value,password.value)">Sign Up
+    <input #password2
+           type="text"
+           placeholder="enter same password"
+           class="user-name-input"
+    >
+    <button class="signup-button"
+            (click)="sus.signUpUser(new_name.value,password.value,password2.value)
+
+
+">Sign Up
     </button>
 
   </div>

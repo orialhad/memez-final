@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {RootStore} from '../root.store';
 import {Router} from '@angular/router';
+import {action, computed} from 'mobx-angular';
 
 
 @Injectable({
@@ -33,6 +34,7 @@ export class AuthService {
   }
 
   public setUserInfo(user) {
+    this.root.lis.currentUser = user.user
     localStorage.setItem('userInfo', JSON.stringify(user));
   }
 
@@ -43,4 +45,5 @@ export class AuthService {
   public async signup(username, password) {
     return await this.root.authAdapter.signup(username, password);
   }
+
 }

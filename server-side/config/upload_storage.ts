@@ -11,29 +11,28 @@ const storage = new GridFsStorage({
     options: {useNewUrlParser: true, useUnifiedTopology: true},
     file   : (req, file) => {
         return new Promise((resolve, reject) => {
-            crypto.randomBytes(16, (err, buf) => {
-                if (err) {
-                    return reject(err);
-                }
-                const
-                    filename = buf.toString('hex') + path.extname(file.originalname),
-                    fileInfo = {
-                        filename  : filename,
-                        bucketName: 'uploads'
-                    };
-                resolve(fileInfo);
-            });
+            const match = ["image/png", 'image/jpg', 'image/jpeg'];
+            if(match.indexOf(file.mimetype) !== -1) {
+                crypto.randomBytes(16, (err, buf) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    const
+                        filename = buf.toString('hex') + path.extname(file.originalname),
+                        fileInfo = {
+                            filename  : filename,
+                            bucketName: 'uploads'
+                        };
+                    resolve(fileInfo);
+                });
+            } else {
+                console.log(`unauthorised file !!! `)
+                reject(file)
+            }
         });
     }
 });
-// const storage = multer.diskStorage({
-//     destination: (req, file, callback) => {
-//         callback(null, 'uploads');
-//     },
-//     filename(req, file, callback) {
-//         callback(null,`blablabal_${file.originalname.toLowerCase().trim()}`);
-//     }
-// })
+
 
 export const upload = multer({storage}).single('file');
 export const uploadFilesMiddleware = util.promisify(upload);

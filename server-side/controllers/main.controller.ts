@@ -58,7 +58,7 @@ export class MainController extends BaseController implements IMainController {
   }
 
   addEventListeners() {
-    // this.httpController.events.addListener('login', loginHandler.bind(this))
+    // this.httpController.events.addListener('get_current', getCurrUSerHandler.bind(this))
     this.httpController.events.addListener('signup', signupHandler.bind(this))
     this.httpController.events.addListener('all_users', getUsersHandler.bind(this))
     this.httpController.events.addListener('all_posts', getPostsHandler.bind(this))

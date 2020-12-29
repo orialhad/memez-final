@@ -40,18 +40,13 @@ export class LoginStore {
   @action
   async loginHandler(username) {
     await this.root.us.getUsers()
-    this.currentUser =  this.root.us.users.find(user => user.username.toLowerCase() === username.toLowerCase());
+    // this.currentUser =  JSON.parse(localStorage.getItem('userInfo')).user
     await this.loginVerification(username)
 
 
-    // if (!loginUser) {
-    // }
-    //   alert('no such user ')
+
   }
 
-  // if(this.currentUser){
-  // this.router.navigateByUrl(`feed`).then();
-  // }
 
 
   async signOutNavigation() {

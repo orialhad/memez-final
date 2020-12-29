@@ -14,6 +14,7 @@ export class UserProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.us.root.us.getCurrentUser()
   }
 
 }

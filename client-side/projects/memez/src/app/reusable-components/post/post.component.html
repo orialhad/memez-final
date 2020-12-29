@@ -35,7 +35,9 @@
     </div>
 
 
-    <div class="delete_post" (click)="deletePost(post)">
+    <div *ngIf="currentUser?._id === post?.postedBy?._id"
+         class="delete_post"
+         (click)="deletePost(post)">
       <mat-icon>delete</mat-icon>
     </div>
 

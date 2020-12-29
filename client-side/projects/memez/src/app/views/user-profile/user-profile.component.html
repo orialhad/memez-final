@@ -20,6 +20,7 @@
       *ngFor="let post of us.root.us.currentUserPosts"
       [post]="post"
       [selected]="us.root.fs.verifyUserLike(post)"
+      [currentUser]="us.root.lis.currentUser"
       (postLiked)="us.root.lks.handleLike($event)"
       (PostToDelete)="us.root.ps.deletePost($event)"
     ></mem-post>

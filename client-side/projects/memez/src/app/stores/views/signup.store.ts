@@ -19,30 +19,22 @@ export class SignupStore {
     private router: Router,
   ) {
     this.root.sus = this;
-    window['lis'] = this;
+    window['sus'] = this;
   }
 
-  @action async signUpUser(username: string,password:string){
-    console.log(username,password)
-    await this.root.authService.signup(username,password)
-    await this.router.navigateByUrl(`login`)
+  @action async signUpUser(username: string,password:string,password2:string){
+    username = username.toLowerCase()
+    if(password === password2) {
+       await this.root.authService.signup(username, password)
+       await this.loginNavigation()
+      console.log("User Created")
+    }else {
+      console.log("Password doesn't match")
+    }
   }
 
-
-
-// const newUser :IUser = {userName: userName.toLowerCase(), password:password.trim()}
-  // console.log(newUser)
-  //
-  // const exist = this.root.us.users.some(user => user.userName.toLowerCase() === newUser.name)
-  // if(exist){
-  //  alert(`user already exist - choose different name`)
-  // }else{
-  //   await this.root.userAdapter.createNewUser(newUser)
-  //   await this.router.navigateByUrl(`login`)
-  //
-  // }
-
-
-
+  @action async loginNavigation() {
+    await this.router.navigateByUrl(``)
+  }
 
 }
