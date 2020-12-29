@@ -9,8 +9,8 @@ import {BaseController, IBaseController} from './base.controller';
 import * as events from 'events';
 import {config} from '../config/config';
 import * as passport from 'passport';
-import {local_Strategy} from '../config/passport-local';
 import session = require('express-session');
+import {getLocalStrategy} from "../config/passport-local";
 const expressSanitizer = require('express-sanitizer');
 //endregion
 
@@ -38,11 +38,7 @@ export class HttpController extends BaseController implements IHttpController {
         // this.express_app.use(expressSanitizer());
 
 
-        passport.use(local_Strategy);
-        //     new LocalStrategy(function (user, pass, done) {
-        //     console.log('HEY HEY HEY HEY!' + user);
-        //     return done(null, user);
-        // }))
+        passport.use(getLocalStrategy(this.main.mongoDbController));
 
         this.registerEndpoints();
         await this.runServer();
@@ -52,7 +48,7 @@ export class HttpController extends BaseController implements IHttpController {
         return (req, res, next) => {
             console.log('Authenticating... (username and password)');
             passport.authenticate('local', (error, user, info) => {
-                console.log('B4: ' + user);
+                console.log('B4: ' + JSON.stringify(user));
                 if (error) {
                     res.status(400).json({'statusCode': 400, 'message': error});
                 }

@@ -4,7 +4,7 @@ import * as PassportLocal from 'passport-local';
 import * as bcrypt from 'bcrypt';
 import {IMainController} from '../controllers/main.controller';
 import {IUser} from '../../client-side/projects/memez/src/app/types/interfaces/IUser';
-import {MongoDBController} from '../controllers/mongoDbcontroller';
+import {IMongoDBController, MongoDBController} from '../controllers/mongoDbcontroller';
 
 
 const LocalStrategy = PassportLocal.Strategy;
@@ -19,14 +19,15 @@ let mock_users =
         ];
 // const users: Promise<IUser[]> =  MongoDBController.prototype.getUsers();
 
-export const local_Strategy = new LocalStrategy(
-    async function(username, password, done) {
+
+export const getLocalStrategy = (db: IMongoDBController) => new LocalStrategy(
+    async (username, password, done) => {
         console.log('checking username123: ' + username);
         // const
         // users: IUser[] = await MongoDBController.prototype.getUsers();
         // console.log(users);
 
-        const user = mock_users.find(user => user.username === username);
+        const user = await db.getUserByName(username);
 
         console.log('checking username: ' + user.username);
 
@@ -36,31 +37,22 @@ export const local_Strategy = new LocalStrategy(
             console.log('ERROR: no user found');
             return done('unauthorized access', false);
         }
-        const validatePassword = async (password) => bcrypt.compare(password, user.password);
-
-        if (validatePassword(password)
-            .then((isValid) => {
-                console.log('Response of validatePassword: ' + isValid);
-                if (!isValid) {
-                    return done('unauthorized access: password problem', false);
-                } else {
-                    // all is well, return successful user
-                    return done(null, user);
-                }
-            })
-        ) {
-            return done;
+        if (await bcrypt.compare(password, user.password)) {
+            done(null, user)
+        } else {
+            done('password mismatch')
         }
     }
 );
 
-passport.serializeUser(function(user, done) {
+
+passport.serializeUser(function (user, done) {
     if (user) {
         done(null, user);
     }
 });
 
-passport.deserializeUser(function(id, done) {
+passport.deserializeUser(function (id, done) {
     done(null, id);
 });
 
