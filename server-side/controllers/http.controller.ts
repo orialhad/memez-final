@@ -124,8 +124,7 @@ export class HttpController extends BaseController implements IHttpController {
         });
 
         // upload a file
-        this.express_app.post('/api/uploads',upload, (req: Request, res: Response,) => {
-            console.log('httpC : ' + req.file)
+        this.express_app.post('/api/uploads', (req: Request, res: Response,) => {
             this.events.emit('upload_file', req, res);
 
         });

@@ -36,4 +36,5 @@ const storage = new GridFsStorage({
 // })
 
 export const upload = multer({storage}).single('file');
+export const uploadFilesMiddleware = util.promisify(upload);
 

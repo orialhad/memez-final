@@ -5,15 +5,14 @@ import {IPost} from '../../client-side/projects/memez/src/app/types/interfaces/I
 
 import {ILike} from '../../client-side/projects/memez/src/app/types/interfaces/ILike';
 import {config} from '../config/config';
+import * as GridFsStorage from 'multer-gridfs-storage';
 
 
 const
     mongo       = require('mongodb'),
     mongoClient = mongo.MongoClient(),
-    ObjectID    = mongo.ObjectID,
-    Grid        = mongo.Grid;
+    ObjectID    = mongo.ObjectID;
 
-let gfs;
 
 export interface IMongoDBController extends IBaseController {
     // run(): Promise<void>;
@@ -50,6 +49,7 @@ export interface IMongoDBController extends IBaseController {
 export class MongoDBController extends BaseController implements IMongoDBController {
     private client: MongoClient;
     private db: Db;
+
     likesCollection: Collection;
     postsCollection: Collection;
     usersCollection: Collection;
@@ -58,6 +58,9 @@ export class MongoDBController extends BaseController implements IMongoDBControl
 
     constructor() {
         super();
+
+        this.getUsers = this.getUsers.bind(this);
+
     }
 
 
@@ -81,19 +84,8 @@ export class MongoDBController extends BaseController implements IMongoDBControl
                 This.likesCollection = This.db.collection('likes');
                 This.postsCollection = This.db.collection('posts');
                 This.usersCollection = This.db.collection('users');
+                This.uploadCollection = This.db.collection(`uploads`);
 
-                // const buffer = new Buffer('Hello world');
-
-                gfs = Grid(This.db, 'fs');
-
-                This.uploadCollection = gfs.collection(`uploads`);
-
-
-                // gfs.put(buffer, {metadata: {category: 'text'}, content_type: 'text'}, function(err, fileInfo) {
-                //     if (!err) {
-                //         console.log('Finished writing file to Mongo');
-                //     }
-                // });
 
                 resolve();
             });

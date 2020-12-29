@@ -18,6 +18,9 @@ export class UserController extends BaseController implements IUserController {
 
     constructor() {
         super();
+
+
+
     }
 
     async getUsers(): Promise<IUser[]> {

@@ -4,7 +4,7 @@ import {PostController} from './controllers/post.controller';
 import {HttpController} from './controllers/http.controller';
 import {MongoDBController} from './controllers/mongoDBController';
 import {LikeController} from './controllers/like.controller';
-// import {UploadController} from './controllers/upload.controller';
+import {UploadController} from './controllers/upload.controller';
 import {AuthController} from './controllers/auth.controller';
 
 (async () => {
@@ -13,7 +13,7 @@ import {AuthController} from './controllers/auth.controller';
         postController    = new PostController(),
         userController    = new UserController(),
         authController    = new AuthController(),
-        // uploadController  = new UploadController(),
+        uploadController  = new UploadController(),
         httpController    = new HttpController(),
         mongoDBController = new MongoDBController(),
         mainController    = new MainController(
@@ -21,7 +21,7 @@ import {AuthController} from './controllers/auth.controller';
             likeController,
             postController,
             authController,
-            // uploadController,
+            uploadController,
             httpController,
             mongoDBController
         );
