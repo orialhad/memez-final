@@ -11,7 +11,7 @@ export const uploadHandler = async function(this: IMainController, req: Request,
             return res.send(`You must select a file.`);
         }else {
             console.log('file uploaded')
-            return res.json(`File has been uploaded.`);
+            return res.status(200).send({msg:`File has been successfully uploaded.`});
         }
     } catch (error) {
         console.log(error);
