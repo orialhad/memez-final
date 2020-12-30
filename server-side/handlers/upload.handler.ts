@@ -19,3 +19,17 @@ export const uploadHandler = async function(this: IMainController, req: Request,
     }
 };
 
+export const getFileHandler = async function(this: IMainController, req: Request, res: Response) {
+    try {
+        if(!req.params.filename) {
+            res.status(404).send({code: 404 ,msg: 'no file name'})
+        }else {
+            const newFile =  await this.uploadController.getFile(req.params.filename)
+            console.log("handler:" ,newFile)
+            return res.sendFile(newFile)
+        }res.status(200)
+    }catch (e) {
+        res.status(500).send({code: 500 ,msg: 'cant get file address'})
+    }
+};
+

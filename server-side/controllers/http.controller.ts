@@ -171,9 +171,9 @@ export class HttpController extends BaseController implements IHttpController {
             this.events.emit('upload_file', req, res);
 
         });
-        // get all files
-        this.express_app.get('/api/images/:filename', (req: Request, res: Response,) => {
-            this.events.emit('all_files', req, res);
+        // get a file
+        this.express_app.get('/api/uploads/:filename', (req: Request, res: Response,) => {
+            this.events.emit('get_file', req, res);
 
         });
 
