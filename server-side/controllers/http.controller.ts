@@ -184,7 +184,7 @@ export class HttpController extends BaseController implements IHttpController {
         //logout
         this.express_app.get('/api/logout', (req: Request, res: Response) => {
             req.logout()
-            this.events.emit('logout', req, res);
+            // this.events.emit('logout', req, res);
         });
 
     }

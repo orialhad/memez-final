@@ -5,14 +5,17 @@ import {IPost} from '../../sheard/interfaces/IPost';
 import {ILike} from '../../sheard/interfaces/ILike';
 import {config} from '../config/config';
 // import {Grid} from 'gridfs-stream';
-import GridStream = require('gridfs-stream');
 
+import GridStream = require('gridfs-stream');
+import {response} from 'express';
+const fs = require('fs');
 
 const
     mongo       = require('mongodb'),
     mongoClient = mongo.MongoClient(),
     ObjectID    = mongo.ObjectID;
-    // Grid = mongo.GridFSBucket
+
+// Grid = mongo.GridFSBucket
 
 
 export interface IMongoDBController extends IBaseController {
@@ -49,7 +52,6 @@ export interface IMongoDBController extends IBaseController {
 }
 
 
-export let gfs
 export class MongoDBController extends BaseController implements IMongoDBController {
     private client: MongoClient;
     private db: Db;
@@ -57,6 +59,7 @@ export class MongoDBController extends BaseController implements IMongoDBControl
     likesCollection: Collection;
     postsCollection: Collection;
     usersCollection: Collection;
+    gfs;
 
     // uploadCollection: Collection;
 
@@ -82,13 +85,13 @@ export class MongoDBController extends BaseController implements IMongoDBControl
                 }
                 console.log('Connected successfully to Mongo');
                 This.db = This.client.db(config.dbName);
-                gfs = GridStream(This.db, This.client);
+                This.gfs = GridStream(This.db, This.client);
 
                 This.likesCollection = This.db.collection('likes');
                 This.postsCollection = This.db.collection('posts');
                 This.usersCollection = This.db.collection('users');
                 // This.uploadCollection = This.db.collection('upload');
-                gfs.collection('uploads');
+                This.gfs.collection('uploads');
 
                 resolve();
             });
@@ -147,7 +150,7 @@ export class MongoDBController extends BaseController implements IMongoDBControl
 
     //likes
     async getLikes(): Promise<ILike[]> {
-        console.log()
+        console.log();
         return this.likesCollection.find({}).toArray();
     }
 
@@ -170,12 +173,9 @@ export class MongoDBController extends BaseController implements IMongoDBControl
         return await this.likesCollection.deleteMany({'postLiked._id': post_id});
     }
 
-
     async getFile(filename): Promise<any> {
-        const file =  await gfs.files.findOne({filename: filename});
-        return file
+           await this.gfs.files.findOne({filename: filename})
     }
-
 
     close(): Promise<any> {
         return this.client.close();
