@@ -2,9 +2,7 @@
 import * as passport from 'passport';
 import * as PassportLocal from 'passport-local';
 import * as bcrypt from 'bcrypt';
-import {IMainController} from '../controllers/main.controller';
-import {IUser} from '../../client-side/projects/memez/src/app/types/interfaces/IUser';
-import {IMongoDBController, MongoDBController} from '../controllers/mongoDbcontroller';
+import {IMongoDBController} from '../controllers/mongoDbcontroller';
 
 
 const LocalStrategy = PassportLocal.Strategy;

@@ -8,7 +8,7 @@ import {getUsersHandler} from '../handlers/user.handler';
 import {createPostHandler, deletePostHandler, getPostsHandler,} from '../handlers/post.handler';
 import {createLikeHandler, getLikesHandler, unLikeHandler,} from '../handlers/like.handler';
 import {IUploadController} from './upload.controller';
-import {signupHandler} from '../handlers/authHandler';
+import {logoutHandler, signupHandler} from '../handlers/authHandler';
 import {IAuthController} from './auth.controller';
 import {getFileHandler, uploadHandler} from '../handlers/upload.handler';
 
@@ -69,7 +69,7 @@ export class MainController extends BaseController implements IMainController {
     this.httpController.events.addListener('delete_like', unLikeHandler.bind(this))
     this.httpController.events.addListener('upload_file', uploadHandler.bind(this))
     this.httpController.events.addListener('get_file', getFileHandler.bind(this))
-    // this.httpController.events.addListener('logout', logoutHandler.bind(this))
+    this.httpController.events.addListener('logout', logoutHandler.bind(this))
     // this.httpController.events.addListener('user', getUserByIdHandler.bind(this))
     // this.httpController.events.addListener('post_likes', getPostLikes.bind(this))
     // this.httpController.events.addListener('post', getPostByIdHandler.bind(this))

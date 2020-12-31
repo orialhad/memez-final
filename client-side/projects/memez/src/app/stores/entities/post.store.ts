@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {RootStore} from '../root.store';
 import {action, computed, observable} from 'mobx-angular';
-import {IPost} from '../../types/interfaces/IPost';
+import {IPost} from '../../../../../../../sheard/interfaces/IPost';
 import {autorun} from 'mobx';
-import {ILike} from '../../types/interfaces/ILike';
+import {ILike} from '../../../../../../../sheard/interfaces/ILike';
 import dayjs = require('dayjs');
 
 @Injectable({

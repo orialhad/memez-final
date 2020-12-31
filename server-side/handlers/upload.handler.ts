@@ -1,11 +1,12 @@
 import {IMainController} from '../controllers/main.controller';
 import {Request, Response} from 'express';
-import {uploadFilesMiddleware} from '../config/upload_storage';
+import {uploadFiles} from '../config/upload_storage';
+import {gfs} from '../controllers/mongoDBController';
 
 
 export const uploadHandler = async function(this: IMainController, req: Request, res: Response) {
     try {
-        await uploadFilesMiddleware(req, res);
+        await uploadFiles(req, res);
         console.log(`upload handler: `, req.file);
         if (req.file == undefined) {
             return res.send(`You must select a file.`);
@@ -20,14 +21,21 @@ export const uploadHandler = async function(this: IMainController, req: Request,
 };
 
 export const getFileHandler = async function(this: IMainController, req: Request, res: Response) {
+    console.log('im in the upload handler ')
     try {
         if(!req.params.filename) {
+            console.log('bla ', req.params.path)
             res.status(404).send({code: 404 ,msg: 'no file name'})
         }else {
-            const newFile =  await this.uploadController.getFile(req.params.filename)
+            const newFile =  await this.mongoDbController.getFile(req.params.filename)
+            const readSteam = gfs.prototype.stream(newFile.filename)
+            readSteam.pipe(res)
             console.log("handler:" ,newFile)
-            return res.sendFile(newFile)
-        }res.status(200)
+            // res.send(newFile);
+
+
+        }
+        res.status(200)
     }catch (e) {
         res.status(500).send({code: 500 ,msg: 'cant get file address'})
     }

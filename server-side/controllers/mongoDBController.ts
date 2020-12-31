@@ -1,23 +1,23 @@
 import {BaseController, IBaseController} from './base.controller';
 import {Collection, Db, MongoClient,} from 'mongodb';
-import {IUser} from '../../client-side/projects/memez/src/app/types/interfaces/IUser';
-import {IPost} from '../../client-side/projects/memez/src/app/types/interfaces/IPost';
-
-import {ILike} from '../../client-side/projects/memez/src/app/types/interfaces/ILike';
+import {IUser} from '../../sheard/interfaces/IUser';
+import {IPost} from '../../sheard/interfaces/IPost';
+import {ILike} from '../../sheard/interfaces/ILike';
 import {config} from '../config/config';
-import * as GridFsStorage from 'multer-gridfs-storage';
 // import {Grid} from 'gridfs-stream';
-import {response} from 'express';
+import GridStream = require('gridfs-stream');
+
 
 const
     mongo       = require('mongodb'),
     mongoClient = mongo.MongoClient(),
-    ObjectID    = mongo.ObjectID,
-    Grid        = mongo.GridFSBucketReadStream;
+    ObjectID    = mongo.ObjectID;
+    // Grid = mongo.GridFSBucket
 
 
 export interface IMongoDBController extends IBaseController {
     // run(): Promise<void>;
+    // gfs: any;
 
     getUsers(): Promise<IUser[]>;
 
@@ -41,13 +41,15 @@ export interface IMongoDBController extends IBaseController {
 
     unLike(like_id: string): Promise<any>
 
-    getFile(filename): Promise<any>
+    getFile(filename: string): Promise<any>
 
     close(): Promise<any>
 
 
 }
 
+
+export let gfs
 export class MongoDBController extends BaseController implements IMongoDBController {
     private client: MongoClient;
     private db: Db;
@@ -55,14 +57,12 @@ export class MongoDBController extends BaseController implements IMongoDBControl
     likesCollection: Collection;
     postsCollection: Collection;
     usersCollection: Collection;
-    uploadCollection: Collection;
-    gfs;
+
+    // uploadCollection: Collection;
 
 
     constructor() {
         super();
-
-        this.getUsers = this.getUsers.bind(this);
 
     }
 
@@ -82,13 +82,13 @@ export class MongoDBController extends BaseController implements IMongoDBControl
                 }
                 console.log('Connected successfully to Mongo');
                 This.db = This.client.db(config.dbName);
-
+                gfs = GridStream(This.db, This.client);
 
                 This.likesCollection = This.db.collection('likes');
                 This.postsCollection = This.db.collection('posts');
                 This.usersCollection = This.db.collection('users');
-                This.uploadCollection = This.db.collection('upload.files');
-
+                // This.uploadCollection = This.db.collection('upload');
+                gfs.collection('uploads');
 
                 resolve();
             });
@@ -147,6 +147,7 @@ export class MongoDBController extends BaseController implements IMongoDBControl
 
     //likes
     async getLikes(): Promise<ILike[]> {
+        console.log()
         return this.likesCollection.find({}).toArray();
     }
 
@@ -171,14 +172,8 @@ export class MongoDBController extends BaseController implements IMongoDBControl
 
 
     async getFile(filename): Promise<any> {
-        console.log('im here '+ filename);
-        return await this.uploadCollection.findOne({filename:filename})
-
-        // this.gfs = new Grid;
-        // const readstream = this.gfs.createReadStream("cec2f6ec4ac0368041609b597c28b267.png");
-        // readstream.pipe(response);
-        // console.log(`get file `,readstream);
-
+        const file =  await gfs.files.findOne({filename: filename});
+        return file
     }
 
 

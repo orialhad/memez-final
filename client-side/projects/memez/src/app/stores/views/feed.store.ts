@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {RootStore} from '../root.store';
-import {IPost} from '../../types/interfaces/IPost';
+import {IPost} from '../../../../../../../sheard/interfaces/IPost';
 import {autorun} from 'mobx';
 import {action} from 'mobx-angular';
 

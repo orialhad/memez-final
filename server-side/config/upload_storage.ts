@@ -1,6 +1,5 @@
 import {config} from './config';
 import * as path from 'path';
-
 import util = require('util');
 import multer = require('multer');
 import GridFsStorage = require('multer-gridfs-storage');
@@ -35,5 +34,5 @@ const storage = new GridFsStorage({
 
 
 export const upload = multer({storage}).single('file');
-export const uploadFilesMiddleware = util.promisify(upload);
+export const uploadFiles = util.promisify(upload);
 

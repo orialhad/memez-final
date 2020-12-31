@@ -1,6 +1,6 @@
 import {BaseController, IBaseController} from './base.controller';
 
-import {IPost} from '../../client-side/projects/memez/src/app/types/interfaces/IPost';
+import {IPost} from '../../sheard/interfaces/IPost';
 
 export interface IPostController extends IBaseController {
   getPosts(): Promise<IPost[]>;

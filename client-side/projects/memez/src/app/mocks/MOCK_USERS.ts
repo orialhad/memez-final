@@ -1,6 +1,6 @@
 import {MOCK_POSTS} from './MOCK_POSTS';
 import {MOCK_LIKES} from './MOCK_LIKES';
-import {IUser} from '../types/interfaces/IUser';
+import {IUser} from '../../../../../../sheard/interfaces/IUser';
 
 export const MOCK_USERS: IUser[] = [];
 //   {

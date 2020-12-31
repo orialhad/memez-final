@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {RootStore} from '../root.store';
 import {action, computed, observable} from 'mobx-angular';
-import {IUser} from '../../types/interfaces/IUser';
+import {IUser} from '../../../../../../../sheard/interfaces/IUser';
 import {autorun} from 'mobx';
 
 

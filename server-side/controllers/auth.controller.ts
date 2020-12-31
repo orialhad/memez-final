@@ -2,7 +2,6 @@ import {BaseController, IBaseController} from './base.controller';
 
 
 import * as bcrypt from 'bcrypt';
-const LocalStrategy = require('passport-local').Strategy;
 const saltRounds = 10;
 
 export interface IAuthController extends IBaseController {

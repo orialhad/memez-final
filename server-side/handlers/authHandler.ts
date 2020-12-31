@@ -1,16 +1,18 @@
 import {IMainController} from '../controllers/main.controller';
 import {Request, Response} from 'express';
-import {IUser} from '../../client-side/projects/memez/src/app/types/interfaces/IUser';
+import {IUser} from '../../sheard/interfaces/IUser';
 import * as PassportLocal from 'passport-local';
 import * as passport from 'passport';
 
 const LocalStrategy = PassportLocal.Strategy;
 
 
-export const loginHandler = async function(this: IMainController, req: Request, res: Response) {
-
-
-}
+export const logoutHandler = async function(this: IMainController, req: Request, res: Response) {
+           console.log('performing logout');
+           req.logOut()
+           req.logout();
+           res.status(200).cookie('bla', '', {maxAge: 1}).send({msg: 'cookie has replaced'})
+       }
 ;
 export const signupHandler = async function(this: IMainController, req: Request, res: Response) {
 
@@ -21,11 +23,13 @@ export const signupHandler = async function(this: IMainController, req: Request,
         const exist = await this.userController.getUserByName(req.body.username);
         if (!exist) {
             user.password = await this.authController.generateHash(req.body.password);
-            res.status(200).json({'statusCode': 400,msg: "user created"})
-            if(user.password) {
+            res.status(200).json({'statusCode': 400, msg: 'user created'});
+            if (user.password) {
                 return await this.userController.createUser(user);
-            }res.status(400).json({'statusCode': 400, 'message': 'password is empty'});
-        } res.status(400).json({'statusCode': 400, 'message': 'Choose a different username'});
+            }
+            res.status(400).json({'statusCode': 400, 'message': 'password is empty'});
+        }
+        res.status(400).json({'statusCode': 400, 'message': 'Choose a different username'});
 
     } catch (e) {
         return res.status(404).send('error' + e);
@@ -37,7 +41,7 @@ export const signupHandler = async function(this: IMainController, req: Request,
 //
 //     try{
 //         if(this.authController.isLoggedIn){
-//             res.json(this.userController.getUserByName(req.body.username)).end()
+//             res.send(this.userController.getUserByName(req.body.username)).end()
 //         }
 //     }catch (e) {
 //         console.log(e)

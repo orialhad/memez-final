@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
 import {IMainController} from '../controllers/main.controller';
-import {IUser} from '../../client-side/projects/memez/src/app/types/interfaces/IUser';
+import {IUser} from '../../sheard/interfaces/IUser';
 
 
 export const getUsersHandler = async function(this: IMainController, req: Request, res: Response) {

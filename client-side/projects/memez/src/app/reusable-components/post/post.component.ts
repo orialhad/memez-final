@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {IPost} from '../../types/interfaces/IPost';
-import {IUser} from '../../types/interfaces/IUser';
+import {IPost} from '../../../../../../../sheard/interfaces/IPost';
+import {IUser} from '../../../../../../../sheard/interfaces/IUser';
 
 
 @Component({

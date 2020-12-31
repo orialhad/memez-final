@@ -1,7 +1,5 @@
 //region Imports
 import * as express from 'express';
-import {upload} from '../config/upload_storage';
-import multer = require('multer');
 import {Express, Request, Response} from 'express';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
@@ -9,20 +7,22 @@ import {BaseController, IBaseController} from './base.controller';
 import * as events from 'events';
 import {config} from '../config/config';
 import * as passport from 'passport';
+import {getLocalStrategy} from '../config/passport-local';
 import session = require('express-session');
-import {getLocalStrategy} from "../config/passport-local";
-const expressSanitizer = require('express-sanitizer');
+import expressSanitizer = require('express-sanitizer');
+
 
 // socket.io
 import {Server as IOServer, Socket as SocketIO_Socket} from "socket.io";
-import * as http from "http";
+import * as http from 'http';
 import * as socketio from "socket.io";
-
-
 //endregion
+
+
 
 export interface IHttpController extends IBaseController {
     events: events.EventEmitter
+    express_app: Express
 }
 
 
@@ -39,16 +39,13 @@ export class HttpController extends BaseController implements IHttpController {
     }
 
     async init() {
-        this.express_app.use(session({secret: 'blahblahblah', resave: true, saveUninitialized: true}));
-        // this.express_app.use(multer)
+        this.express_app.use(session({secret: 'blahblahblah', resave: true, saveUninitialized: true }));
         this.express_app.use(bodyParser.urlencoded({extended: false}));
         this.express_app.use(bodyParser.json());
         this.express_app.use(cors());
         this.express_app.use(passport.initialize());
         this.express_app.use(passport.session());
         // this.express_app.use(expressSanitizer());
-
-
         passport.use(getLocalStrategy(this.main.mongoDbController));
 
         this.registerEndpoints();
@@ -62,10 +59,12 @@ export class HttpController extends BaseController implements IHttpController {
 
     initSocketIO() {
         const This = this;
+
         // @ts-ignore
         this.io_server = socketio(this.http_server);
 
         this.io_server.on('connection',function(socket: SocketIO_Socket){
+
             this.socket.push(socket)
             const idx = This.sockets.indexOf(socket)
             socket.send('Hi There How R U today ? ')
@@ -75,17 +74,16 @@ export class HttpController extends BaseController implements IHttpController {
             socket.on('disconnected',()=>{
                 This.sockets.splice(idx,1);
                 console.log(`SOCKET CONNECTED to slot ${idx}. Total ${This.sockets.length} clients connected`);
-
             })
 
             socket.on('ping',()=>{
-
                 console.log('pong');
             })
         })
 
 
     }
+
 
     auth() {
         return (req, res, next) => {
@@ -105,10 +103,11 @@ export class HttpController extends BaseController implements IHttpController {
         };
     }
 
+
      runServer(): http.Server {
          return this.express_app.listen(config.port, () => {
             console.log(`server is up on port ${config.port} `);
-        });
+        })
     }
 
     registerEndpoints() {
@@ -172,9 +171,8 @@ export class HttpController extends BaseController implements IHttpController {
 
         });
         // get a file
-        this.express_app.get('/api/uploads/:filename', (req: Request, res: Response,) => {
+        this.express_app.get('/api/image/:filename', (req: Request, res: Response,) => {
             this.events.emit('get_file', req, res);
-
         });
 
         //login
@@ -185,6 +183,7 @@ export class HttpController extends BaseController implements IHttpController {
 
         //logout
         this.express_app.get('/api/logout', (req: Request, res: Response) => {
+            req.logout()
             this.events.emit('logout', req, res);
         });
 

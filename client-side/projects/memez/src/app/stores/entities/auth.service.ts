@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   public async logout() {
-    await this.root.authAdapter;
+    await this.root.authAdapter.logout();
     await this.router.navigate(['login']);
   }
 

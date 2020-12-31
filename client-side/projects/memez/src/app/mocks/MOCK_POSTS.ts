@@ -1,4 +1,4 @@
-import {IPost} from '../types/interfaces/IPost';
+import {IPost} from '../../../../../../sheard/interfaces/IPost';
 import {MOCK_USERS} from './MOCK_USERS';
 import {MOCK_LIKES} from './MOCK_LIKES';
 

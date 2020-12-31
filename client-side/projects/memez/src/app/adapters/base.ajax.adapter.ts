@@ -1,6 +1,6 @@
 import {IBaseAdapter} from '../types/interfaces/IBaseAdapter';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {IUser} from '../types/interfaces/IUser';
+import {IUser} from '..../../../../sheard/interfaces/IUser';
 
 
 export abstract class BaseAjaxAdapter implements IBaseAdapter {

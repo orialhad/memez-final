@@ -1,10 +1,7 @@
 import {Injectable} from '@angular/core';
 import {RootStore} from '../root.store';
 import {action, observable} from 'mobx-angular';
-import {IUser} from '../../types/interfaces/IUser';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
-
-import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 
 @Injectable({

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BaseAjaxAdapter} from './base.ajax.adapter';
 import {HttpClient} from '@angular/common/http';
-import {IPost} from '../types/interfaces/IPost';
+import {IPost} from '../../../../../../sheard/interfaces/IPost';
 
 @Injectable({
   providedIn: 'root'

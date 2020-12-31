@@ -16,7 +16,8 @@ export class UploadController extends BaseController implements IUploadControlle
   }
 
   async getFile(filename): Promise<any> {
-    console.log('upload controller: ', filename)
-    return await this.main.mongoDbController.getFile(filename);
+
+    // const file =  await this.main.mongoDbController.getFile(filename);
+    // console.log('upload controller: ', file)
   }
 }

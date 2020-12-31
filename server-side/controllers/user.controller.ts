@@ -1,5 +1,5 @@
 import {BaseController, IBaseController} from './base.controller';
-import {IUser} from '../../client-side/projects/memez/src/app/types/interfaces/IUser';
+import {IUser} from '../../sheard/interfaces/IUser';
 
 export interface IUserController extends IBaseController {
 

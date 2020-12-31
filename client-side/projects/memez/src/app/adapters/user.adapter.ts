@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BaseAjaxAdapter} from './base.ajax.adapter';
 import {HttpClient} from '@angular/common/http';
-import {IUser} from '../types/interfaces/IUser';
+import {IUser} from '../../../../../../sheard/interfaces/IUser';
 
 @Injectable({
   providedIn: 'root'

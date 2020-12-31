@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {RootStore} from '../root.store';
-import {action, computed, observable} from 'mobx-angular';
-import {ILike} from '../../types/interfaces/ILike';
-import {IPost} from '../../types/interfaces/IPost';
-import {autorun, toJS} from 'mobx';
-import {IUser} from '../../types/interfaces/IUser';
+import {action, observable} from 'mobx-angular';
+import {ILike} from '../../../../../../../sheard/interfaces/ILike';
+import {IPost} from '../../../../../../../sheard/interfaces/IPost';
+import {autorun} from 'mobx';
 
 @Injectable({
   providedIn: 'root'
@@ -42,8 +41,9 @@ export class LikeStore {
 
   @action
   async handleLike(post: IPost) {
-    const current = this.root.lis.currentUser;
-    const alreadyLiked = await post.likes.find(like => like.userLiked._id === current._id);
+    const
+      current      = this.root.lis.currentUser,
+      alreadyLiked = await post.likes.find(like => like.userLiked._id === current._id);
     if (alreadyLiked) {
       await this.unLike(alreadyLiked._id);
     } else {

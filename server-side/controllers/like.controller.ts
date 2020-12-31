@@ -1,6 +1,5 @@
 import {BaseController, IBaseController} from './base.controller';
-import {ILike} from '../../client-side/projects/memez/src/app/types/interfaces/ILike';
-import {IPost} from '../../client-side/projects/memez/src/app/types/interfaces/IPost';
+import {ILike} from '../../sheard/interfaces/ILike';
 
 
 export interface ILikeController extends IBaseController {

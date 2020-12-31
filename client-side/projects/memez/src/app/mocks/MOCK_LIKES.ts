@@ -1,4 +1,4 @@
-import {ILike} from '../types/interfaces/ILike';
+import {ILike} from '../../../../../../sheard/interfaces/ILike';
 import {MOCK_USERS} from './MOCK_USERS';
 import {MOCK_POSTS} from './MOCK_POSTS';
 

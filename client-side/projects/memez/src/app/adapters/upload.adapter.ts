@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BaseAjaxAdapter} from './base.ajax.adapter';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {IFile} from '../types/interfaces/IFile';
+import {IFile} from '../../../../../../sheard/interfaces/IFile';
 
 
 @Injectable({
@@ -28,7 +28,8 @@ export class UploadAdapter extends BaseAjaxAdapter {
 
   async getFiles(filename): Promise<IFile[]> {
     console.log('filename form client: ', filename)
-    return await this.request(`uploads/${filename}`);
+    return await this.request(`image/${filename}`);
+    // return await this.request(`uploads`);
   }
 
 }
