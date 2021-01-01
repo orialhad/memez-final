@@ -39,7 +39,7 @@ export class HttpController extends BaseController implements IHttpController {
     }
 
     async init() {
-        this.express_app.use(session({secret: 'blahblahblah', resave: true, saveUninitialized: true }));
+        // this.express_app.use(session({secret: 'blahblahblah', resave: true, saveUninitialized: true }));
         this.express_app.use(bodyParser.urlencoded({extended: false}));
         this.express_app.use(bodyParser.json());
         this.express_app.use(cors());
@@ -63,9 +63,9 @@ export class HttpController extends BaseController implements IHttpController {
         // @ts-ignore
         this.io_server = socketio(this.http_server);
 
-        this.io_server.on('connection',function(socket: SocketIO_Socket){
 
-            this.socket.push(socket)
+        this.io_server.on('connection',function (socket: SocketIO_Socket) {
+            This.sockets.push(socket)
             const idx = This.sockets.indexOf(socket)
             socket.send('Hi There How R U today ? ')
             console.log(`SOCKET CONNECTED to slot ${idx}. Total ${This.sockets.length} clients connected`);
@@ -82,6 +82,11 @@ export class HttpController extends BaseController implements IHttpController {
         })
 
 
+    }
+    runServer(): http.Server {
+        return this.express_app.listen(config.port, () => {
+            console.log(`server is up on port ${config.port} `);
+        })
     }
 
 
@@ -104,11 +109,7 @@ export class HttpController extends BaseController implements IHttpController {
     }
 
 
-     runServer(): http.Server {
-         return this.express_app.listen(config.port, () => {
-            console.log(`server is up on port ${config.port} `);
-        })
-    }
+
 
     registerEndpoints() {
         //get all users
@@ -183,8 +184,8 @@ export class HttpController extends BaseController implements IHttpController {
 
         //logout
         this.express_app.get('/api/logout', (req: Request, res: Response) => {
-            req.logout()
-            // this.events.emit('logout', req, res);
+            // req.logout()
+            this.events.emit('logout', req, res);
         });
 
     }

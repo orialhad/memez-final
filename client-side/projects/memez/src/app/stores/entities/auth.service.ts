@@ -28,8 +28,11 @@ export class AuthService {
     return false;
   }
 
+  @action
   public async logout() {
     await this.root.authAdapter.logout();
+    localStorage.clear()
+    this.root.lis.currentUser = null
     await this.router.navigate(['login']);
   }
 
