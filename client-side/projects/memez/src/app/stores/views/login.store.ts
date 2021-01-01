@@ -24,7 +24,7 @@ export class LoginStore {
 
 
   @action
-  async loginVerification(username) {
+  async loginVerification() {
     this.root.authService.validate(this.username, this.password)
       .then((response) => {
         this.root.authService.setUserInfo({'user': response['user']});
@@ -38,10 +38,10 @@ export class LoginStore {
 
 
   @action
-  async loginHandler(username) {
+  async loginHandler() {
     await this.root.us.getUsers()
     // this.currentUser =  JSON.parse(localStorage.getItem('userInfo')).user
-    await this.loginVerification(username)
+    await this.loginVerification()
 
 
 
