@@ -5,5 +5,8 @@
          name="file"
          accept="image/*"
          (change)="onSelect($event)">
-  <button type="button" (click)="onUpload()">submit</button>
+  <button type="button"
+          mat-button [mat-dialog-close]="true"
+          (click)="onUpload()">submit</button>
 </form>
+

@@ -1,42 +1,56 @@
 import {IBaseAdapter} from '../types/interfaces/IBaseAdapter';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {IUser} from '..../../../../sheard/interfaces/IUser';
+import {Observable} from 'rxjs';
+import {BaseUrl} from '../config/config';
 
 
 export abstract class BaseAjaxAdapter implements IBaseAdapter {
-  BASE_URL = 'http://localhost:4300/api';
+  BASE_URL = BaseUrl;
 
   protected constructor(
     protected http: HttpClient
   ) {
   }
-
-
-  async request<T>(path: string): Promise<T> {
-    return this.http
-      .get<T>(`${this.BASE_URL}/${path}`)
-      .toPromise<T>();
-  }
+  options = {responseType: 'text' as 'text'};
 
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
 
 
-  async post(path: string, body: string | IUser  ): Promise<any> {
+
+//trying something
+  async get_image<T>(path: string): Promise<T> {
     return this.http
-      .post(`${this.BASE_URL}/${path}`, body || FormData, this.httpOptions )
-      .toPromise();
+               .get<T>(`${this.BASE_URL}/${path}`,{responseType:'blob' as 'json'})
+               .toPromise<T>()
+
   }
+
+
+  async request<T>(path: string): Promise<T> {
+    return this.http
+               .get<T>(`${this.BASE_URL}/${path}`)
+               .toPromise<T>();
+  }
+
+
+  async post(path: string, body: string | IUser): Promise<any> {
+    return this.http
+               .post(`${this.BASE_URL}/${path}`, body || FormData, this.httpOptions)
+               .toPromise();
+  }
+
   async post_data(path: string, body: string | IUser | File | FormData): Promise<any> {
     return this.http
-      .post(`${this.BASE_URL}/${path}`, body || FormData )
-      .toPromise();
+               .post(`${this.BASE_URL}/${path}`, body || FormData)
+               .toPromise();
   }
 
   async delete(path: string): Promise<any> {
     return this.http
-      .delete(`${this.BASE_URL}/${path}`)
-      .toPromise();
+               .delete(`${this.BASE_URL}/${path}`)
+               .toPromise();
   }
 }

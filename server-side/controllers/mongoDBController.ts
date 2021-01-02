@@ -1,13 +1,14 @@
 import {BaseController, IBaseController} from './base.controller';
-import {Collection, Db, MongoClient,} from 'mongodb';
+import {Collection, Db, GridFSBucket, MongoClient,} from 'mongodb';
 import {IUser} from '../../sheard/interfaces/IUser';
 import {IPost} from '../../sheard/interfaces/IPost';
 import {ILike} from '../../sheard/interfaces/ILike';
 import {config} from '../config/config';
 // import {Grid} from 'gridfs-stream';
 
-import GridStream = require('gridfs-stream');
+import Grid = require('gridfs-stream');
 import {response} from 'express';
+
 const fs = require('fs');
 
 const
@@ -46,6 +47,8 @@ export interface IMongoDBController extends IBaseController {
 
     getFile(filename: string): Promise<any>
 
+    getLastUpload(): Promise<any>
+
     close(): Promise<any>
 
 
@@ -60,6 +63,7 @@ export class MongoDBController extends BaseController implements IMongoDBControl
     postsCollection: Collection;
     usersCollection: Collection;
     gfs;
+    gridFSBucket;
 
     // uploadCollection: Collection;
 
@@ -85,7 +89,10 @@ export class MongoDBController extends BaseController implements IMongoDBControl
                 }
                 console.log('Connected successfully to Mongo');
                 This.db = This.client.db(config.dbName);
-                This.gfs = GridStream(This.db, This.client);
+
+                //This.gfs = Grid(This.db, This.client);
+                This.gfs = Grid(This.db, mongo);
+                This.gridFSBucket = new GridFSBucket(This.db, {bucketName: 'uploads'});
 
                 This.likesCollection = This.db.collection('likes');
                 This.postsCollection = This.db.collection('posts');
@@ -174,8 +181,24 @@ export class MongoDBController extends BaseController implements IMongoDBControl
     }
 
     async getFile(filename): Promise<any> {
-           await this.gfs.files.findOne({filename: filename})
+        return new Promise((resolve, reject) => {
+            this.gfs.files.findOne({filename: filename}, (err, file) => {
+                const readstream = this.gridFSBucket.openDownloadStream(file._id);
+                resolve(readstream);
+            });
+        });
     }
+
+    async getLastUpload() {
+        return new Promise((resolve, reject) => {
+            this.gfs.files.find({}).toArray((err, files) => {
+                let lastFile = files.reduce((a, b) => (a.uploadDate > b.uploadDate ? a : b));
+                const readstream = this.gridFSBucket.openDownloadStream(lastFile._id);
+                resolve(readstream);
+            });
+        });
+    }
+
 
     close(): Promise<any> {
         return this.client.close();

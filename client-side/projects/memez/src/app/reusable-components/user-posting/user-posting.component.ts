@@ -10,6 +10,7 @@ export class UserPostingComponent implements OnInit {
   @Output() newPost = new EventEmitter();
 
 
+
   constructor() {
 
   }

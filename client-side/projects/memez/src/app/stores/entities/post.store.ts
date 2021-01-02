@@ -5,6 +5,7 @@ import {IPost} from '../../../../../../../sheard/interfaces/IPost';
 import {autorun} from 'mobx';
 import {ILike} from '../../../../../../../sheard/interfaces/ILike';
 import dayjs = require('dayjs');
+import {BaseUrl} from '../../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -39,9 +40,11 @@ export class PostStore {
       postedBy: this.root.lis.currentUser,
       date    : dayjs().format('DD.MM.YY'),
       time    : dayjs().format('hh:mm:ss'),
-      likes   : []
+      likes   : [],
+      image   : (this.root.fs.newFile) ? BaseUrl+'/image/'+ this.root.ups.newFileName : ""
     };
     await this.root.postAdapter.createPost(newPost);
+    this.root.ups.newFileName = null
     await this.getAllPosts();
   }
 

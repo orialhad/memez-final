@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {BaseAjaxAdapter} from './base.ajax.adapter';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {IFile} from '../../../../../../sheard/interfaces/IFile';
+import {observable} from 'mobx-angular';
 
 
 @Injectable({
@@ -10,6 +10,7 @@ import {IFile} from '../../../../../../sheard/interfaces/IFile';
 })
 export class UploadAdapter extends BaseAjaxAdapter {
 
+  @observable newFile :string
 
   constructor(
     http: HttpClient
@@ -22,14 +23,22 @@ export class UploadAdapter extends BaseAjaxAdapter {
 
 
   async uploadFile(file: FormData): Promise<Response> {
-    console.log(`form data: ` + file);
-    return  this.post_data('uploads', file);
+    const post  = await   this.post_data('uploads', file)
+    this.newFile = post.filename
+    return post
+
+
   }
 
-  async getFiles(filename): Promise<IFile[]> {
-    console.log('filename form client: ', filename)
-    return await this.request(`image/${filename}`);
-    // return await this.request(`uploads`);
+   async getFile(filename): Promise<any> {
+
+     return await this.get_image(`image/${filename}`)
   }
+  async getLastUpload(): Promise<any> {
+     return await this.get_image(`images`)
+  }
+
+
+
 
 }

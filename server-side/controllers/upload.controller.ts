@@ -3,21 +3,26 @@ import {BaseController, IBaseController} from './base.controller';
 
 export interface IUploadController extends IBaseController {
 
-  getFile(photo: any): Promise<any>
+    getFile(filename: string): Promise<any>
 
+    getLastUpload(): Promise<any>
 
 }
 
 
 export class UploadController extends BaseController implements IUploadController {
 
-  constructor() {
-    super();
-  }
+    constructor() {
+        super();
+    }
 
-  async getFile(filename): Promise<any> {
+    async getFile(filename): Promise<any> {
+        return await this.main.mongoDbController.getFile(filename);
 
-    // const file =  await this.main.mongoDbController.getFile(filename);
-    // console.log('upload controller: ', file)
-  }
+    }
+
+    async getLastUpload(): Promise<any> {
+        return await this.main.mongoDbController.getLastUpload();
+
+    }
 }

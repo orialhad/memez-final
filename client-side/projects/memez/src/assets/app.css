@@ -7,12 +7,24 @@ html, body, mem-layout {
   background: #fafafa;
 }
 
+mem-layout {
+  background-image: url("../assets/images/backround.png");
+  background-repeat: no-repeat;
+  background-size: 101% 101%;
+
+  background-position: center;
+  background-color: transparent;
+}
+
 .main-container {
   display: flex;
   flex: 1;
   width: 100%;
   align-items: center;
   flex-direction: column;
+
+  /* padding: 10px; */
+  /*font-size: 40px;*/
   /*border: solid magenta;*/
 }
 
@@ -20,7 +32,7 @@ html, body, mem-layout {
 /*HEADER*/
 
 .header {
-  border: solid lightgray 1px;
+  /*border: solid lightgray 1px;*/
   height: 80px;
   width: 100%;
   display: flex;
@@ -66,7 +78,8 @@ mem-nav-bar {
   background-color: white;
 
 }
-.nav-user-profile-img:hover{
+
+.nav-user-profile-img:hover {
   cursor: pointer;
 }
 
@@ -77,13 +90,23 @@ mem-nav-bar {
 }
 
 .navbar-title {
-  font-family: 'Pacifico', cursive;
-  padding: 10px;
+  width: 140px;
+  height: 100px;
+  background-image: url("../assets/images/logo.png");
+  background-repeat: no-repeat;
+  background-size: 125px;
+  background-position: center;
+  background-color: transparent;
+  /* padding: 10px; */
   font-size: 40px;
 }
 
 /*All posts*/
 
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+}
 
 .content {
   display: flex;
@@ -108,18 +131,20 @@ mem-feed {
 }
 
 .posts-container {
-  height: 180px;
+  height: auto;
   margin: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .post-wrapper {
   display: flex;
   flex-direction: column;
   height: 100%;
-  border: lightgray solid 1px;
-  border-radius: 20px;
+  border: transparent solid 1px;
+  border-radius: 10px;
   margin-top: 10px;
-  box-shadow: #bbb2b2 5px 5px 5px;
+  box-shadow: #a1c4d0 5px 5px 5px;
   background: white;
 }
 
@@ -156,6 +181,7 @@ mem-feed {
   width: 50px;
   border-radius: 100%;
 }
+
 .post-time-date {
 
   display: flex;
@@ -166,7 +192,9 @@ mem-feed {
 .post-content-wrapper {
   display: flex;
   flex: 2;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 100%;
 }
 
@@ -179,12 +207,14 @@ mem-feed {
   overflow-wrap: break-word;
   flex-wrap: wrap;
 }
-.like-btn-count section{
+
+.like-btn-count section {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
+
 .post-like-wrapper {
   display: flex;
   flex-direction: row;
@@ -195,22 +225,19 @@ mem-feed {
 }
 
 
-
-
-.post-like{
+.post-like {
   display: flex;
   align-items: center;
 }
 
-.delete_post{
+.delete_post {
   display: flex;
   align-items: center;
 }
-.delete_post:hover{
+
+.delete_post:hover {
   cursor: pointer;
 }
-
-
 
 
 footer {
@@ -218,41 +245,61 @@ footer {
   height: 80px;
   /* border: solid brown; */
   width: 100%;
-  background: white;
+  background: transparent;
 }
 
 /*new posts*/
 
 .new-post {
   display: flex;
-  border: solid lightgray 1px;
-  flex-direction: row;
+  border: solid #a1c4d0 1px;
+  flex-direction: column;
   justify-content: center;
-  height: 200px;
+  height: 250px;
   width: 99%;
   margin: 40px 0 40px 0;
   align-items: center;
   background: white;
-  border-radius: 15px;
-  box-shadow: #bbb2b2 5px 5px 5px;
+  border-radius: 9px;
+  /*box-shadow: #bbb2b2 5px 5px 5px;*/
 }
+
+.new-post-heading {
+  height: 35px;
+  padding: 10px;
+  font-family: 'Major Mono Display', monospace;
+  font-size: 40px;
+  white-space: nowrap;
+}
+
 
 mem-user-posting {
   width: 100%;
-  height: 100%;
+  height: 80%;
+  /*border: solid magenta 1px;*/
 }
 
 .user-new-post {
+  height: 70%;
   margin: 10px;
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  /* border: red solid; */
+  /*border: red solid;*/
+  justify-content: space-between;
   align-items: center;
 }
 
-.user-new-post-input {
-  width: 100%;
+.newPostInput {
+  width: 90%;
+  height: 30px;
+  padding: 0 20px;
+  border-radius: 15px;
+}
+.user-new-post Input:focus {
+  outline: none;
+  border: #1cb1e0 3px solid;
+  border-radius: 15px;
 }
 
 .example-form {
@@ -266,9 +313,15 @@ mem-user-posting {
 }
 
 
+.upload_dialog_btn {
+  display: flex;
+  justify-content: center;
+  /*border: cyan solid;*/
+  width: 100%;
+}
+
+
 /* LIKE BUTTON*/
-
-
 
 
 .like-btn:hover {
@@ -314,8 +367,6 @@ mem-user-profile {
 }
 
 
-
-
 .user-image img {
   height: 200px;
   /*width: auto;*/
@@ -349,7 +400,9 @@ mem-login {
   width: 100%;
 
 
-}mem-singup {
+}
+
+mem-singup {
   display: flex;
   justify-content: center;
   height: 100%;
@@ -389,23 +442,30 @@ mem-login {
   width: 80px;
 }
 
-.login-heading  {
-  font-family: 'Pacifico', cursive;
+.login-heading {
   padding: 10px;
   font-size: 60px;
   margin-bottom: 90px;
 }
-.new-account:hover{
+
+.new-account:hover {
   cursor: pointer;
 }
-.new-account{
+
+.new-account {
   margin-top: 50px;
   font-size: 20px;
 }
 
 
-
 .well.my-drop-zone {
-    height: 100px;
-    border: solid;
+  height: 100px;
+  border: solid;
 }
+
+img.post-content {
+  height: 170px;
+  width: auto;
+}
+
+

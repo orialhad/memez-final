@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IPost} from '../../../../../../../sheard/interfaces/IPost';
 import {IUser} from '../../../../../../../sheard/interfaces/IUser';
+import {DomSanitizer} from '@angular/platform-browser';
 
 
 @Component({
@@ -37,6 +38,5 @@ export class PostComponent implements OnInit {
     this.selected = !this.selected;
     this.selectedChange.emit(this.selected);
   }
-
 
 }

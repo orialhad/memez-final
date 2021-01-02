@@ -8,4 +8,5 @@ export interface IPost {
 	date: string
 	time: string
 	likes?: ILike[]
+	image?: string
 }

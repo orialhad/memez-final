@@ -29,7 +29,8 @@ export const createPostHandler = async function(this: IMainController, req: Requ
     postedBy: req.body.postedBy,
     date: dayjs().format(`DD.MM.YY`),
     time: dayjs().format(`HH:mm.ss`),
-    likes: []
+    likes: [],
+    image: req.body.image
   };
   try {
     const

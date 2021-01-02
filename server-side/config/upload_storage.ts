@@ -10,7 +10,7 @@ const storage = new GridFsStorage({
     options: {useNewUrlParser: true, useUnifiedTopology: true},
     file   : (req, file) => {
         return new Promise((resolve, reject) => {
-            const match = ["image/png", 'image/jpg', 'image/jpeg'];
+            const match = ["image/png", 'image/gif', 'image/jpeg'];
             if(match.indexOf(file.mimetype) !== -1) {
                 crypto.randomBytes(16, (err, buf) => {
                     if (err) {
@@ -20,6 +20,7 @@ const storage = new GridFsStorage({
                         filename = buf.toString('hex') + path.extname(file.originalname),
                         fileInfo = {
                             filename  : filename,
+                            originalname: file.originalname,
                             bucketName: 'uploads'
                         };
                     resolve(fileInfo);
