@@ -2,18 +2,21 @@
 
   <div class="login-form-wrapper">
     <div class="login-heading">
-      Memez
+      <img src="../../../assets/images/logo.png" alt="logo">
+    </div>
+    <div class="login-img">
+      <img src="../../../assets/images/login.png" alt="login">
     </div>
 
-    <input [(ngModel)]="lis.username"
-           name="username"
-           type="text" placeholder="enter your name" class="user-name-input">
-    <input [(ngModel)]="lis.password"
-           name="password"
-           type="password" placeholder="enter your password" class="user-name-input"
-            (keyup.enter)="lis.loginHandler()">
-
-
+    <div class="login-details">
+      <input [(ngModel)]="lis.username"
+              name="username"
+              type="text" placeholder="enter your name" class="user-name-input">
+      <input [(ngModel)]="lis.password"
+             name="password"
+             type="password" placeholder="enter your password" class="user-name-input"
+             (keyup.enter)="lis.loginHandler()">
+    </div>
     <button
       class="login-button" (click)="lis.loginHandler()">login
     </button>
