@@ -181,7 +181,7 @@ mem-feed {
   height: 50px;
   width: 50px;
   border-radius: 100%;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .post-time-date {
@@ -400,7 +400,7 @@ mem-user-profile {
   background-position: center;
   background-color: white;
 }
-.user-image img:hover{
+.user-image:hover{
   cursor: pointer;
 }
 
@@ -412,9 +412,9 @@ mem-user-profile {
 }
 
 .user-name {
-  font-size: 20px;
+  font-size: 35px;
   margin: 10px;
-  /*border:  solid yellow;*/
+  /* border:  solid yellow; */
   flex: 1;
 }
 
@@ -583,6 +583,18 @@ mem-singup {
   .modal-content {
     width: 100%;
   }
+}
+
+.upload_wrapper button{
+  color: #444444;
+  background: #d5edf6;
+  border: 1px #DADADA solid;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 9pt;
+  outline: none;
+  margin: 0 5px;
 }
 
 

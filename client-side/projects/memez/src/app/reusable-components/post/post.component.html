@@ -20,9 +20,10 @@
     <div [ngClass]="status ? 'modal' :'modal_hide'"
          id="myModal" class="modal_hide">
       <span class="close"
-      (click)="closeModal()"
+            (click)="closeModal()"
       >&times;</span>
-      <img class="modal-content" id="img01"
+      <img (click)="closeModal()"
+           class="modal-content" id="img01"
            [src]="post.image"
       >
     </div>
