@@ -180,6 +180,7 @@ mem-feed {
   height: 50px;
   width: 50px;
   border-radius: 100%;
+  cursor: pointer;
 }
 
 .post-time-date {
@@ -221,7 +222,7 @@ mem-feed {
   justify-content: space-between;
   /*border: solid #00ffff 1px;*/
   flex: 1;
-  padding: 0px 90px 0 90px;
+  padding: 0 90px 0 90px;
 }
 
 
@@ -482,6 +483,72 @@ mem-singup {
 img.post-content {
   height: 170px;
   width: auto;
+}
+
+
+
+
+
+/*image model*/
+
+.modal_hide{
+  display: none;
+}
+
+.modal {
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 150px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgb(162 158 158 / 76%); /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+.modal-content, #caption {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 50px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
 }
 
 
