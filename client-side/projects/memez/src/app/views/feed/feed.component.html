@@ -4,10 +4,13 @@
       (newPost)="fs.root.ps.createPost($event)"
     ></mem-user-posting>
 
-    <div class="upload_dialog_btn">
-      <button mat-button (click)="fs.openUploadDialog()">Upload File</button>
+    <div class="upload_dialog_btn" *mobxAutorun>
+      <button mat-button (click)="fs.openUploadDialogFeed()">Upload File</button>
+      <div *ngIf="fs.root.ups.newFileName"
+        class="upload-done">
+        <img src="../../../assets/images/done.png" alt="done">
+      </div>
     </div>
-    <!--    [getFile]="fs.root.ups.getLastUpload()"-->
   </div>
 
 

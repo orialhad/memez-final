@@ -1,8 +1,13 @@
 <div class="content-wrapper">
 
-  <div class="user-card">
+  <div class="user-card" *mobxAutorun>
     <div class="user-image">
-      <img src="{{us.root.lis.currentUser.avatar}}">
+      <img (click)="us.openUploadDialogProfile()"
+        src="{{us.root.lis.currentUser.avatar}}">
+
+      <button mat-button
+              *ngIf="this.us.root.ups.newFileName"
+              (click)="us.editProfilePic(this.us.root.lis.currentUser, this.us.root.ups.newFileName)">Apply</button>
     </div>
     <div class="user-details-all">
       <div class="user-name">{{us.root.lis.currentUser.username.toUpperCase()}}</div>

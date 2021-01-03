@@ -29,3 +29,12 @@ export const createUserHandler = async function(this: IMainController, req: Requ
   }
 };
 
+export const editProfilePicHandler = async function (this: IMainController, req: Request, res: Response){
+  try{
+    const updatedUser = await this.userController.editProfilePic(req.params.id,req.body.avatar)
+    return res.json(updatedUser).end();
+  }catch (e) {
+    return res.status(404).json({msg: 'can not updated user' + e});
+  }
+}
+

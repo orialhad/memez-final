@@ -28,15 +28,23 @@ export const getLocalStrategy = (db: IMongoDBController) => new LocalStrategy(
     }
 );
 
+export const isLoggedIn = (req, res,next)=>{
+    console.log('session ', req.session);
+    if (req.isAuthenticated()) {
+        return  next();
+    }
+    return res.status(400).json({'statusCode': 400, "message": "not authenticated"})
+}
 
 passport.serializeUser(function (user, done) {
-    if (user) {
-        done(null, user);
-    }
+    console.log('yo yo yo  ', user)
+    if (user) done(null, user);
+
 });
 
-passport.deserializeUser(function (id, done) {
-    done(null, id);
+passport.deserializeUser(function (user, done) {
+    console.log('bla bla bla ')
+    done(null, user);
 });
 
 

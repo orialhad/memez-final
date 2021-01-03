@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
 import {RootStore} from '../root.store';
 import {IPost} from '../../../../../../../sheard/interfaces/IPost';
-import {autorun} from 'mobx';
-import {action, computed, observable} from 'mobx-angular';
+import {action, observable} from 'mobx-angular';
 import {MatDialog} from '@angular/material/dialog';
 import {UploadComponent} from '../../reusable-components/upload/upload.component';
-import {uploadFiles} from '../../../../../../../server-side/config/upload_storage';
 
 @Injectable({
   providedIn: 'root'
@@ -33,10 +31,10 @@ export class FeedStore {
 
 
 
-  @action  openUploadDialog() {
+  @action  openUploadDialogFeed() {
     let dialogRef = this.dialog.open(UploadComponent,{
-      width: '400px',
-      height: '400px'
+      width: '800px',
+      height: '800px'
     });
     dialogRef.componentInstance.uploadedFiles.subscribe(()=>{
       this.newFile = dialogRef.componentInstance.newFile

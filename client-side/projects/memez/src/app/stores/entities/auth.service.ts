@@ -22,13 +22,11 @@ export class AuthService {
 
   public isAuthenticated(): Boolean {
     let userData = localStorage.getItem('userInfo');
-    if (userData && JSON.parse(userData)) {
-      return true;
-    }
-    return false;
+    return !!(userData && JSON.parse(userData));
+
   }
 
-  @action
+
   public async logout() {
     await this.root.authAdapter.logout();
     localStorage.clear()

@@ -4,7 +4,7 @@ import {BaseController, IBaseController} from './base.controller';
 import {IPostController} from './post.controller';
 import {ILikeController} from './like.controller';
 import {IUserController} from './user.controller';
-import {getUsersHandler} from '../handlers/user.handler';
+import {editProfilePicHandler, getUsersHandler} from '../handlers/user.handler';
 import {createPostHandler, deletePostHandler, getPostsHandler,} from '../handlers/post.handler';
 import {createLikeHandler, getLikesHandler, unLikeHandler,} from '../handlers/like.handler';
 import {IUploadController} from './upload.controller';
@@ -61,6 +61,7 @@ export class MainController extends BaseController implements IMainController {
     // this.httpController.events.addListener('get_current', getCurrUSerHandler.bind(this))
     this.httpController.events.addListener('signup', signupHandler.bind(this))
     this.httpController.events.addListener('all_users', getUsersHandler.bind(this))
+    this.httpController.events.addListener('edit_profile_pic', editProfilePicHandler.bind(this))
     this.httpController.events.addListener('all_posts', getPostsHandler.bind(this))
     this.httpController.events.addListener('upload_post', createPostHandler.bind(this))
     this.httpController.events.addListener('delete_post', deletePostHandler.bind(this))

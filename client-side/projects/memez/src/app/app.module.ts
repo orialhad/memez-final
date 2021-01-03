@@ -22,6 +22,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatListModule} from '@angular/material/list';
 import { FileUploadModule } from 'ng2-file-upload';
 import { UploadComponent } from './reusable-components/upload/upload.component';
+import {ImageCropperModule} from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [
@@ -36,23 +37,24 @@ import { UploadComponent } from './reusable-components/upload/upload.component';
     UploadComponent,
 
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MobxAngularModule,
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatIconModule,
-    FormsModule,
-    MatDialogModule,
-    MatListModule,
-    FileUploadModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MobxAngularModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatIconModule,
+        FormsModule,
+        MatDialogModule,
+        MatListModule,
+        FileUploadModule,
+        ImageCropperModule
+    ],
   providers: [],
   bootstrap: [LayoutComponent]
 })

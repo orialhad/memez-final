@@ -1,8 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {RootStore} from '../root.store';
 import {action, computed, observable} from 'mobx-angular';
 import {IUser} from '../../../../../../../sheard/interfaces/IUser';
 import {autorun} from 'mobx';
+import {BaseUrl} from '../../config/config';
+import {UploadComponent} from '../../reusable-components/upload/upload.component';
+import {MatDialog} from '@angular/material/dialog';
 
 
 @Injectable({
@@ -11,8 +14,11 @@ import {autorun} from 'mobx';
 export class UserStore {
   @observable users: IUser[] = [];
 
+  @observable userProfileImage: File;
+
   constructor(
-    public root : RootStore
+    public root: RootStore,
+    public dialog: MatDialog
   ) {
     this.root.us = this;
     window['us'] = this;
@@ -22,21 +28,46 @@ export class UserStore {
   }
 
 
-  @action  async getUsers(){
+  @action
+  async getUsers() {
     this.users = await this.root.userAdapter.getUsers();
-    return this.users
+    return this.users;
+  }
+
+  @action
+  async editProfilePic(user: IUser, filename: string) {
+    let
+      id     = user._id,
+      avatar = BaseUrl + '/image/' + filename;
+    await this.root.userAdapter.editProfilePic(id, avatar);
+    this.root.lis.currentUser.avatar = avatar;
+    this.root.ups.newFileName = undefined
   }
 
 
-  @action getCurrentUser(){
-    this.root.lis.currentUser =  JSON.parse(localStorage.getItem('userInfo')).user
+  @action getCurrentUser() {
+    this.root.lis.currentUser = JSON.parse(localStorage.getItem('userInfo')).user;
   }
-  @computed   get currentUserPosts(){
-    const current = this.root.lis.currentUser
-    if(current) {
-      const currentPosts = this.root.ps.posts.filter(ele => ele.postedBy._id === current._id)
-      return currentPosts.reverse()
+
+  @computed get currentUserPosts() {
+    const current = this.root.lis.currentUser;
+    if (current) {
+      const currentPosts = this.root.ps.posts.filter(ele => ele.postedBy._id === current._id);
+      return currentPosts.reverse();
     }
+  }
+
+  @action openUploadDialogProfile() {
+    let dialogRef1 = this.dialog.open(UploadComponent, {
+      width : '800px',
+      height: '800px'
+    });
+    dialogRef1.componentInstance.uploadedFiles.subscribe(() => {
+      this.userProfileImage = dialogRef1.componentInstance.newFile;
+      this.root.ups.onUpload(this.userProfileImage).then();
+    });
+    dialogRef1.afterClosed().subscribe(() => {
+    });
   }
 
 }

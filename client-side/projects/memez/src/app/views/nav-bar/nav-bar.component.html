@@ -1,4 +1,4 @@
-<div class="navbar-wrapper">
+<div class="navbar-wrapper" >
   <div class="navbar-title"
        (click)="log.root.lys.homeNavigation()">
   </div>
@@ -10,9 +10,14 @@
       <button mat-menu-item (click)="log.root.lys.userProfileNavigation()" >User Profile</button>
       <button mat-menu-item (click)="log.root.authService.logout()" >Sign Out</button>
     </mat-menu>
-    <div class="nav-user-profile-img" (click)="log.root.lys.userProfileNavigation()">
-      <img *ngIf="log.currentUser.avatar"
-            src="{{log.currentUser.avatar}}">
+    <div class="nav-user-profile-img"
+         (click)="log.root.lys.userProfileNavigation()">
+
+      <ng-container *ngIf="log.currentUser.avatar" >
+
+      <img *mobxAutorun
+              src="{{log.currentUser.avatar}}">
+      </ng-container>
     </div>
   </div>
 </div>

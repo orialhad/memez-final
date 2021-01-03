@@ -29,6 +29,8 @@ export interface IMongoDBController extends IBaseController {
 
     getUserByName(userName): Promise<IUser>;
 
+    editProfilePic(id, avatar): Promise<any>
+
     getPosts(): Promise<IPost[]>;
 
     getPostLikes(post_id: string): Promise<ILike[]>;
@@ -132,6 +134,13 @@ export class MongoDBController extends BaseController implements IMongoDBControl
         return;
     }
 
+    async editProfilePic(id: string, avatar: string): Promise<any> {
+        const _id = new ObjectID(id);
+        return await this.usersCollection.updateOne(
+            {_id: _id}, {$set: {avatar: avatar}});
+
+    }
+
 
     //posts
 
@@ -183,11 +192,11 @@ export class MongoDBController extends BaseController implements IMongoDBControl
     async getFile(filename): Promise<any> {
         return new Promise((resolve, reject) => {
             this.gfs.files.findOne({filename: filename}, (err, file) => {
-                if(file) {
+                if (file) {
                     const readstream = this.gridFSBucket.openDownloadStream(file._id);
                     resolve(readstream);
-                }else {
-                    reject()
+                } else {
+                    reject();
                 }
             });
         });

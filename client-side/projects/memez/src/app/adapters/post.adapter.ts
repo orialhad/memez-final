@@ -15,7 +15,7 @@ export class PostAdapter extends BaseAjaxAdapter {
   }
 
   async getAllPosts(): Promise<IPost[]> {
-    return this.request<IPost[]>('posts');
+    return this.get<IPost[]>('posts');
   }
 
   async createPost(postContent): Promise<IPost> {
@@ -33,7 +33,7 @@ export class PostAdapter extends BaseAjaxAdapter {
   }
 
   async getPostByID(post_id: string) {
-    return await this.request(`posts/${post_id} `);
+    return await this.get(`posts/${post_id} `);
 
   }
 

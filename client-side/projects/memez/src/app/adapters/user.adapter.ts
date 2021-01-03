@@ -13,12 +13,15 @@ export class UserAdapter extends BaseAjaxAdapter{
   }
 
   async getUsers(): Promise<IUser[]> {
-    return this.request('users');
+    return this.get('users');
   }
 
   async createNewUser(user: IUser): Promise<IUser> {
-    // const newUser : IUser = {userName:userName ,password:password}
     return this.post('users', user);
+  }
+
+  async editProfilePic(id: string , avatar: string): Promise<any>{
+    return this.post_avatar(`editProfilePic/${id}`, {avatar:avatar} );
   }
 
 }

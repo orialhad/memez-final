@@ -9,6 +9,8 @@ export interface IUserController extends IBaseController {
 
     getUserByName(userName): Promise<IUser>
 
+    editProfilePic(id, avatar): Promise<any>
+
     createUser(user: IUser): Promise<any>
 }
 
@@ -34,6 +36,10 @@ export class UserController extends BaseController implements IUserController {
 
     async createUser(user: IUser): Promise<IUser> {
         return await this.main.mongoDbController.createUser(user);
+    }
+
+    async editProfilePic(id, avatar): Promise<IUser> {
+        return await this.main.mongoDbController.editProfilePic(id, avatar);
     }
 
     async getUserByName(userName): Promise<IUser> {

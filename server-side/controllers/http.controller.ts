@@ -9,15 +9,17 @@ import {config} from '../config/config';
 import * as passport from 'passport';
 import {getLocalStrategy} from '../config/passport-local';
 import session = require('express-session');
-import expressSanitizer = require('express-sanitizer');
+import expressSanitizer = require( 'express-sanitizer');
+
+
 
 
 // socket.io
-import {Server as IOServer, Socket as SocketIO_Socket} from "socket.io";
+import {Server as IOServer, Socket as SocketIO_Socket} from 'socket.io';
 import * as http from 'http';
-import * as socketio from "socket.io";
-//endregion
+import * as socketio from 'socket.io';
 
+//endregion
 
 
 export interface IHttpController extends IBaseController {
@@ -39,14 +41,17 @@ export class HttpController extends BaseController implements IHttpController {
     }
 
     async init() {
-        // this.express_app.use(session({secret: 'blahblahblah', resave: true, saveUninitialized: true }));
+        this.express_app.use(session({secret: 'blahblahblah', resave: true, saveUninitialized: true}));
+        this.express_app.use(expressSanitizer());
         this.express_app.use(bodyParser.urlencoded({extended: false}));
         this.express_app.use(bodyParser.json());
         this.express_app.use(cors());
         this.express_app.use(passport.initialize());
         this.express_app.use(passport.session());
-        // this.express_app.use(expressSanitizer());
         passport.use(getLocalStrategy(this.main.mongoDbController));
+
+
+
 
         this.registerEndpoints();
 
@@ -64,29 +69,30 @@ export class HttpController extends BaseController implements IHttpController {
         this.io_server = socketio(this.http_server);
 
 
-        this.io_server.on('connection',function (socket: SocketIO_Socket) {
-            This.sockets.push(socket)
-            const idx = This.sockets.indexOf(socket)
-            socket.send('Hi There How R U today ? ')
+        this.io_server.on('connection', function(socket: SocketIO_Socket) {
+            This.sockets.push(socket);
+            const idx = This.sockets.indexOf(socket);
+            socket.send('Hi There How R U today ? ');
             console.log(`SOCKET CONNECTED to slot ${idx}. Total ${This.sockets.length} clients connected`);
-            console.log(socket.connected,'socket.connected');
+            console.log(socket.connected, 'socket.connected');
 
-            socket.on('disconnected',()=>{
-                This.sockets.splice(idx,1);
+            socket.on('disconnected', () => {
+                This.sockets.splice(idx, 1);
                 console.log(`SOCKET CONNECTED to slot ${idx}. Total ${This.sockets.length} clients connected`);
-            })
+            });
 
-            socket.on('ping',()=>{
+            socket.on('ping', () => {
                 console.log('pong');
-            })
-        })
+            });
+        });
 
 
     }
+
     runServer(): http.Server {
         return this.express_app.listen(config.port, () => {
             console.log(`server is up on port ${config.port} `);
-        })
+        });
     }
 
 
@@ -109,8 +115,6 @@ export class HttpController extends BaseController implements IHttpController {
     }
 
 
-
-
     registerEndpoints() {
         //get all users
         this.express_app.get('/api/users', (req: Request, res: Response) => {
@@ -127,6 +131,10 @@ export class HttpController extends BaseController implements IHttpController {
         //create new user
         this.express_app.post('/api/auth/signup', (req: Request, res: Response) => {
             this.events.emit('signup', req, res);
+        });
+        //egit profile pic
+        this.express_app.post('/api/editProfilePic/:id', (req: Request, res: Response) => {
+            this.events.emit('edit_profile_pic', req, res);
         });
         //get all posts
         this.express_app.get('/api/posts', (req: Request, res: Response) => {
@@ -184,14 +192,17 @@ export class HttpController extends BaseController implements IHttpController {
 
         //login
         this.express_app.post('/api/auth/login', this.auth(), (req: Request, res: Response) => {
-            // this.events.emit('login', req, res);
             res.status(200).json({'statusCode': 200, 'user': req.user});
         });
 
         //logout
-        this.express_app.get('/api/logout', (req: Request, res: Response) => {
+        this.express_app.get('/api/logout', (req, res) => {
+            console.log('performing logout');
+            req.logOut()
+            delete req.session
+            res.status(200).json({'statusCode': 200});
             // req.logout()
-            this.events.emit('logout', req, res);
+            // this.events.emit('logout', req, res);
         });
 
     }

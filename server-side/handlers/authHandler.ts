@@ -7,15 +7,17 @@ import * as passport from 'passport';
 const LocalStrategy = PassportLocal.Strategy;
 
 
-export const logoutHandler = async function (this: IMainController, req: Request, res: Response) {
-           console.log('performing logout');
-           req.logout()
-           res.status(200).cookie('bla', '', {maxAge: 1}).send({msg: 'cookie has replaced'})
-       }
-;
-export const signupHandler = async function (this: IMainController, req: Request, res: Response) {
 
-    const user: IUser = {username: req.body.username, password: req.body.password};
+
+
+export const logoutHandler = async function(this: IMainController, req: Request, res: Response) {
+
+};
+
+
+export const signupHandler = async function(this: IMainController, req: Request, res: Response) {
+
+    const user: IUser = {username: req.body.username, password: req.body.password, avatar: ''};
 
     try {
         //chek if already exist

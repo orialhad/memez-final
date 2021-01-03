@@ -1,10 +1,6 @@
 import {Injectable} from '@angular/core';
 import {RootStore} from '../root.store';
-import {autorun, toJS} from 'mobx';
-import {action, computed, observable} from 'mobx-angular';
-import {FileUploader} from 'ng2-file-upload';
-import {Observable} from 'rxjs';
-import {DomSanitizer} from '@angular/platform-browser';
+import {action, observable} from 'mobx-angular';
 
 
 @Injectable({
@@ -12,9 +8,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class UploadStore {
 
-  @observable files_blabla;
   @observable file: File;
-  @observable newFileName: string ;
+  @observable newFileName: string;
 
 
   constructor(
@@ -22,11 +17,6 @@ export class UploadStore {
   ) {
     this.root.ups = this;
     window['ups'] = this;
-    autorun(() => {
-
-    });
-
-
   }
 
 

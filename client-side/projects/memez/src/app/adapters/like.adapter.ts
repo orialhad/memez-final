@@ -21,7 +21,7 @@ export class LikeAdapter extends BaseAjaxAdapter {
   }
 
   async getLikes(): Promise<ILike[]> {
-    return await this.request('likes');
+    return await this.get('likes');
   }
 }
 

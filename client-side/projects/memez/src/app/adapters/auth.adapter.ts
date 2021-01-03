@@ -19,7 +19,8 @@ export class AuthAdapter extends BaseAjaxAdapter {
   // }
 
   async logout() {
-    return this.request('logout');
+    console.log('tried sending logout to server')
+    return await this.get('logout');
   }
 
   async validate(username, password) {

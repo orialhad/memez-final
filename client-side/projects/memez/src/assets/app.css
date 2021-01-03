@@ -8,7 +8,7 @@ html, body, mem-layout {
 }
 
 mem-layout {
-  background-image: url("../assets/images/backround.png");
+  background-image: url("images/backround.png");
   background-repeat: no-repeat;
   background-size: 101% 101%;
   background-position: center;
@@ -209,6 +209,13 @@ mem-feed {
   overflow-wrap: break-word;
   flex-wrap: wrap;
 }
+img.post-content {
+  height: 170px;
+  width: auto;
+}
+img.post-content:hover{
+  cursor: pointer;
+}
 
 .like-btn-count section {
   display: flex;
@@ -325,6 +332,16 @@ mem-user-posting {
 .upload_dialog_btn button{
   font-size: 20px;
 }
+
+.upload-done{
+  height: 50px;
+  width: 35px;
+}
+.upload-done img{
+  height: 35px;
+  width: 35px;
+}
+
 .upload_wrapper{
   height: 100%;
   display: flex;
@@ -376,18 +393,21 @@ mem-user-profile {
   padding: 10px;
   margin-right: 10px;
   height: 200px;
-  width: 200px;
+  width: 300px;
   background-image: url("../assets/images/generic-avatar.png");
   background-repeat: no-repeat;
   background-size: 200px;
   background-position: center;
   background-color: white;
 }
+.user-image img:hover{
+  cursor: pointer;
+}
 
 
 .user-image img {
   height: 200px;
-  /*width: auto;*/
+  width: auto;
   /*flex: 1;*/
 }
 
@@ -497,10 +517,7 @@ mem-singup {
   border: solid;
 }
 
-img.post-content {
-  height: 170px;
-  width: auto;
-}
+
 
 
 
@@ -567,5 +584,6 @@ img.post-content {
     width: 100%;
   }
 }
+
 
 

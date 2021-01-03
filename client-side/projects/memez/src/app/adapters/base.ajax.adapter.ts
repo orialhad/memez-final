@@ -12,7 +12,6 @@ export abstract class BaseAjaxAdapter implements IBaseAdapter {
     protected http: HttpClient
   ) {
   }
-  options = {responseType: 'text' as 'text'};
 
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -29,16 +28,23 @@ export abstract class BaseAjaxAdapter implements IBaseAdapter {
   }
 
 
-  async request<T>(path: string): Promise<T> {
+  async get<T>(path: string): Promise<T> {
     return this.http
                .get<T>(`${this.BASE_URL}/${path}`)
                .toPromise<T>();
   }
 
 
-  async post(path: string, body: string | IUser): Promise<any> {
+  async post(path: string, body: string | FormData | IUser): Promise<any> {
     return this.http
                .post(`${this.BASE_URL}/${path}`, body || FormData, this.httpOptions)
+               .toPromise();
+  }
+
+
+  async post_avatar(path: string, body: {avatar : string}): Promise<any> {
+    return this.http
+               .post(`${this.BASE_URL}/${path}`, body)
                .toPromise();
   }
 
