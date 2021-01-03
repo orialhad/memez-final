@@ -11,9 +11,10 @@ mem-layout {
   background-image: url("../assets/images/backround.png");
   background-repeat: no-repeat;
   background-size: 101% 101%;
-
   background-position: center;
   background-color: transparent;
+
+
 }
 
 .main-container {
@@ -317,9 +318,25 @@ mem-user-posting {
 .upload_dialog_btn {
   display: flex;
   justify-content: center;
+  margin-bottom: 15px;
   /*border: cyan solid;*/
   width: 100%;
 }
+.upload_dialog_btn button{
+  font-size: 20px;
+}
+.upload_wrapper{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.upload_btn button{
+  font-size: 20px;
+}
+
 
 
 /* LIKE BUTTON*/

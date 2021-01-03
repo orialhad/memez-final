@@ -1,12 +1,18 @@
-<h1>file upload</h1>
-<form action="/uploads" method="post" enctype="multipart/form-data">
-  <input #ImageInput
-         type="file"
-         name="file"
-         accept="image/*"
-         (change)="onSelect($event)">
-  <button type="button"
-          mat-button [mat-dialog-close]="true"
-          (click)="onUpload()">submit</button>
-</form>
+<div class="upload_wrapper">
+    <div class="upload_input">
+      <input #ImageInput
+             type="file"
+             name="file"
+             accept="image/*"
+             (change)="onSelect($event)">
+    </div>
+    <div class="upload_btn">
+      <button type="button"
+              mat-button [mat-dialog-close]="true"
+              (click)="onUpload()">submit
+      </button>
+    </div>
+
+</div>
+
 
