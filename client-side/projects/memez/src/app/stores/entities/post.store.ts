@@ -41,10 +41,10 @@ export class PostStore {
       date    : dayjs().format('DD.MM.YY'),
       time    : dayjs().format('hh:mm:ss'),
       likes   : [],
-      image   : (this.root.fs.newFile) ? BaseUrl+'/image/'+ this.root.ups.newFileName : ""
+      image   : (this.root.ups.newFileName !== undefined) ? BaseUrl+'/image/'+ this.root.ups.newFileName : ""
     };
     await this.root.postAdapter.createPost(newPost);
-    this.root.ups.newFileName = null
+    this.root.ups.newFileName = undefined
     await this.getAllPosts();
   }
 
