@@ -23,7 +23,6 @@ export class AuthService {
   public isAuthenticated(): Boolean {
     let userData = localStorage.getItem('userInfo');
     return !!(userData && JSON.parse(userData));
-
   }
 
 

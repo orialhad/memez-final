@@ -40,8 +40,15 @@ export class UserStore {
       id     = user._id,
       avatar = BaseUrl + '/image/' + filename;
     await this.root.userAdapter.editProfilePic(id, avatar);
+    this.updateLocaleStorage(avatar);
     this.root.lis.currentUser.avatar = avatar;
-    this.root.ups.newFileName = undefined
+    this.root.ups.newFileName = undefined;
+  }
+
+  @action updateLocaleStorage(avatar) {
+    const currentLocalStorage = JSON.parse(localStorage.getItem('userInfo')).user;
+    const updatedLocalStorage = JSON.stringify({user: {...currentLocalStorage, avatar: avatar}});
+    localStorage.setItem('userInfo', updatedLocalStorage);
   }
 
 
