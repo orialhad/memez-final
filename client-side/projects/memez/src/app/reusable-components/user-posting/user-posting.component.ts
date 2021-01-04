@@ -21,6 +21,7 @@ export class UserPostingComponent implements OnInit {
   userNewPost(val) {
     this.newPost.emit(val);
 
+
   }
 
 }

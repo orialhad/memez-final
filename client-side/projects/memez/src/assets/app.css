@@ -289,9 +289,9 @@ mem-user-posting {
 }
 
 .user-new-post {
-  height: 70%;
+  height: 89%;
   margin: 10px;
-  padding: 10px;
+  padding: 0 0 0 0;
   display: flex;
   flex-direction: column;
   /*border: red solid;*/
@@ -599,3 +599,32 @@ mem-singup {
 
 
 
+
+
+.user-new-post button {
+  width: 150px;
+  height: 40px;
+  color: #d3dddd;
+  background: #707679;
+  border: 1px #DADADA solid;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 9pt;
+  outline: none;
+  margin: 5px 5px;
+}
+
+.upload_dialog_btn button{
+  width: 110px;
+  height: 38px;
+  color: #d3dddd;
+  background: #707679;
+  border: 1px #DADADA solid;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 9pt;
+  outline: none;
+  margin: 5px 5px;
+}

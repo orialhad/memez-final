@@ -5,7 +5,7 @@
     ></mem-user-posting>
 
     <div class="upload_dialog_btn" *mobxAutorun>
-      <button mat-button (click)="fs.openUploadDialogFeed()">Upload File</button>
+      <button (click)="fs.openUploadDialogFeed()">Upload File</button>
       <div *ngIf="fs.root.ups.newFileName"
         class="upload-done">
         <img src="../../../assets/images/done.png" alt="done">
