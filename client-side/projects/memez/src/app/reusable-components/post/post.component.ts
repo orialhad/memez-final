@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef} from '@angular/core';
 import {IPost} from '../../../../../../../sheard/interfaces/IPost';
 import {IUser} from '../../../../../../../sheard/interfaces/IUser';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -17,6 +17,8 @@ import {HttpEvent} from '@angular/common/http';
 
 
 export class PostComponent implements OnInit {
+  @ViewChild("myModal") myModal: ElementRef;
+
   @Input() post: IPost;
   @Input() currentUser :IUser;
   @Output() postLiked = new EventEmitter();
@@ -47,11 +49,15 @@ export class PostComponent implements OnInit {
     this.selectedChange.emit(this.selected);
   }
 
-  displayOriginal(){
+  openModal(){
     this.status = true
   }
-  closeModal(){
+  closeModal_btn(){
     this.status = false
   }
-
+  closeModal(event) {
+    window.onclick = (event) => {
+      this.status = false
+    }
+  }
 }

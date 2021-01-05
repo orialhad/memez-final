@@ -14,16 +14,15 @@
     <img class="post-content"
          *ngIf="post.image"
          [src]="post.image"
-         (click)="displayOriginal()"
-    >
+         (click)="openModal()">
 
     <div [ngClass]="status ? 'modal' :'modal_hide'"
-         id="myModal" class="modal_hide">
+         id="myModal" class="modal_hide"
+         (click)="closeModal($event)">
       <span class="close"
-            (click)="closeModal()"
+            (click)="closeModal_btn()"
       >&times;</span>
-      <img (click)="closeModal()"
-           class="modal-content" id="img01"
+      <img class="modal-content" id="img01"
            [src]="post.image"
       >
     </div>
