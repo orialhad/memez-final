@@ -67,7 +67,7 @@ export class UserStore {
   @action openUploadDialogProfile() {
     let dialogRef1 = this.dialog.open(UploadComponent, {
       width : '800px',
-      height: '800px'
+      height: '875px'
     });
     dialogRef1.componentInstance.uploadedFiles.subscribe(() => {
       this.userProfileImage = dialogRef1.componentInstance.resultImage;

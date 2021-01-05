@@ -36,20 +36,21 @@ export class UploadComponent implements OnInit {
   }
 
   onUpload() {
+    //check i file exist
     if (this.newFile) {
-      if (this.newFile.type === 'image/gif') {
+      //check if file gif
+      console.log(this.resultImage)
+      if (this.newFile.type === 'image/gif' || this.result === undefined) {
         this.resultImage = this.newFile;
         this.uploadedFiles.emit(this.resultImage);
       } else {
         this.resultImage = this.toFile(this.result, this.newFile.name);
         this.uploadedFiles.emit(this.resultImage);
       }
-    }
-    else
-      {
-        alert('please select a file')
+    } else {
+      alert('please select a file');
 
-      }
+    }
   }
 
   CropMe() {

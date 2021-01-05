@@ -1,14 +1,15 @@
 <div class="upload_wrapper">
   <div class="upload_input">
 
-    <input #ImageInput
-           id="fileInput"
-           type="file"
-           name="file"
-           accept="image/*"
-           (change)="onSelect($event)">
-
-    <label for="fileInput">Select an Image</label>
+    <div class="upload-input">
+      <input #ImageInput
+             id="fileInput"
+             type="file"
+             name="file"
+             accept="image/*"
+             (change)="onSelect($event)">
+      <label for="fileInput">Select an Image</label>
+    </div>
 
     <br>
     <br>
@@ -23,7 +24,7 @@
 
     <button
       *ngIf="imageUrl"
-      (click)="CropMe()">CropMe
+      (click)="CropMe()">Crop
     </button>
     <br>
     <br>
