@@ -1,35 +1,35 @@
 <div class="upload_wrapper">
-    <div class="upload_input">
-      <input #ImageInput
-             type="file"
-             name="file"
-             accept="image/*"
-             (change)="onSelect($event)">
+  <div class="upload_input">
 
-      <angular-cropper #angularCropper
-                       *ngIf="imageUrl"
-                       [cropperOptions]="config"
-                       (export)="resultImageFun($event)"
-                       [imageUrl]="imageUrl">
+    <input #ImageInput
+           id="fileInput"
+           type="file"
+           name="file"
+           accept="image/*"
+           (change)="onSelect($event)">
 
-      </angular-cropper>
-      <br>
+    <label for="fileInput">Select an Image</label>
 
-      <button
-        *ngIf="imageUrl"
-        (click)="CropMe()">CropMe</button>
+    <br>
+    <br>
+    <angular-cropper #angularCropper
+                     *ngIf="imageUrl"
+                     [cropperOptions]="config"
+                     (export)="resultImageFun($event)"
+                     [imageUrl]="imageUrl">
 
+    </angular-cropper>
+    <br>
 
-      <br>
-      <br>
-
-      <img
-        *ngIf="imageUrl"
-        [src]="result" />
-
-
-
-
+    <button
+      *ngIf="imageUrl"
+      (click)="CropMe()">CropMe
+    </button>
+    <br>
+    <br>
+    <img
+      *ngIf="imageUrl"
+      [src]="result"/>
 
 
     <div class="upload_btn">
@@ -39,6 +39,6 @@
       </button>
     </div>
 
-</div>
+  </div>
 
 

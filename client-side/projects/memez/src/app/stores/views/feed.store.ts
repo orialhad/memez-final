@@ -34,7 +34,7 @@ export class FeedStore {
   @action  openUploadDialogFeed() {
     let dialogRef = this.dialog.open(UploadComponent,{
       width: '800px',
-      height: '800px'
+      height: '900px'
     });
     dialogRef.componentInstance.uploadedFiles.subscribe(()=>{
       this.newFile = dialogRef.componentInstance.resultImage
