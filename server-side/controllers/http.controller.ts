@@ -12,8 +12,6 @@ import session = require('express-session');
 import expressSanitizer = require( 'express-sanitizer');
 
 
-
-
 // socket.io
 import {Server as IOServer, Socket as SocketIO_Socket} from 'socket.io';
 import * as http from 'http';
@@ -50,11 +48,7 @@ export class HttpController extends BaseController implements IHttpController {
         this.express_app.use(passport.session());
         passport.use(getLocalStrategy(this.main.mongoDbController));
 
-
-
-
         this.registerEndpoints();
-
 
         this.http_server = this.runServer();
         this.initSocketIO();
@@ -67,7 +61,6 @@ export class HttpController extends BaseController implements IHttpController {
 
         // @ts-ignore
         this.io_server = socketio(this.http_server);
-
 
         this.io_server.on('connection', function(socket: SocketIO_Socket) {
             This.sockets.push(socket);

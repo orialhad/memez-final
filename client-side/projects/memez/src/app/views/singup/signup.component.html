@@ -24,6 +24,13 @@
              placeholder="enter same password"
              class="user-name-input"
       ></div>
+    <ng-container *mobxAutorun>
+      <div
+        *ngIf="password.value !== password2.value"
+        class="doesnt-match">
+        Passwords doesn't match !
+      </div>
+    </ng-container>
     <button class="signup-button"
             (click)="sus.signUpUser(new_name.value,password.value,password2.value)
 
