@@ -23,20 +23,18 @@ export class UploadAdapter extends BaseAjaxAdapter {
 
 
   async uploadFile(file: FormData): Promise<Response> {
-    const post  = await   this.post_data('uploads', file)
+    const post = await this.post_data('uploads', file)
     this.newFile = post.filename
     return post
-
-
   }
 
-   async getFile(filename): Promise<any> {
 
-     return await this.get_image(`image/${filename}`)
-  }
-  async getLastUpload(): Promise<any> {
-     return await this.get_image(`images`)
-  }
+  //  async getFile(filename): Promise<any> {
+  //    return await this.get_image(`image/${filename}`)
+  // }
+  // async getLastUpload(): Promise<any> {
+  //    return await this.get_image(`images`)
+  // }
 
 
 

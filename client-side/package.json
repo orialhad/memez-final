@@ -22,6 +22,8 @@
     "@angular/platform-browser": "~9.1.12",
     "@angular/platform-browser-dynamic": "~9.1.12",
     "@angular/router": "~9.1.12",
+    "angular-cropperjs": "^1.0.2",
+    "cropperjs": "^1.5.9",
     "dayjs": "^1.9.7",
     "mobx": "^5.15.7",
     "mobx-angular": "^4.1.0",

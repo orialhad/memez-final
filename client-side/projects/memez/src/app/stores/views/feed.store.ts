@@ -37,7 +37,7 @@ export class FeedStore {
       height: '800px'
     });
     dialogRef.componentInstance.uploadedFiles.subscribe(()=>{
-      this.newFile = dialogRef.componentInstance.newFile
+      this.newFile = dialogRef.componentInstance.resultImage
       this.root.ups.onUpload(this.newFile).then()
     })
     dialogRef.afterClosed().subscribe(() => {

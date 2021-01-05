@@ -5,7 +5,7 @@ export interface IUploadController extends IBaseController {
 
     getFile(filename: string): Promise<any>
 
-    getLastUpload(): Promise<any>
+    // getLastUpload(): Promise<any>
 
 }
 
@@ -21,8 +21,8 @@ export class UploadController extends BaseController implements IUploadControlle
 
     }
 
-    async getLastUpload(): Promise<any> {
-        return await this.main.mongoDbController.getLastUpload();
-
-    }
+    // async getLastUpload(): Promise<any> {
+    //     return await this.main.mongoDbController.getLastUpload();
+    //
+    // }
 }

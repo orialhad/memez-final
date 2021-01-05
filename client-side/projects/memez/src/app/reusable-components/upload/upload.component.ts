@@ -1,5 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {base64ToFile, Dimensions, ImageCroppedEvent, ImageTransform} from 'ngx-image-cropper';
+import {CropperComponent, ImageCropperResult} from 'angular-cropperjs';
+import {DomSanitizer} from '@angular/platform-browser';
 
 export interface DialogData {
   newFile: File;
@@ -11,155 +13,81 @@ export interface DialogData {
   styleUrls  : ['./upload.component.css']
 })
 export class UploadComponent implements OnInit {
+  @ViewChild('angularCropper') public angularCropper: CropperComponent;
 
-  newFile;
+  newFile: File;
+  blobFile: any;
   @Output() uploadedFiles = new EventEmitter();
 
-  imageChangedEvent: any = '';
-  croppedImage: any = '';
-  canvasRotation = 0;
-  rotation = 0;
-  scale = 1;
-  showCropper = false;
-  containWithinAspectRatio = false;
-  transform: ImageTransform = {};
+  config = [];
+  imageUrl: string;
+  resultImage: File;
+  result: any;
 
 
-  constructor() {
+  constructor(
+    private sanitizer: DomSanitizer
+  ) {
   }
 
   onSelect(file) {
     this.newFile = file.target.files[0];
+    this.toUrl();
   }
 
   onUpload() {
-    // const  blob  = base64ToFile(this.croppedImage);
-    this.newFile = this.ToFile(this.croppedImage)
-    this.uploadedFiles.emit(this.newFile);
+    if (this.newFile) {
+      if (this.newFile.type === 'image/gif') {
+        this.resultImage = this.newFile;
+        this.uploadedFiles.emit(this.resultImage);
+      } else {
+        this.resultImage = this.toFile(this.result, this.newFile.name);
+        this.uploadedFiles.emit(this.resultImage);
+      }
+    }
+    else
+      {
+        alert('please select a file')
+
+      }
   }
 
-  fileChangeEvent(event: any): void {
-    this.imageChangedEvent = event;
+  CropMe() {
+    this.result = this.angularCropper.imageUrl;
+    this.angularCropper.exportCanvas();
   }
 
-  imageCropped(event: ImageCroppedEvent) {
-    this.croppedImage = event.base64;
+  resultImageFun(event: ImageCropperResult) {
+    this.result = this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png');
 
-    console.log(event, base64ToFile(event.base64));
-  }
-
-  imageLoaded() {
-    this.showCropper = true;
-    console.log('Image loaded');
-  }
-
-  cropperReady(sourceImageDimensions: Dimensions) {
-    console.log('Cropper ready', sourceImageDimensions);
-  }
-
-  loadImageFailed() {
-    console.log('Load failed');
-  }
-
-  rotateLeft() {
-    this.canvasRotation--;
-    this.flipAfterRotate();
-  }
-
-  rotateRight() {
-    this.canvasRotation++;
-    this.flipAfterRotate();
-  }
-
-  private flipAfterRotate() {
-    const flippedH = this.transform.flipH;
-    const flippedV = this.transform.flipV;
-    this.transform = {
-      ...this.transform,
-      flipH: flippedV,
-      flipV: flippedH
-    };
   }
 
 
-  flipHorizontal() {
-    this.transform = {
-      ...this.transform,
-      flipH: !this.transform.flipH
-    };
-  }
-
-  flipVertical() {
-    this.transform = {
-      ...this.transform,
-      flipV: !this.transform.flipV
-    };
-  }
-
-  resetImage() {
-    this.scale = 1;
-    this.rotation = 0;
-    this.canvasRotation = 0;
-    this.transform = {};
-  }
-
-  zoomOut() {
-    this.scale -= .1;
-    this.transform = {
-      ...this.transform,
-      scale: this.scale
-    };
-  }
-
-  zoomIn() {
-    this.scale += .1;
-    this.transform = {
-      ...this.transform,
-      scale: this.scale
-    };
-  }
-
-  toggleContainWithinAspectRatio() {
-    this.containWithinAspectRatio = !this.containWithinAspectRatio;
-  }
-
-  updateRotation() {
-    this.transform = {
-      ...this.transform,
-      rotate: this.rotation
-    };
-  }
-
-  // public blobToFile = (theBlob: Blob): File => {
-  //   const b: any           = theBlob,
-  //         filename: string = this.imageChangedEvent.target.files[0].name
-  //
-  //   //A Blob() is almost a File() - it's just missing the two properties below which we will add
-  //   b.lastModifiedDate = new Date();
-  //   b.name = filename;
-  //   b.filename = filename
-  //
-  //   //Cast to a File() type
-  //   return  <File> theBlob;
-  //
-  //
-  // }
-
-  ToFile(data) {
-    const filename: string = this.imageChangedEvent.target.files[0].name
-    const arr = data.split(',');
-    const mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    let u8arr = new Uint8Array(n);
-
-    while(n--){
+  toFile(data, filename) {
+    const
+      arr  = data.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]);
+    let n     = bstr.length,
+        u8arr = new Uint8Array(n);
+    while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
-
-    return new File([u8arr], filename, { type: mime });
+    return new File([u8arr], filename, {type: mime});
   }
 
+
+  toUrl() {
+    if (this.newFile === undefined) {
+      return;
+    }
+    let newBlob = new Blob([this.newFile], {type: this.newFile.type});
+    let urlCreator = window.URL;
+    this.blobFile = this.sanitizer.bypassSecurityTrustUrl(
+      urlCreator.createObjectURL(newBlob).toString());
+    this.imageUrl = this.blobFile;
+
+  }
 
 
   ngOnInit(): void {

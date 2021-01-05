@@ -10,7 +10,7 @@ import {createLikeHandler, getLikesHandler, unLikeHandler,} from '../handlers/li
 import {IUploadController} from './upload.controller';
 import {logoutHandler, signupHandler} from '../handlers/authHandler';
 import {IAuthController} from './auth.controller';
-import {getFileHandler, getLastUploadHandler, uploadHandler} from '../handlers/upload.handler';
+import {getFileHandler, uploadHandler} from '../handlers/upload.handler';
 
 
 export interface IMainController extends IBaseController {
@@ -70,7 +70,7 @@ export class MainController extends BaseController implements IMainController {
     this.httpController.events.addListener('delete_like', unLikeHandler.bind(this))
     this.httpController.events.addListener('upload_file', uploadHandler.bind(this))
     this.httpController.events.addListener('get_file', getFileHandler.bind(this))
-    this.httpController.events.addListener('get_last_file', getLastUploadHandler.bind(this))
+    // this.httpController.events.addListener('get_last_file', getLastUploadHandler.bind(this))
     this.httpController.events.addListener('logout', logoutHandler.bind(this))
     // this.httpController.events.addListener('user', getUserByIdHandler.bind(this))
     // this.httpController.events.addListener('post_likes', getPostLikes.bind(this))

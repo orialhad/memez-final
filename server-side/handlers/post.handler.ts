@@ -8,10 +8,11 @@ import {IPost} from '../../sheard/interfaces/IPost';
 export const getPostsHandler = async function(this: IMainController, req: Request, res: Response) {
   try {
     const
-      posts = await this.postController.getPosts(),
+      posts :IPost[] = await this.postController.getPosts(),
       postsWithLikes = await Promise.all(
           posts.map(async post => {
             post.likes =  await this.likeController.getPostLikes(post._id.toString())
+            post.postedBy = await this.postController.getPostUsers(post.postedBy_id)
             return post
           })
         );
@@ -26,7 +27,7 @@ export const getPostsHandler = async function(this: IMainController, req: Reques
 export const createPostHandler = async function(this: IMainController, req: Request, res: Response) {
   const post: IPost = {
     content: req.body.content,
-    postedBy: req.body.postedBy,
+    postedBy_id: req.body.postedBy_id,
     date: dayjs().format(`DD.MM.YY`),
     time: dayjs().format(`HH:mm.ss`),
     likes: [],

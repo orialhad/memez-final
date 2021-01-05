@@ -44,3 +44,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+/projects/memez/src/app/old.ignore/

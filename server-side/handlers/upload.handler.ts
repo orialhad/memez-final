@@ -40,18 +40,18 @@ export const getFileHandler = async function(this: IMainController, req: Request
 };
 
 
-export const getLastUploadHandler = async function(this: IMainController, req: Request, res: Response) {
-    try {
-        const newfile = await this.uploadController.getLastUpload();
-        if (newfile) {
-            res.set({responseType: 'blob'});
-            newfile.pipe(res);
-            res.status(200);
-        } else {
-            res.status(404).send({code: 404, msg: 'can not get file address'});
-        }
-    } catch (e) {
-        res.status(404).send({code: 404, msg: 'can not get file address'});
-    }
-};
+// export const getLastUploadHandler = async function(this: IMainController, req: Request, res: Response) {
+//     try {
+//         const newfile = await this.uploadController.getLastUpload();
+//         if (newfile) {
+//             res.set({responseType: 'blob'});
+//             newfile.pipe(res);
+//             res.status(200);
+//         } else {
+//             res.status(404).send({code: 404, msg: 'can not get file address'});
+//         }
+//     } catch (e) {
+//         res.status(404).send({code: 404, msg: 'can not get file address'});
+//     }
+// };
 

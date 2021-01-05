@@ -35,6 +35,8 @@ export interface IMongoDBController extends IBaseController {
 
     getPostLikes(post_id: string): Promise<ILike[]>;
 
+    getPostUsers(user_id: string): Promise<IUser>
+
     getLikes(): Promise<ILike[]>;
 
     createUser(user: IUser): Promise<any>
@@ -49,7 +51,7 @@ export interface IMongoDBController extends IBaseController {
 
     getFile(filename: string): Promise<any>
 
-    getLastUpload(): Promise<any>
+    // getLastUpload(): Promise<any>
 
     close(): Promise<any>
 
@@ -163,6 +165,14 @@ export class MongoDBController extends BaseController implements IMongoDBControl
 
         }
     }
+    async getPostLikes(post_id: string): Promise<ILike[]> {
+        return this.likesCollection.find({'postLiked._id': post_id}).toArray();
+    }
+
+    async getPostUsers(user_id: string): Promise<IUser> {
+        const id = new ObjectID(user_id)
+        return this.usersCollection.findOne({_id: id})
+    }
 
     //likes
     async getLikes(): Promise<ILike[]> {
@@ -170,9 +180,7 @@ export class MongoDBController extends BaseController implements IMongoDBControl
         return this.likesCollection.find({}).toArray();
     }
 
-    async getPostLikes(post_id: string): Promise<ILike[]> {
-        return this.likesCollection.find({'postLiked._id': post_id}).toArray();
-    }
+
 
     async createLike(like: ILike): Promise<any> {
         return this.likesCollection.insertOne(like);
@@ -202,15 +210,15 @@ export class MongoDBController extends BaseController implements IMongoDBControl
         });
     }
 
-    async getLastUpload() {
-        return new Promise((resolve, reject) => {
-            this.gfs.files.find({}).toArray((err, files) => {
-                let lastFile = files.reduce((a, b) => (a.uploadDate > b.uploadDate ? a : b));
-                const readstream = this.gridFSBucket.openDownloadStream(lastFile._id);
-                resolve(readstream);
-            });
-        });
-    }
+    // async getLastUpload() {
+    //     return new Promise((resolve, reject) => {
+    //         this.gfs.files.find({}).toArray((err, files) => {
+    //             let lastFile = files.reduce((a, b) => (a.uploadDate > b.uploadDate ? a : b));
+    //             const readstream = this.gridFSBucket.openDownloadStream(lastFile._id);
+    //             resolve(readstream);
+    //         });
+    //     });
+    // }
 
 
     close(): Promise<any> {

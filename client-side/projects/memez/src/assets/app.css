@@ -7,6 +7,16 @@ html, body, mem-layout {
   background: #fafafa;
 }
 
+button{
+  border: 1px #DADADA solid;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 9pt;
+  outline: none;
+  /*margin: 5px 5px;*/
+}
+
 mem-layout {
   background-image: url("images/backround.png");
   background-repeat: no-repeat;
@@ -391,9 +401,9 @@ mem-user-profile {
 
 .user-image {
   padding: 10px;
-  margin-right: 10px;
+  margin:  0 10px;
   height: 200px;
-  width: 300px;
+  width: 270px;
   background-image: url("../assets/images/generic-avatar.png");
   background-repeat: no-repeat;
   background-size: 200px;
@@ -423,6 +433,22 @@ mem-user-profile {
   margin: 10px;
   flex: 1;
   /*border: coral solid;*/
+}
+
+.apply-button{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.apply-button button{
+  width: 100px;
+  background: #67b067;
+  color: #ffffff;
+}
+.image-and-apply{
+
 }
 
 
@@ -628,3 +654,5 @@ mem-singup {
   outline: none;
   margin: 5px 5px;
 }
+
+

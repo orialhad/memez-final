@@ -25,23 +25,23 @@ export class UploadStore {
     this.file = file;
     const formData = new FormData();
     formData.append('file', this.file);
-    console.log(`Upload Store: `, this.file);
+    console.log(`Upload Store_before: `, this.file);
     await this.root.uploadAdapter.uploadFile(formData);
     this.newFileName = this.root.uploadAdapter.newFile;
-    console.log(`Upload Store: `, this.newFileName);
+    console.log(`Upload Store_after: `, this.newFileName);
 
   }
 
-  @action
-  async getFile(filename: string) {
-    const file1 = await this.root.uploadAdapter.getFile(filename);
-    console.log(`file1: `, file1);
-    const file_blob = new Blob([file1], {type: file1.contentType}),
-          fileURL   = URL.createObjectURL(file_blob);
-    console.log('file_blob: ', file_blob);
-    console.log('fileURL: ', fileURL);
-
-  }
+  // @action
+  // async getFile(filename: string) {
+  //   const file1 = await this.root.uploadAdapter.getFile(filename);
+  //   console.log(`file1: `, file1);
+  //   const file_blob = new Blob([file1], {type: file1.contentType}),
+  //         fileURL   = URL.createObjectURL(file_blob);
+  //   console.log('file_blob: ', file_blob);
+  //   console.log('fileURL: ', fileURL);
+  //
+  // }
 
   // @action
   // async getLastUpload() {

@@ -1,14 +1,17 @@
 <div class="content-wrapper">
 
   <div class="user-card" *mobxAutorun>
-    <div class="user-image"
-         (click)="us.openUploadDialogProfile()">
-      <img src="{{us.root.lis.currentUser.avatar}}">
-
-      <button mat-button
-              *ngIf="this.us.root.ups.newFileName"
-              (click)="us.editProfilePic(this.us.root.lis.currentUser, this.us.root.ups.newFileName)">Apply
-      </button>
+    <div class="image-and-apply">
+      <div class="user-image"
+           (click)="us.openUploadDialogProfile()">
+        <img src="{{us.root.lis.currentUser.avatar}}">
+      </div>
+      <div class="apply-button">
+        <button
+          *ngIf="this.us.root.ups.newFileName"
+          (click)="us.editProfilePic(this.us.root.lis.currentUser, this.us.root.ups.newFileName)">Apply
+        </button>
+      </div>
     </div>
     <div class="user-details-all">
       <div class="user-name">{{us.root.lis.currentUser.username.toUpperCase()}}</div>
@@ -20,6 +23,7 @@
         </mat-list>
       </div>
     </div>
+
   </div>
   <div class="posts-container" *mobxAutorun>
     <mem-post

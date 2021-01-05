@@ -70,7 +70,7 @@ export class UserStore {
       height: '800px'
     });
     dialogRef1.componentInstance.uploadedFiles.subscribe(() => {
-      this.userProfileImage = dialogRef1.componentInstance.newFile;
+      this.userProfileImage = dialogRef1.componentInstance.resultImage;
       this.root.ups.onUpload(this.userProfileImage).then();
     });
     dialogRef1.afterClosed().subscribe(() => {

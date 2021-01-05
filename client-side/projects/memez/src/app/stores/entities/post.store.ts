@@ -37,7 +37,7 @@ export class PostStore {
   async createPost(content: string) {
     let newPost = {
       content : content,
-      postedBy: this.root.lis.currentUser,
+      postedBy_id: this.root.lis.currentUser._id,
       date    : dayjs().format('DD.MM.YY'),
       time    : dayjs().format('hh:mm:ss'),
       likes   : [],
