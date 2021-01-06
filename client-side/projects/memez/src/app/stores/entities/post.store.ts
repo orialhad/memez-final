@@ -26,10 +26,8 @@ export class PostStore {
 
 
   @action
-  async getAllPosts(): Promise<IPost[]> {
-    this.posts = await this.root.postAdapter.getAllPosts();
-    return this.posts;
-
+  async getPosts(){
+    this.posts = await this.root.postAdapter.getPosts();
   }
 
 
@@ -45,14 +43,14 @@ export class PostStore {
     };
     await this.root.postAdapter.createPost(newPost);
     this.root.ups.newFileName = undefined
-    await this.getAllPosts();
+    await this.getPosts();
   }
 
   @action
   async deletePost(post: IPost) {
     if (post.postedBy._id === this.root.lis.currentUser._id) {
       await this.root.postAdapter.deletePost(post._id);
-      await this.getAllPosts();
+      await this.getPosts();
     } else {
       alert(`WHAT ARE YOU DOING !!!!! YOU CANT DO THAT`);
     }

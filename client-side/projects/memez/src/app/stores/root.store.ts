@@ -14,7 +14,7 @@ import {UploadStore} from './entities/upload.store';
 import {AuthAdapter} from '../adapters/auth.adapter';
 import {AuthService} from './entities/auth.service';
 import {AuthGuardService} from './entities/auth-gurad.service';
-import {SocketAdapter} from '../adapters/socket.adapter';
+import {BaseSocketAdapter} from '../adapters/base-socket.adapter';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +38,7 @@ export class RootStore {
     public likeAdapter: LikeAdapter,
     public authAdapter: AuthAdapter,
     public uploadAdapter: UploadAdapter,
-    public socketAdapter: SocketAdapter
+    // public socketAdapter: BaseSocketAdapter
   ) {
     window['root'] = this;
 

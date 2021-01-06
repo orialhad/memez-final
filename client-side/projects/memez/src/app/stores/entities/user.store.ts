@@ -43,7 +43,7 @@ export class UserStore {
     this.updateLocaleStorage(avatar);
     this.root.lis.currentUser.avatar = avatar;
     this.root.ups.newFileName = undefined;
-    await this.root.ps.getAllPosts()
+    await this.root.ps.getPosts()
   }
 
   @action updateLocaleStorage(avatar) {

@@ -16,8 +16,68 @@ import expressSanitizer = require( 'express-sanitizer');
 import {Server as IOServer, Socket as SocketIO_Socket} from 'socket.io';
 import * as http from 'http';
 import * as socketio from 'socket.io';
+import {APIEvent} from '../../sheard/api/api-events';
+import {IPost} from '../../sheard/interfaces/IPost';
+import dayjs = require('dayjs');
 
 //endregion
+
+
+const event_mapper: { [event_name in APIEvent]: (socket: SocketIO_Socket, data: any, req_id: string) => void } = {
+
+    getPosts: async function(this: HttpController, socket, data, req_id) {
+        console.log('getPosts Request id ' + req_id);
+
+        const
+            posts: IPost[] = await this.main.postController.getPosts(),
+            postsWithLikes = await Promise.all(
+                posts.map(async post => {
+                    post.likes = await this.main.likeController.getPostLikes(post._id.toString());
+                    post.postedBy = await this.main.postController.getPostUsers(post.postedBy_id);
+                    return post;
+                })
+            );
+        socket.emit('getPosts', postsWithLikes, req_id);
+    },
+
+    getPost   : async function(this: HttpController, socket, data, req_id) {
+    },
+    createPost: async function(this: HttpController, socket, data, req_id) {
+        console.log(data);
+        const post: IPost = {
+            content    : data.content,
+            postedBy_id: data.postedBy_id,
+            date       : dayjs().format(`DD.MM.YY`),
+            time       : dayjs().format(`HH:mm.ss`),
+            likes      : [],
+            image      : data.image
+        };
+        console.log(post);
+        try {
+            if (post.postedBy_id) {
+                const
+                    postToUpload = await this.main.postController.createPost(post);
+                socket.emit('createPost', postToUpload, req_id);
+            }else {
+                console.log('cant post that ');
+            }
+        } catch
+            (err) {
+            console.log(err);
+        }
+    },
+    deletePost: async function(this: HttpController, socket, data, req_id) {
+        console.log(data.id)
+        try {
+            const postToDelete = await this.main.postController.deletePost(data.id);
+            socket.emit('deletePost', postToDelete, req_id);
+        } catch (e) {
+            console.log( 'post was not deleted ');
+        }
+    },
+    // updatePost: async function (this: HttpController,socket, data, req_id) {
+    // },
+};
 
 
 export interface IHttpController extends IBaseController {
@@ -66,17 +126,23 @@ export class HttpController extends BaseController implements IHttpController {
             This.sockets.push(socket);
             const idx = This.sockets.indexOf(socket);
             socket.send('Hi There How R U today ? ');
-            console.log(`SOCKET CONNECTED to slot ${idx}. Total ${This.sockets.length} clients connected`);
+            console.log(`SOCKET CONNECTED to slot ${idx}. Total ${This.sockets.length-1} clients connected`);
             console.log(socket.connected, 'socket.connected');
 
             socket.on('disconnected', () => {
                 This.sockets.splice(idx, 1);
-                console.log(`SOCKET CONNECTED to slot ${idx}. Total ${This.sockets.length} clients connected`);
+                console.log(`SOCKET CONNECTED to slot ${idx}. Total ${This.sockets.length-1} clients connected`);
             });
 
-            socket.on('ping', () => {
-                console.log('pong');
+            socket.on('ping', async () => {
+                socket.emit('pong', 'pong');
             });
+            Object
+                .entries(event_mapper)
+                .forEach(([event, fn]) => {
+                    socket.on(event, fn.bind(This, socket));
+                });
+
         });
 
 
@@ -191,8 +257,8 @@ export class HttpController extends BaseController implements IHttpController {
         //logout
         this.express_app.get('/api/logout', (req, res) => {
             console.log('performing logout');
-            req.logOut()
-            delete req.session
+            req.logOut();
+            delete req.session;
             res.status(200).json({'statusCode': 200});
             // req.logout()
             // this.events.emit('logout', req, res);

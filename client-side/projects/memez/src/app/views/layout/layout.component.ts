@@ -10,9 +10,9 @@ import {UploadStore} from '../../stores/entities/upload.store';
 import {AuthService} from '../../stores/entities/auth.service';
 
 @Component({
-  selector: 'mem-layout',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.css'],
+  selector       : 'mem-layout',
+  templateUrl    : './layout.component.html',
+  styleUrls      : ['./layout.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LayoutComponent implements OnInit {
@@ -24,18 +24,11 @@ export class LayoutComponent implements OnInit {
     public lks: LikeStore,
     public fs: FeedStore,
     public lys: LayoutStore,
-    public lis : LoginStore,
+    public lis: LoginStore,
     public auth: AuthService,
     public ups: UploadStore
   ) {
 
-    (async () => {
-
-        await this.ps.getAllPosts();
-        await this.lks.getLikes();
-        await this.us.getUsers();
-      }
-    )();
   }
 
   ngOnInit(): void {

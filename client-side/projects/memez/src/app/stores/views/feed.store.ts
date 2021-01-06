@@ -25,7 +25,7 @@ export class FeedStore {
   @action verifyUserLike(post: IPost): boolean {
     const current = this.root.lis.currentUser;
     if (current) {
-      return post.likes.some(like => like.userLiked._id === current._id);
+      return post.likes.some(like => like.userLiked._id === current._id)
     }
   }
 
@@ -35,7 +35,8 @@ export class FeedStore {
     let dialogRef = this.dialog.open(UploadComponent,{
       width: '800px',
       height: '900px'
-    });
+    })
+
     dialogRef.componentInstance.uploadedFiles.subscribe(()=>{
       this.newFile = dialogRef.componentInstance.resultImage
       this.root.ups.onUpload(this.newFile).then()

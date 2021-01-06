@@ -17,14 +17,10 @@ export abstract class BaseAjaxAdapter implements IBaseAdapter {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
 
-
-
-//trying something
-  async get_image<T>(path: string): Promise<T> {
+  async request<T>(path: string): Promise<T> {
     return this.http
-               .get<T>(`${this.BASE_URL}/${path}`,{responseType:'blob' as 'json'})
-               .toPromise<T>()
-
+               .get<T>(`${this.BASE_URL}/${path}`, {withCredentials: true})
+               .toPromise<T>();
   }
 
 
