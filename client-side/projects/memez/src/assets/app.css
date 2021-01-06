@@ -431,7 +431,7 @@ mem-user-profile {
   padding: 10px;
   margin: 0 10px;
   height: 200px;
-  width: 270px;
+  width: 220px;
   background-image: url("../assets/images/generic-avatar.png");
   background-repeat: no-repeat;
   background-size: 200px;
@@ -446,7 +446,7 @@ mem-user-profile {
 
 .user-image img {
   height: 200px;
-  width: auto;
+  width: 200px;
   /*flex: 1;*/
 }
 
@@ -478,7 +478,6 @@ mem-user-profile {
 }
 
 .image-and-apply {
-
 }
 
 
@@ -698,4 +697,9 @@ mem-singup {
 .upload-input {
   display: flex;
   justify-content: center;
+}
+
+.doesnt-match{
+  font-size: 15px;
+  color: red;
 }
