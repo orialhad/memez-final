@@ -11,7 +11,9 @@ const LocalStrategy = PassportLocal.Strategy;
 
 
 export const logoutHandler = async function(this: IMainController, req: Request, res: Response) {
-
+    req.logout();
+    req.session.destroy(null)
+    res.status(200).json({'statusCode': 200});
 };
 
 

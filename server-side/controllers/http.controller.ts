@@ -7,9 +7,14 @@ import {BaseController, IBaseController} from './base.controller';
 import * as events from 'events';
 import {config} from '../config/config';
 import * as passport from 'passport';
-import {getLocalStrategy} from '../config/passport-local';
+import {auth, getLocalStrategy} from '../config/passport-local';
 import session = require('express-session');
 import expressSanitizer = require( 'express-sanitizer');
+import {IPost} from '../../sheard/interfaces/IPost';
+import dayjs = require('dayjs');
+import cookieParser = require('cookie-parser')
+
+
 
 
 // socket.io
@@ -17,8 +22,6 @@ import {Server as IOServer, Socket as SocketIO_Socket} from 'socket.io';
 import * as http from 'http';
 import * as socketio from 'socket.io';
 import {APIEvent} from '../../sheard/api/api-events';
-import {IPost} from '../../sheard/interfaces/IPost';
-import dayjs = require('dayjs');
 
 //endregion
 
@@ -99,10 +102,11 @@ export class HttpController extends BaseController implements IHttpController {
     }
 
     async init() {
-        this.express_app.use(session({secret: 'blahblahblah', resave: true, saveUninitialized: true}));
+        this.express_app.use(session({secret: 'blahblahblah', resave: true, saveUninitialized: true, cookie: { maxAge: 7000000 }}));
         this.express_app.use(expressSanitizer());
         this.express_app.use(bodyParser.urlencoded({extended: false}));
         this.express_app.use(bodyParser.json());
+        this.express_app.use(cookieParser())
         this.express_app.use(cors());
         this.express_app.use(passport.initialize());
         this.express_app.use(passport.session());
@@ -155,23 +159,6 @@ export class HttpController extends BaseController implements IHttpController {
     }
 
 
-    auth() {
-        return (req, res, next) => {
-            console.log('Authenticating... (username and password)');
-            passport.authenticate('local', (error, user, info) => {
-                console.log('B4: ' + JSON.stringify(user));
-                if (error) {
-                    res.status(400).json({'statusCode': 400, 'message': error});
-                }
-                req.login(user, function(error) {
-                    if (error) {
-                        return next(error);
-                    }
-                    next();
-                });
-            })(req, res, next);
-        };
-    }
 
 
     registerEndpoints() {
@@ -250,18 +237,14 @@ export class HttpController extends BaseController implements IHttpController {
         });
 
         //login
-        this.express_app.post('/api/auth/login', this.auth(), (req: Request, res: Response) => {
+        this.express_app.post('/api/auth/login', auth(), (req: Request, res: Response) => {
             res.status(200).json({'statusCode': 200, 'user': req.user});
         });
 
         //logout
         this.express_app.get('/api/logout', (req, res) => {
             console.log('performing logout');
-            req.logOut();
-            delete req.session;
-            res.status(200).json({'statusCode': 200});
-            // req.logout()
-            // this.events.emit('logout', req, res);
+            this.events.emit('logout', req, res);
         });
 
     }

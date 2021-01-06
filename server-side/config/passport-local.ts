@@ -48,3 +48,22 @@ passport.deserializeUser(function (user, done) {
 });
 
 
+
+
+export const auth = ()=> {
+    return (req, res, next) => {
+        console.log('Authenticating... (username and password)');
+        passport.authenticate('local', (error, user, info) => {
+            console.log('B4: ' + JSON.stringify(user));
+            if (error) {
+                res.status(400).json({'statusCode': 400, 'message': error});
+            }
+            req.login(user, function(error) {
+                if (error) {
+                    return next(error);
+                }
+                next();
+            });
+        })(req, res, next);
+    };
+}
