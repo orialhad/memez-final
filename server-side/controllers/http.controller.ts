@@ -121,10 +121,10 @@ export class HttpController extends BaseController implements IHttpController {
         // this.express_app.get('/api/users/:id', (req: Request, res: Response) => {
         //     this.events.emit('get_current', req, res);
         // });
-        // //create new user
-        // this.express_app.post('/api/auth/signup', (req: Request, res: Response) => {
-        //     this.events.emit('signup', req, res);
-        // });
+        //create new user
+        this.express_app.post('/api/auth/signup', (req: Request, res: Response) => {
+            this.events.emit('signup', req, res);
+        });
         // //egit profile pic
         // this.express_app.post('/api/editProfilePic/:id', (req: Request, res: Response) => {
         //     this.events.emit('edit_profile_pic', req, res);

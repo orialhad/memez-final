@@ -58,11 +58,11 @@ export class UploadComponent implements OnInit {
       if (this.newFile.type === 'image/gif' || this.result === undefined) {
         this.resultImage = this.newFile;
         this.uploadedFiles.emit(this.resultImage);
-      }
+      }else {
       if (this.newFile.type === 'image/png' || 'image/jpg') {
         this.resultImage = this.toFile(this.result, this.newFile.name);
         this.uploadedFiles.emit(this.resultImage);
-      }
+      }}
     } else {
       alert(`You can't do that`);
 
