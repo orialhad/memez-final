@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
-import {IMainController} from '../controllers/main.controller';
-import {ILike} from '../../sheard/interfaces/ILike';
+import {IMainController} from '../../controllers/main.controller';
+import {ILike} from '../../../sheard/interfaces/ILike';
 import * as dayjs          from "dayjs";
 
 

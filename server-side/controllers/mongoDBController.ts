@@ -47,9 +47,11 @@ export interface IMongoDBController extends IBaseController {
 
     createLike(like: ILike): Promise<any>;
 
-    unLike(like_id: string): Promise<any>
+    unLike(like_id: string): Promise<any>;
 
-    getFile(filename: string): Promise<any>
+    getFile(filename: string): Promise<any>;
+
+    getPostsWithData(): Promise<IPost[]>;
 
     // getLastUpload(): Promise<any>
 
@@ -154,6 +156,20 @@ export class MongoDBController extends BaseController implements IMongoDBControl
         return this.postsCollection.find({}).toArray();
     }
 
+    async getPostsWithData(): Promise<IPost[]> {
+        const
+            posts: IPost[] = await this.getPosts(),
+            postsWithData  = await Promise.all(
+                posts.map(async post => {
+                    post.likes = await this.getPostLikes(post._id.toString());
+                    post.postedBy = await this.getPostUsers(post.postedBy_id);
+                    return post;
+                })
+            );
+        return postsWithData;
+    }
+
+
     async deletePost(post_id: string): Promise<any> {
         try {
             const id           = new ObjectID(post_id),
@@ -165,13 +181,14 @@ export class MongoDBController extends BaseController implements IMongoDBControl
 
         }
     }
+
     async getPostLikes(post_id: string): Promise<ILike[]> {
         return this.likesCollection.find({'postLiked._id': post_id}).toArray();
     }
 
     async getPostUsers(user_id: string): Promise<IUser> {
-        const id = new ObjectID(user_id)
-        return this.usersCollection.findOne({_id: id})
+        const id = new ObjectID(user_id);
+        return this.usersCollection.findOne({_id: id});
     }
 
     //likes
@@ -179,7 +196,6 @@ export class MongoDBController extends BaseController implements IMongoDBControl
         console.log();
         return this.likesCollection.find({}).toArray();
     }
-
 
 
     async createLike(like: ILike): Promise<any> {

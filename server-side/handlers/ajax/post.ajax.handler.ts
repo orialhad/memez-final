@@ -1,7 +1,7 @@
 import {Request, Response} from 'express';
-import {IMainController} from '../controllers/main.controller';
+import {IMainController} from '../../controllers/main.controller';
 import dayjs = require('dayjs');
-import {IPost} from '../../sheard/interfaces/IPost';
+import {IPost} from '../../../sheard/interfaces/IPost';
 
 
 

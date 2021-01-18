@@ -1,6 +1,6 @@
-import {IMainController} from '../controllers/main.controller';
+import {IMainController} from '../../controllers/main.controller';
 import {Request, Response} from 'express';
-import {IUser} from '../../sheard/interfaces/IUser';
+import {IUser} from '../../../sheard/interfaces/IUser';
 import * as PassportLocal from 'passport-local';
 import * as passport from 'passport';
 

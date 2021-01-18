@@ -1,27 +1,28 @@
-import { Injectable } from '@angular/core';
-import {BaseAjaxAdapter} from './base.ajax.adapter';
-import {HttpClient} from '@angular/common/http';
-import {IUser} from '../../../../../../sheard/interfaces/IUser';
+import { Injectable }      from '@angular/core';
+import {BaseAjaxAdapter}   from './base.ajax.adapter';
+import {HttpClient}        from '@angular/common/http';
+import {IUser}             from '../../../../../../sheard/interfaces/IUser';
+import {BaseSocketAdapter} from './base-socket.adapter';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserAdapter extends BaseAjaxAdapter{
+export class UserAdapter extends BaseSocketAdapter{
 
-  constructor(http:HttpClient) {
-    super(http);
+  constructor() {
+    super();
   }
 
   async getUsers(): Promise<IUser[]> {
-    return this.get('users');
+    return this.request('getUsers');
   }
 
-  async createNewUser(user: IUser): Promise<IUser> {
-    return this.post('users', user);
+  async createUser(user: IUser): Promise<IUser> {
+    return this.request('createUser', {user});
   }
 
   async editProfilePic(id: string , avatar: string): Promise<any>{
-    return this.post_avatar(`editProfilePic/${id}`, {avatar:avatar} );
+    return this.request(`editProfilePic`, {avatar:avatar, id: id} );
   }
 
 }

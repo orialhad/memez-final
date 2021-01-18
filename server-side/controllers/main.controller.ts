@@ -4,13 +4,13 @@ import {BaseController, IBaseController} from './base.controller';
 import {IPostController} from './post.controller';
 import {ILikeController} from './like.controller';
 import {IUserController} from './user.controller';
-import {editProfilePicHandler, getUsersHandler} from '../handlers/user.handler';
-import {createPostHandler, deletePostHandler, getPostsHandler,} from '../handlers/post.handler';
-import {createLikeHandler, getLikesHandler, unLikeHandler,} from '../handlers/like.handler';
+import {editProfilePicHandler, getUsersHandler} from '../handlers/ajax/user.handler';
+import {createPostHandler, deletePostHandler, getPostsHandler,} from '../handlers/ajax/post.ajax.handler';
+import {createLikeHandler, getLikesHandler, unLikeHandler,} from '../handlers/ajax/like.ajax.handler';
 import {IUploadController} from './upload.controller';
-import {logoutHandler, signupHandler} from '../handlers/authHandler';
+import {logoutHandler, signupHandler} from '../handlers/ajax/authHandler';
 import {IAuthController} from './auth.controller';
-import {getFileHandler, uploadHandler} from '../handlers/upload.handler';
+import {getFileHandler, uploadHandler} from '../handlers/ajax/upload.handler';
 
 
 export interface IMainController extends IBaseController {

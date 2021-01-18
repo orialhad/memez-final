@@ -49,7 +49,7 @@ export class LikeStore {
     } else {
       await this.createLike(post);
     }
-    await this.root.ps.getPosts();
+    // await this.root.ps.getPosts();
   }
 }
 

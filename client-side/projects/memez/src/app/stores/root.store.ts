@@ -38,7 +38,7 @@ export class RootStore {
     public likeAdapter: LikeAdapter,
     public authAdapter: AuthAdapter,
     public uploadAdapter: UploadAdapter,
-    // public socketAdapter: BaseSocketAdapter
+    public socketAdapter: BaseSocketAdapter
   ) {
     window['root'] = this;
 

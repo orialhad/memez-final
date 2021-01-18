@@ -42,7 +42,7 @@ export class BaseSocketAdapter implements IBaseAdapter{
       const req_id = uuidv4();
 
       if (this.socket && this.socket.connected) {
-        console.log(`client: sendMessage emitting event_name ${event_name} with id ${req_id} with data`, data);
+        // console.log(`client: sendMessage emitting event_name ${event_name} with id ${req_id} with data`, data);
         this.socket.emit(event_name, data, req_id);
 
         let emitter:Emitter;
@@ -63,6 +63,16 @@ export class BaseSocketAdapter implements IBaseAdapter{
         console.log("SocketAPI: no sockets connected...");
       }
     })
+
+  }
+
+ listenToEvent<T = any>(event_name: APIEvent, fn: Function) {
+    this.socket && this.socket.on(event_name, fn)
+
+  }
+
+  async stopListeningToEvent<T = any>(event_name: APIEvent) {
+    this.socket && this.socket.off(event_name)
 
   }
 

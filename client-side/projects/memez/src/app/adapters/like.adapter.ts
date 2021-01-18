@@ -2,26 +2,27 @@ import {Injectable} from '@angular/core';
 import {BaseAjaxAdapter} from './base.ajax.adapter';
 import {HttpClient} from '@angular/common/http';
 import {ILike} from '../../../../../../sheard/interfaces/ILike';
+import {BaseSocketAdapter} from './base-socket.adapter';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LikeAdapter extends BaseAjaxAdapter {
+export class LikeAdapter extends BaseSocketAdapter {
 
-  constructor(http: HttpClient) {
-    super(http);
+  constructor() {
+    super();
   }
 
   async createLike(likeIds): Promise<ILike> {
-    return this.post('likes', likeIds);
+    return this.request('createLike', likeIds);
   }
 
   async unLike(like_id: string): Promise<ILike> {
-    return this.delete(`likes/${like_id}`);
+    return this.request(`unlike` ,like_id);
   }
 
   async getLikes(): Promise<ILike[]> {
-    return await this.get('likes');
+    return await this.request('getLikes');
   }
 }
 

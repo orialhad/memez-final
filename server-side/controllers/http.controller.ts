@@ -22,65 +22,12 @@ import {Server as IOServer, Socket as SocketIO_Socket} from 'socket.io';
 import * as http from 'http';
 import * as socketio from 'socket.io';
 import {APIEvent} from '../../sheard/api/api-events';
+import {event_mapper} from '../handlers/socket/event-mapper';
 
 //endregion
 
 
-const event_mapper: { [event_name in APIEvent]: (socket: SocketIO_Socket, data: any, req_id: string) => void } = {
 
-    getPosts: async function(this: HttpController, socket, data, req_id) {
-        console.log('getPosts Request id ' + req_id);
-
-        const
-            posts: IPost[] = await this.main.postController.getPosts(),
-            postsWithLikes = await Promise.all(
-                posts.map(async post => {
-                    post.likes = await this.main.likeController.getPostLikes(post._id.toString());
-                    post.postedBy = await this.main.postController.getPostUsers(post.postedBy_id);
-                    return post;
-                })
-            );
-        socket.emit('getPosts', postsWithLikes, req_id);
-    },
-
-    getPost   : async function(this: HttpController, socket, data, req_id) {
-    },
-    createPost: async function(this: HttpController, socket, data, req_id) {
-        console.log(data);
-        const post: IPost = {
-            content    : data.content,
-            postedBy_id: data.postedBy_id,
-            date       : dayjs().format(`DD.MM.YY`),
-            time       : dayjs().format(`HH:mm.ss`),
-            likes      : [],
-            image      : data.image
-        };
-        console.log(post);
-        try {
-            if (post.postedBy_id) {
-                const
-                    postToUpload = await this.main.postController.createPost(post);
-                socket.emit('createPost', postToUpload, req_id);
-            }else {
-                console.log('cant post that ');
-            }
-        } catch
-            (err) {
-            console.log(err);
-        }
-    },
-    deletePost: async function(this: HttpController, socket, data, req_id) {
-        console.log(data.id)
-        try {
-            const postToDelete = await this.main.postController.deletePost(data.id);
-            socket.emit('deletePost', postToDelete, req_id);
-        } catch (e) {
-            console.log( 'post was not deleted ');
-        }
-    },
-    // updatePost: async function (this: HttpController,socket, data, req_id) {
-    // },
-};
 
 
 export interface IHttpController extends IBaseController {
