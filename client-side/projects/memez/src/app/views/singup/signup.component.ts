@@ -1,5 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {SignupStore} from '../../stores/views/signup.store';
+import {SignupStore}                                     from '../../stores/views/signup.store';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {PasswordValidator}                               from './password.validator';
+
 
 @Component({
   selector: 'mem-singup',
@@ -8,12 +11,27 @@ import {SignupStore} from '../../stores/views/signup.store';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignupComponent implements OnInit {
+  public signupForm: FormGroup
 
   constructor(
-    public sus: SignupStore
+    public sus: SignupStore,
+    public fb: FormBuilder
+
   ) { }
 
   ngOnInit(): void {
+    this.signupForm = new FormGroup({
+      password:new FormControl('',
+        [Validators.required,PasswordValidator.strong]),
+      password2:new FormControl('',
+        [Validators.required]),
+      username:new FormControl('',
+        [Validators.minLength(3)]),
+    });
+
+
+
   }
+
 
 }

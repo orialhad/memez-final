@@ -1,7 +1,7 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild}          from '@angular/core';
 import {base64ToFile, Dimensions, ImageCroppedEvent, ImageTransform} from 'ngx-image-cropper';
-import {CropperComponent, ImageCropperResult} from 'angular-cropperjs';
-import {DomSanitizer} from '@angular/platform-browser';
+import {CropperComponent, ImageCropperResult}                        from 'angular-cropperjs';
+import {DomSanitizer}                                                from '@angular/platform-browser';
 
 export interface DialogData {
   newFile: File;
@@ -19,43 +19,60 @@ export class UploadComponent implements OnInit {
   blobFile: any;
   @Output() uploadedFiles = new EventEmitter();
 
-  config = {}
+  config = {
+    preview: '.preview'
+  };
   imageUrl: string;
   resultImage: File;
   result: any;
+  cropped: boolean = false;
 
 
   constructor(
     private sanitizer: DomSanitizer
   ) {
+    window['Upload1'] = this;
   }
 
   onSelect(file) {
     this.newFile = file.target.files[0];
-    this.toUrl();
+    if (
+      this.newFile.type === 'image/png'
+      || this.newFile.type === 'image/jpeg'
+      || this.newFile.type === 'image/gif'
+    ) {
+      console.log(this.newFile.type);
+      this.toUrl();
+    } else {
+      this.newFile = undefined
+      alert(`ONLY PICTURES PLEASE!!!`);
+    }
+
   }
 
   onUpload() {
     //check if file exist
     if (this.newFile) {
       //check if file gif
-      console.log(this.resultImage)
+      console.log(this.resultImage);
       if (this.newFile.type === 'image/gif' || this.result === undefined) {
         this.resultImage = this.newFile;
         this.uploadedFiles.emit(this.resultImage);
-      } else {
+      }
+      if (this.newFile.type === 'image/png' || 'image/jpg') {
         this.resultImage = this.toFile(this.result, this.newFile.name);
         this.uploadedFiles.emit(this.resultImage);
       }
     } else {
-      alert('please select a file');
+      alert(`You can't do that`);
 
     }
   }
 
-  CropMe() {
+  cropMe() {
     this.result = this.angularCropper.imageUrl;
     this.angularCropper.exportCanvas();
+    this.cropped = true;
   }
 
   resultImageFun(event: ImageCropperResult) {

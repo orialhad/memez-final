@@ -1,0 +1,26 @@
+<div class="user-new-post">
+  <div class="new-post-heading">MEME of the day; </div>
+    <input  [(ngModel)]="ps.new_post"
+           class="newPostInput"
+           placeholder="Enter new Post">
+
+  <div class="upload_dialog_btn" *mobxAutorun>
+    <button (click)="ps.openUploadDialogFeed()">Upload File</button>
+    <div *ngIf="ps.root.ups.newFileName"
+         class="upload-done">
+      <img src="../../../assets/images/done.png" alt="done">
+    </div>
+    <div *ngIf="ps.root.ups.loading"
+         class="upload-loading">
+      <div class="loader"></div>
+    </div>
+  </div>
+
+
+  <ng-container *mobxAutorun>
+    <button
+      [disabled]="ps.new_post === '' && !ps.root.ups.newFileName"
+      (click)="ps.createPost(ps.new_post)">POST
+    </button>
+</ng-container>
+</div>

@@ -1,21 +1,8 @@
 <div class="content-wrapper">
   <div class="new-post">
-    <mem-user-posting
-      (newPost)="fs.root.ps.createPost($event)"
-    ></mem-user-posting>
-
-    <div class="upload_dialog_btn" *mobxAutorun>
-      <button (click)="fs.openUploadDialogFeed()">Upload File</button>
-      <div *ngIf="fs.root.ups.newFileName"
-        class="upload-done">
-        <img src="../../../assets/images/done.png" alt="done">
-      </div>
-      <div *ngIf="fs.root.ups.loading"
-        class="upload-loading">
-        <div class="loader"></div>
-      </div>
+    <mem-user-posting></mem-user-posting>
     </div>
-  </div>
+
 
 
   <div class="posts-container" *mobxAutorun>
@@ -29,8 +16,8 @@
     ></mem-post>
 
   </div>
-</div>
 
+</div>
 
 
 

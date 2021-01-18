@@ -3,7 +3,9 @@ import {RootStore}                    from '../root.store';
 import {action, computed, observable} from 'mobx-angular';
 import {IPost}                        from '../../../../../../../sheard/interfaces/IPost';
 import {BaseUrl}                      from '../../config/config';
-import dayjs                          from 'dayjs';
+import * as dayjs                     from 'dayjs';
+import {MatDialog}                    from '@angular/material/dialog';
+import {UploadComponent}              from '../../reusable-components/upload/upload.component';
 
 
 @Injectable({
@@ -12,10 +14,13 @@ import dayjs                          from 'dayjs';
 export class PostStore {
   @observable posts: IPost[] = [];
   @observable searchTerm: string;
+  @observable newFile: File;
+  @observable new_post: string = '';
 
 
   constructor(
-    public root: RootStore
+    public root: RootStore,
+    public dialog: MatDialog
   ) {
     this.root.ps = this;
     window['ps'] = this;
@@ -53,10 +58,10 @@ export class PostStore {
   }
 
   @computed get filteredPosts() {
-     return this.searchTerm ?
-       this.reversedPosts.filter((post) => {
-      return post.content.includes(this.searchTerm) || post.postedBy.username.includes(this.searchTerm);
-    }):  this.reversedPosts;
+    return this.searchTerm ?
+           this.reversedPosts.filter((post) => {
+             return post.content.includes(this.searchTerm) || post.postedBy.username.includes(this.searchTerm);
+           }) : this.reversedPosts;
   }
 
   @action
@@ -73,6 +78,22 @@ export class PostStore {
                .slice()
                .reverse();
   }
+
+  @action  openUploadDialogFeed() {
+    let dialogRef = this.dialog.open(UploadComponent,{
+      width: '800px',
+      height: '900px'
+    })
+
+    dialogRef.componentInstance.uploadedFiles.subscribe(()=>{
+      this.newFile = dialogRef.componentInstance.resultImage
+      this.root.ups.onUpload(this.newFile).then()
+    })
+    dialogRef.afterClosed().subscribe(() => {
+    });
+  }
+
+
 
 
   listenToPostsUpdate() {

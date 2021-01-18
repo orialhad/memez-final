@@ -11,32 +11,33 @@
       <label for="fileInput">Select an Image</label>
     </div>
 
-    <br>
-    <br>
-    <angular-cropper #angularCropper
-                     *ngIf="imageUrl"
-                     [cropperOptions]="config"
-                     (export)="resultImageFun($event)"
-                     [imageUrl]="imageUrl">
+    <ng-container *ngIf="imageUrl">
+      <div class="upload-image-wrapper">
+        <angular-cropper
+          #angularCropper
+          [cropperOptions]="config"
+          (export)="resultImageFun($event)"
+          [imageUrl]="imageUrl">
+        </angular-cropper>
+      </div>
+      <ng-container *ngIf="newFile.type !== 'image/gif'">
+        <div class="preview"
+             [ngClass]="cropped ? 'preview-selected' : 'preview'"
+             (click)="cropMe()">
+        </div>
+        <div class="preview-btn"
+             (click)="cropMe()">
+          CROP
+        </div>
+      </ng-container>
 
-    </angular-cropper>
-    <br>
+    </ng-container>
 
-    <button
-      *ngIf="imageUrl"
-      (click)="CropMe()">Crop
-    </button>
     <br>
-    <br>
-    <img
-      *ngIf="imageUrl"
-      [src]="result"/>
-
-
     <div class="upload_btn">
       <button type="button"
               mat-button [mat-dialog-close]="true"
-              (click)="onUpload()">submit
+              (click)="onUpload()">Upload
       </button>
     </div>
 
@@ -44,3 +45,4 @@
 
 
 </div>
+

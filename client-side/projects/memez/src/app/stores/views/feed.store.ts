@@ -10,7 +10,7 @@ import {UploadComponent} from '../../reusable-components/upload/upload.component
 })
 export class FeedStore {
 
-  @observable newFile : File;
+
 
 
   constructor(
@@ -32,19 +32,19 @@ export class FeedStore {
 
 
 
-  @action  openUploadDialogFeed() {
-    let dialogRef = this.dialog.open(UploadComponent,{
-      width: '800px',
-      height: '900px'
-    })
-
-    dialogRef.componentInstance.uploadedFiles.subscribe(()=>{
-      this.newFile = dialogRef.componentInstance.resultImage
-      this.root.ups.onUpload(this.newFile).then()
-    })
-    dialogRef.afterClosed().subscribe(() => {
-    });
-  }
+  // @action  openUploadDialogFeed() {
+  //   let dialogRef = this.dialog.open(UploadComponent,{
+  //     width: '800px',
+  //     height: '900px'
+  //   })
+  //
+  //   dialogRef.componentInstance.uploadedFiles.subscribe(()=>{
+  //     this.newFile = dialogRef.componentInstance.resultImage
+  //     this.root.ups.onUpload(this.newFile).then()
+  //   })
+  //   dialogRef.afterClosed().subscribe(() => {
+  //   });
+  // }
 }
 
 

@@ -4,17 +4,18 @@ import {UserStore} from './entities/user.store';
 import {FeedStore} from './views/feed.store';
 import {LayoutStore} from './views/layout.store';
 import {LikeStore} from './entities/like.store';
-import {PostAdapter} from '../adapters/post.adapter';
-import {UserAdapter} from '../adapters/user.adapter';
-import {LikeAdapter} from '../adapters/like.adapter';
-import {LoginStore} from './views/login.store';
-import {SignupStore} from './views/signup.store';
-import {UploadAdapter} from '../adapters/upload.adapter';
-import {UploadStore} from './entities/upload.store';
-import {AuthAdapter} from '../adapters/auth.adapter';
-import {AuthService} from './entities/auth.service';
-import {AuthGuardService} from './entities/auth-gurad.service';
+import {PostAdapter}       from '../adapters/post.adapter';
+import {UserAdapter}       from '../adapters/user.adapter';
+import {LikeAdapter}       from '../adapters/like.adapter';
+import {LoginStore}        from './views/login.store';
+import {SignupStore}       from './views/signup.store';
+import {UploadAdapter}     from '../adapters/upload.adapter';
+import {UploadStore}       from './entities/upload.store';
+import {AuthAdapter}       from '../adapters/auth.adapter';
+import {AuthService}       from './entities/auth.service';
+import {AuthGuardService}  from './entities/auth-gurad.service';
 import {BaseSocketAdapter} from '../adapters/base-socket.adapter';
+
 
 @Injectable({
   providedIn: 'root'

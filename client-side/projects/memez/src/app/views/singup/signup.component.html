@@ -8,34 +8,40 @@
 
 
     </div>
-    <div class="login-details">
-      <input #new_name
+    <div class="login-details"
+         [formGroup]="signupForm">
+      <input #username
              type="text"
              placeholder="enter your name"
-             class="user-name-input"
-      >
+             class="user-name-input">
       <input #password
              type="password"
+             formControlName="password"
              placeholder="enter your password"
-             class="user-name-input"
-      >
+             class="user-name-input">
+      <div
+        class="password-error"
+        *ngIf="signupForm.get('password').hasError('strong') && !signupForm.pristine">
+        Must contain at least 1 number 1 lowercase 1 uppercase letter.
+      </div>
       <input #password2
              type="password"
+             formControlName="password2"
              placeholder="enter same password"
              class="user-name-input"
       ></div>
     <ng-container *mobxAutorun>
       <div
-        *ngIf="password.value !== password2.value"
-        class="doesnt-match">
+        *ngIf="password.value !== password2.value && !signupForm.get('password2').pristine"
+        class="password-error">
         Passwords doesn't match !
       </div>
+
     </ng-container>
     <button class="signup-button"
-            (click)="sus.signUpUser(new_name.value,password.value,password2.value)
-
-
-">Sign Up
+            [disabled]="!signupForm.valid || signupForm.pristine"
+            (click)="sus.signUpUser(username.value,password.value,password2.value)">
+      Sign Up
     </button>
 
   </div>
