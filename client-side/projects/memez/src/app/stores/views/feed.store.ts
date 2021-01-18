@@ -12,6 +12,7 @@ export class FeedStore {
 
   @observable newFile : File;
 
+
   constructor(
     public root: RootStore,
     public dialog: MatDialog

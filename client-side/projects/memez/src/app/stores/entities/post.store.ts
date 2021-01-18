@@ -1,17 +1,18 @@
-import {Injectable} from '@angular/core';
-import {RootStore} from '../root.store';
+import {Injectable}                   from '@angular/core';
+import {RootStore}                    from '../root.store';
 import {action, computed, observable} from 'mobx-angular';
-import {IPost} from '../../../../../../../sheard/interfaces/IPost';
-import {autorun, reaction} from 'mobx';
-import {ILike} from '../../../../../../../sheard/interfaces/ILike';
+import {IPost}                        from '../../../../../../../sheard/interfaces/IPost';
+import {autorun, reaction}            from 'mobx';
+import {ILike}                        from '../../../../../../../sheard/interfaces/ILike';
 import dayjs = require('dayjs');
-import {BaseUrl} from '../../config/config';
+import {BaseUrl}                      from '../../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostStore {
   @observable posts: IPost[] = [];
+  @observable searchTerm: string;
 
 
   constructor(
@@ -20,14 +21,12 @@ export class PostStore {
     this.root.ps = this;
     window['ps'] = this;
 
-    this.listenToPostsUpdate()
+    this.listenToPostsUpdate();
   }
 
 
-
-
   @action
-  async getPosts(){
+  async getPosts() {
     this.posts = await this.root.postAdapter.getPosts();
   }
 
@@ -35,15 +34,15 @@ export class PostStore {
   @action
   async createPost(content: string) {
     let newPost = {
-      content : content,
+      content    : content,
       postedBy_id: this.root.lis.currentUser._id,
-      date    : dayjs().format('DD.MM.YY'),
-      time    : dayjs().format('hh:mm:ss'),
-      likes   : [],
-      image   : (this.root.ups.newFileName !== undefined) ? BaseUrl+'/image/'+ this.root.ups.newFileName : ""
+      date       : dayjs().format('DD.MM.YY'),
+      time       : dayjs().format('hh:mm:ss'),
+      likes      : [],
+      image      : (this.root.ups.newFileName !== undefined) ? BaseUrl + '/image/' + this.root.ups.newFileName : ''
     };
     await this.root.postAdapter.createPost(newPost);
-    this.root.ups.newFileName = undefined
+    this.root.ups.newFileName = undefined;
   }
 
   @action
@@ -55,6 +54,21 @@ export class PostStore {
     }
   }
 
+  @computed get filteredPosts() {
+     return this.searchTerm ?
+       this.reversedPosts.filter((post) => {
+      return post.content.includes(this.searchTerm) || post.postedBy.username.includes(this.searchTerm);
+    }):  this.reversedPosts;
+  }
+
+  @action
+  onSearch(value: string) {
+    setTimeout(() => {
+      this.searchTerm = value;
+    }, 1000);
+
+  }
+
 
   @computed get reversedPosts() {
     return this.posts
@@ -64,9 +78,9 @@ export class PostStore {
 
 
   listenToPostsUpdate() {
-     this.root.socketAdapter.listenToEvent('postsUpdate', posts => {
-       this.posts = posts
-     })
+    this.root.socketAdapter.listenToEvent('postsUpdate', posts => {
+      this.posts = posts;
+    });
   }
 
 }

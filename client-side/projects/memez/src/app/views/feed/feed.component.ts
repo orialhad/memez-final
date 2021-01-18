@@ -12,18 +12,17 @@ export class FeedComponent implements OnInit {
   constructor(
     public fs: FeedStore
   ) {
-
     (async () => {
         await this.fs.root.us.getUsers();
-        await this.fs.root.lks.getLikes();
         await this.fs.root.ps.getPosts();
+        await this.fs.root.lks.getLikes();
       }
     )();
   }
 
   ngOnInit(): void {
-    this.fs.root.us.getCurrentUser()
 
+    this.fs.root.us.getCurrentUser()
   };
 
 }

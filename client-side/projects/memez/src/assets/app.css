@@ -703,3 +703,9 @@ mem-singup {
   font-size: 15px;
   color: red;
 }
+
+
+input.navbar-search-input {
+    height: 22px;
+    border-radius: 25px;
+}

@@ -16,7 +16,7 @@
 
   <div class="posts-container" *mobxAutorun>
     <mem-post
-      *ngFor="let post of fs.root.ps.reversedPosts"
+      *ngFor="let post of fs.root.ps.filteredPosts"
       [post]="post"
       [selected]="fs.verifyUserLike(post)"
       [currentUser]="fs.root.lis.currentUser"

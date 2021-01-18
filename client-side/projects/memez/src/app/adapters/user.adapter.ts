@@ -17,9 +17,9 @@ export class UserAdapter extends BaseSocketAdapter{
     return this.request('getUsers');
   }
 
-  async createUser(user: IUser): Promise<IUser> {
-    return this.request('createUser', {user});
-  }
+  // async createUser(user: IUser): Promise<IUser> {
+  //   return this.request('createUser', {user});
+  // }
 
   async editProfilePic(id: string , avatar: string): Promise<any>{
     return this.request(`editProfilePic`, {avatar:avatar, id: id} );

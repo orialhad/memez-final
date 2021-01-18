@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {LoginStore} from '../../stores/views/login.store';
+import {LoginStore}                                 from '../../stores/views/login.store';
+import {RootStore}                                  from '../../stores/root.store';
 
 @Component({
   selector: 'mem-nav-bar',
@@ -10,7 +11,7 @@ import {LoginStore} from '../../stores/views/login.store';
 export class NavBarComponent implements OnInit {
 
   constructor(
-    public log: LoginStore
+    public root: RootStore
   ) { }
 
   ngOnInit(): void {
