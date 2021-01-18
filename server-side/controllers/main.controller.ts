@@ -59,15 +59,15 @@ export class MainController extends BaseController implements IMainController {
     }
 
     addEventListeners() {
+        // this.httpController.events.addListener('all_users', getUsersHandler.bind(this));
+        // this.httpController.events.addListener('edit_profile_pic', editProfilePicHandler.bind(this));
+        // this.httpController.events.addListener('all_posts', getPostsHandler.bind(this));
+        // this.httpController.events.addListener('upload_post', createPostHandler.bind(this));
+        // this.httpController.events.addListener('delete_post', deletePostHandler.bind(this));
+        // this.httpController.events.addListener('all_likes', getLikesHandler.bind(this));
+        // this.httpController.events.addListener('create_like', createLikeHandler.bind(this));
+        // this.httpController.events.addListener('delete_like', unLikeHandler.bind(this));
         this.httpController.events.addListener('signup', signupHandler.bind(this));
-        this.httpController.events.addListener('all_users', getUsersHandler.bind(this));
-        this.httpController.events.addListener('edit_profile_pic', editProfilePicHandler.bind(this));
-        this.httpController.events.addListener('all_posts', getPostsHandler.bind(this));
-        this.httpController.events.addListener('upload_post', createPostHandler.bind(this));
-        this.httpController.events.addListener('delete_post', deletePostHandler.bind(this));
-        this.httpController.events.addListener('all_likes', getLikesHandler.bind(this));
-        this.httpController.events.addListener('create_like', createLikeHandler.bind(this));
-        this.httpController.events.addListener('delete_like', unLikeHandler.bind(this));
         this.httpController.events.addListener('upload_file', uploadHandler.bind(this));
         this.httpController.events.addListener('logout', logoutHandler.bind(this));
         this.httpController.events.addListener('get_file', getFileHandler.bind(this));

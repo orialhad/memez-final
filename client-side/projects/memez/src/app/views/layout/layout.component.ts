@@ -29,6 +29,7 @@ export class LayoutComponent implements OnInit {
     public ups: UploadStore
   ) {
 
+
   }
 
   ngOnInit(): void {

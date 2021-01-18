@@ -13,16 +13,14 @@ export class FeedComponent implements OnInit {
     public fs: FeedStore
   ) {
     (async () => {
-        await this.fs.root.us.getUsers();
         await this.fs.root.ps.getPosts();
-        await this.fs.root.lks.getLikes();
       }
     )();
   }
 
-  ngOnInit(): void {
-
+  async ngOnInit(): Promise<void> {
     this.fs.root.us.getCurrentUser()
+    await this.fs.root.ps.getPosts();
   };
 
 }

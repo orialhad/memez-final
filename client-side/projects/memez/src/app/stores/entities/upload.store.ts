@@ -10,6 +10,8 @@ export class UploadStore {
 
   @observable file: File;
   @observable newFileName: string;
+  @observable loading: boolean = false
+
 
 
   constructor(
@@ -23,11 +25,13 @@ export class UploadStore {
   @action
   async onUpload(file) {
     this.file = file;
+    this.loading = true
     const formData = new FormData();
     formData.append('file', this.file);
     console.log(`Upload Store_before: `, this.file);
     await this.root.uploadAdapter.uploadFile(formData);
     this.newFileName = this.root.uploadAdapter.newFile;
+    this.loading = false
     console.log(`Upload Store_after: `, this.newFileName);
 
   }

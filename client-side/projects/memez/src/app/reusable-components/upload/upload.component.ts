@@ -19,7 +19,7 @@ export class UploadComponent implements OnInit {
   blobFile: any;
   @Output() uploadedFiles = new EventEmitter();
 
-  config = [];
+  config = {}
   imageUrl: string;
   resultImage: File;
   result: any;
@@ -36,7 +36,7 @@ export class UploadComponent implements OnInit {
   }
 
   onUpload() {
-    //check i file exist
+    //check if file exist
     if (this.newFile) {
       //check if file gif
       console.log(this.resultImage)

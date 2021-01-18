@@ -2,10 +2,9 @@ import {Injectable}                   from '@angular/core';
 import {RootStore}                    from '../root.store';
 import {action, computed, observable} from 'mobx-angular';
 import {IPost}                        from '../../../../../../../sheard/interfaces/IPost';
-import {autorun, reaction}            from 'mobx';
-import {ILike}                        from '../../../../../../../sheard/interfaces/ILike';
-import dayjs = require('dayjs');
 import {BaseUrl}                      from '../../config/config';
+import dayjs                          from 'dayjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +19,6 @@ export class PostStore {
   ) {
     this.root.ps = this;
     window['ps'] = this;
-
     this.listenToPostsUpdate();
   }
 

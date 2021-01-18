@@ -10,6 +10,10 @@
         class="upload-done">
         <img src="../../../assets/images/done.png" alt="done">
       </div>
+      <div *ngIf="fs.root.ups.loading"
+        class="upload-loading">
+        <div class="loader"></div>
+      </div>
     </div>
   </div>
 

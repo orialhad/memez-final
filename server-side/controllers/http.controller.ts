@@ -109,63 +109,63 @@ export class HttpController extends BaseController implements IHttpController {
 
 
     registerEndpoints() {
-        //get all users
-        this.express_app.get('/api/users', (req: Request, res: Response) => {
-            this.events.emit('all_users', req, res);
-        });
-        // get specific user
-        this.express_app.get('/api/users/:id', (req: Request, res: Response) => {
-            this.events.emit('user', req, res);
-        });
-        // get current user
-        this.express_app.get('/api/users/:id', (req: Request, res: Response) => {
-            this.events.emit('get_current', req, res);
-        });
-        //create new user
-        this.express_app.post('/api/auth/signup', (req: Request, res: Response) => {
-            this.events.emit('signup', req, res);
-        });
-        //egit profile pic
-        this.express_app.post('/api/editProfilePic/:id', (req: Request, res: Response) => {
-            this.events.emit('edit_profile_pic', req, res);
-        });
-        //get all posts
-        this.express_app.get('/api/posts', (req: Request, res: Response) => {
-            this.events.emit('all_posts', req, res);
-        });
-        //get specific post
-        this.express_app.get('/api/posts/:id', (req: Request, res: Response) => {
-            this.events.emit('post', req, res);
-        });
-        //upload new post
-        this.express_app.post('/api/posts', (req: Request, res: Response) => {
-            this.events.emit('upload_post', req, res);
-        });
-        //delete post
-        this.express_app.delete('/api/posts/:id', (req: Request, res: Response) => {
-            this.events.emit('delete_post', req, res);
-        });
-        //get all likes
-        this.express_app.get('/api/likes', (req: Request, res: Response) => {
-            this.events.emit('all_likes', req, res);
-        });
-        //get specific like
-        this.express_app.get('/api/likes/:id', (req: Request, res: Response) => {
-            this.events.emit('like', req, res);
-        });
-        //create new like
-        this.express_app.post('/api/likes', (req: Request, res: Response) => {
-            this.events.emit('create_like', req, res);
-        });
-        //remove like
-        this.express_app.delete('/api/likes/:id', (req: Request, res: Response) => {
-            this.events.emit('delete_like', req, res);
-        });
-
-        //get post likes
-        this.express_app.get('/api/likes/:post_id', (req: Request, res: Response) => {
-            this.events.emit('post_likes', req, res);
-        });
+        // //get all users
+        // this.express_app.get('/api/users', (req: Request, res: Response) => {
+        //     this.events.emit('all_users', req, res);
+        // });
+        // // get specific user
+        // this.express_app.get('/api/users/:id', (req: Request, res: Response) => {
+        //     this.events.emit('user', req, res);
+        // });
+        // // get current user
+        // this.express_app.get('/api/users/:id', (req: Request, res: Response) => {
+        //     this.events.emit('get_current', req, res);
+        // });
+        // //create new user
+        // this.express_app.post('/api/auth/signup', (req: Request, res: Response) => {
+        //     this.events.emit('signup', req, res);
+        // });
+        // //egit profile pic
+        // this.express_app.post('/api/editProfilePic/:id', (req: Request, res: Response) => {
+        //     this.events.emit('edit_profile_pic', req, res);
+        // });
+        // //get all posts
+        // this.express_app.get('/api/posts', (req: Request, res: Response) => {
+        //     this.events.emit('all_posts', req, res);
+        // });
+        // //get specific post
+        // this.express_app.get('/api/posts/:id', (req: Request, res: Response) => {
+        //     this.events.emit('post', req, res);
+        // });
+        // //upload new post
+        // this.express_app.post('/api/posts', (req: Request, res: Response) => {
+        //     this.events.emit('upload_post', req, res);
+        // });
+        // //delete post
+        // this.express_app.delete('/api/posts/:id', (req: Request, res: Response) => {
+        //     this.events.emit('delete_post', req, res);
+        // });
+        // //get all likes
+        // this.express_app.get('/api/likes', (req: Request, res: Response) => {
+        //     this.events.emit('all_likes', req, res);
+        // });
+        // //get specific like
+        // this.express_app.get('/api/likes/:id', (req: Request, res: Response) => {
+        //     this.events.emit('like', req, res);
+        // });
+        // //create new like
+        // this.express_app.post('/api/likes', (req: Request, res: Response) => {
+        //     this.events.emit('create_like', req, res);
+        // });
+        // //remove like
+        // this.express_app.delete('/api/likes/:id', (req: Request, res: Response) => {
+        //     this.events.emit('delete_like', req, res);
+        // });
+        //
+        // //get post likes
+        // this.express_app.get('/api/likes/:post_id', (req: Request, res: Response) => {
+        //     this.events.emit('post_likes', req, res);
+        // });
 
         // upload a file
         this.express_app.post('/api/uploads', (req: Request, res: Response,) => {

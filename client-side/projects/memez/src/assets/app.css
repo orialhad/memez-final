@@ -339,6 +339,7 @@ mem-user-posting {
 .upload_dialog_btn {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-bottom: 15px;
   /*border: cyan solid;*/
   width: 100%;
@@ -353,7 +354,13 @@ mem-user-posting {
   width: 35px;
 }
 
+
 .upload-done img {
+  height: 35px;
+  width: 35px;
+}
+
+.upload-loading{
   height: 35px;
   width: 35px;
 }
@@ -708,4 +715,30 @@ mem-singup {
 input.navbar-search-input {
     height: 22px;
     border-radius: 25px;
+    padding-left: 10px;
+    width: 240px;
+}
+
+
+
+
+.loader {
+  border: 6px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 6px solid #77bbd6;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 1s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
