@@ -1,10 +1,10 @@
-import * as io from 'socket.io-client';
-import {Injectable} from '@angular/core';
+import * as io                    from 'socket.io-client';
+import {Injectable}               from '@angular/core';
 import {Socket as SocketIOClient} from 'socket.io-client';
-import {v4 as uuidv4} from "uuid";
-import * as Emitter from 'component-emitter';
-import {APIEvent} from '../../../../../../sheard/api/api-events';
-import {IBaseAdapter} from '../../../../../../sheard/interfaces/IBaseAdapter';
+import {v4 as uuidv4}             from 'uuid';
+import * as Emitter               from 'component-emitter';
+import {APIEvent}                 from '../../../../../../sheard/api/api-events';
+import {IBaseAdapter}             from '../../../../../../sheard/interfaces/IBaseAdapter';
 
 
 const URL = 'http://localhost:4300';
@@ -13,7 +13,7 @@ const URL = 'http://localhost:4300';
 @Injectable({
   providedIn: 'root'
 })
-export class BaseSocketAdapter implements IBaseAdapter{
+export class BaseSocketAdapter implements IBaseAdapter {
 
   socket: SocketIOClient;
   user;
@@ -44,15 +44,12 @@ export class BaseSocketAdapter implements IBaseAdapter{
       if (this.socket && this.socket.connected) {
         // console.log(`client: sendMessage emitting event_name ${event_name} with id ${req_id} with data`, data);
         this.socket.emit(event_name, data, req_id);
-
-        let emitter:Emitter;
-
+        let emitter: Emitter;
         const
           fn = (res_data, request_id) => {
             if (request_id !== req_id) {
-              return
+              return;
             }
-
             resolve(res_data as T);
             emitter.off(event_name, fn);
           };
@@ -60,19 +57,19 @@ export class BaseSocketAdapter implements IBaseAdapter{
         emitter = this.socket.on(event_name, fn);
 
       } else {
-        console.log("SocketAPI: no sockets connected...");
+        console.log('SocketAPI: no sockets connected...');
       }
-    })
+    });
 
   }
 
- listenToEvent<T = any>(event_name: APIEvent, fn: Function) {
-    this.socket && this.socket.on(event_name, fn)
+  listenToEvent<T = any>(event_name: APIEvent, fn: Function) {
+    this.socket && this.socket.on(event_name, fn);
 
   }
 
   async stopListeningToEvent<T = any>(event_name: APIEvent) {
-    this.socket && this.socket.off(event_name)
+    this.socket && this.socket.off(event_name);
 
   }
 
