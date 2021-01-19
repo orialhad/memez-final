@@ -11,7 +11,9 @@
       <label for="fileInput">Select an Image</label>
     </div>
 
+
     <ng-container *ngIf="imageUrl">
+      <hr>
       <div class="upload-image-wrapper">
         <angular-cropper
           #angularCropper
@@ -34,6 +36,7 @@
     </ng-container>
 
     <br>
+    <hr>
     <div class="upload_btn">
       <button type="button"
               mat-button [mat-dialog-close]="true"
