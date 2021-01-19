@@ -50,7 +50,8 @@
             ],
             "styles": [
               "projects/memez/src/custom-theme.scss",
-              "projects/memez/src/styles.css"
+              "projects/memez/src/styles.css",
+              "node_modules/@ctrl/ngx-emoji-mart/picker.css"
             ],
             "scripts": []
           },

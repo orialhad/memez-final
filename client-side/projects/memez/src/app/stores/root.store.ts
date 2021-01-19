@@ -15,6 +15,8 @@ import {AuthAdapter}       from '../adapters/auth.adapter';
 import {AuthService}       from './entities/auth.service';
 import {AuthGuardService}  from './entities/auth-gurad.service';
 import {BaseSocketAdapter} from '../adapters/base-socket.adapter';
+import {CommentStore} from "./entities/comment.store";
+import {CommentAdapter} from "../adapters/comment.adapter";
 
 
 @Injectable({
@@ -25,6 +27,7 @@ export class RootStore {
   ps: PostStore;
   us: UserStore;
   fs: FeedStore;
+  cms: CommentStore;
   lys: LayoutStore;
   lks: LikeStore;
   lis: LoginStore;
@@ -39,9 +42,12 @@ export class RootStore {
     public likeAdapter: LikeAdapter,
     public authAdapter: AuthAdapter,
     public uploadAdapter: UploadAdapter,
-    public socketAdapter: BaseSocketAdapter
+    public socketAdapter: BaseSocketAdapter,
+    public commentAdapter :CommentAdapter
   ) {
     window['root'] = this;
 
   }
+
+
 }

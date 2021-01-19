@@ -3,6 +3,7 @@ import {Socket as SocketIO_Socket}                             from 'socket.io/d
 import {createPostHandler, deletePostHandler, getPostsHandler} from './post.socket.handler';
 import {createLikeHandler, getLikesHandler, unlikeHandler}     from './like.socket.handler';
 import {editProfilePicHandler, getUsersHandler}                from './user.socket.handler';
+import {createCommentHandler, deleteCommentHandler} from "./comment.socket.handler";
 
 export const event_mapper: { [event_name in APIEvent]: (socket: SocketIO_Socket, data: any, req_id: string) => void } = {
 
@@ -18,7 +19,11 @@ export const event_mapper: { [event_name in APIEvent]: (socket: SocketIO_Socket,
 
     // createUser    : createUserHandler,
     getUsers      : getUsersHandler,
-    editProfilePic: editProfilePicHandler
+    editProfilePic: editProfilePicHandler,
 
+    createComment: createCommentHandler,
+    deleteComment: deleteCommentHandler
 
 };
+
+

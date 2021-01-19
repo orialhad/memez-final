@@ -8,6 +8,7 @@ import {FeedStore} from '../../stores/views/feed.store';
 import {LoginStore} from '../../stores/views/login.store';
 import {UploadStore} from '../../stores/entities/upload.store';
 import {AuthService} from '../../stores/entities/auth.service';
+import {CommentStore} from "../../stores/entities/comment.store";
 
 @Component({
   selector       : 'mem-layout',
@@ -25,6 +26,7 @@ export class LayoutComponent implements OnInit {
     public fs: FeedStore,
     public lys: LayoutStore,
     public lis: LoginStore,
+    public cms: CommentStore,
     public auth: AuthService,
     public ups: UploadStore
   ) {

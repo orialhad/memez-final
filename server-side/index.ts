@@ -6,12 +6,14 @@ import {MongoDBController} from './controllers/mongoDBController';
 import {LikeController} from './controllers/like.controller';
 import {UploadController} from './controllers/upload.controller';
 import {AuthController} from './controllers/auth.controller';
+import {CommentController} from "./controllers/comment.controller";
 
 (async () => {
     const
         likeController    = new LikeController(),
         postController    = new PostController(),
         userController    = new UserController(),
+        commentController = new CommentController(),
         authController    = new AuthController(),
         uploadController  = new UploadController(),
         httpController    = new HttpController(),
@@ -20,6 +22,7 @@ import {AuthController} from './controllers/auth.controller';
             userController,
             likeController,
             postController,
+            commentController,
             authController,
             uploadController,
             httpController,

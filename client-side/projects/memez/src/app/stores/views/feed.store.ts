@@ -10,9 +10,6 @@ import {UploadComponent} from '../../reusable-components/upload/upload.component
 })
 export class FeedStore {
 
-
-
-
   constructor(
     public root: RootStore,
     public dialog: MatDialog
@@ -29,6 +26,7 @@ export class FeedStore {
       return post.likes.some(like => like.userLiked._id === current._id)
     }
   }
+
 
 
 

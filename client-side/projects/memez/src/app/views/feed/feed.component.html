@@ -1,8 +1,7 @@
 <div class="content-wrapper">
   <div class="new-post">
     <mem-user-posting></mem-user-posting>
-    </div>
-
+  </div>
 
 
   <div class="posts-container" *mobxAutorun>
@@ -13,6 +12,8 @@
       [currentUser]="fs.root.lis.currentUser"
       (postLiked)="fs.root.lks.handleLike($event)"
       (PostToDelete)="fs.root.ps.deletePost($event)"
+      (commentClicked)="fs.root.cms.openCommentsDialog(post._id)"
+      (comment)="fs.root.cms.createComment(post._id,$event)"
     ></mem-post>
 
   </div>

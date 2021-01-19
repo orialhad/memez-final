@@ -1,5 +1,6 @@
 import {ILike} from './ILike';
 import {IUser} from "./IUser";
+import {IComment} from "./IComment";
 
 export interface IPost {
 	_id?: string
@@ -9,5 +10,6 @@ export interface IPost {
 	date: string
 	time: string
 	likes?: ILike[]
+	comments?: IComment[]
 	image?: string
 }

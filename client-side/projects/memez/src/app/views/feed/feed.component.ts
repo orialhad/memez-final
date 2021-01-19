@@ -12,6 +12,9 @@ export class FeedComponent implements OnInit {
   constructor(
     public fs: FeedStore
   ) {
+    (async ()=>{
+      await this.fs.root.ps.getPosts();
+    })()
 
     setTimeout(async ()=>{
       await this.fs.root.ps.getPosts()},700)

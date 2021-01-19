@@ -25,7 +25,7 @@ export async function createLikeHandler(this: HttpController, socket, data, req_
     try {
         const
             newLike = await this.main.likeController.createLike(like),
-            posts   = await this.main.mongoDbController.getPostsWithData();
+            posts   = await this.main.postController.getPostsWithData();
         socket.emit('createLike', newLike, req_id);
         socket.broadcast.emit('postsUpdate', posts);
 

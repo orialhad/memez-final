@@ -5,7 +5,7 @@
            placeholder="Enter new Post">
 
   <div class="upload_dialog_btn" *mobxAutorun>
-    <button (click)="ps.openUploadDialogFeed()">Upload File</button>
+    <button (click)="ps.openUploadDialogPosting()">Upload File</button>
     <div *ngIf="ps.root.ups.newFileName"
          class="upload-done">
       <img src="../../../assets/images/done.png" alt="done">

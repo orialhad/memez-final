@@ -1,10 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {IPost} from '../../../../../../../sheard/interfaces/IPost';
 import {IUser} from '../../../../../../../sheard/interfaces/IUser';
-import {DomSanitizer} from '@angular/platform-browser';
-import {HttpEvent} from '@angular/common/http';
-
-
 
 
 @Component({
@@ -23,12 +19,13 @@ export class PostComponent implements OnInit {
   @Input() currentUser :IUser;
   @Output() postLiked = new EventEmitter();
   @Output() PostToDelete = new EventEmitter();
+  @Output() commentClicked = new EventEmitter();
+  @Output() comment = new EventEmitter();
 
   @Input() selected: boolean;
   @Output() selectedChange = new EventEmitter<boolean>();
 
   status: boolean
-
 
   constructor() {
   }
@@ -43,6 +40,15 @@ export class PostComponent implements OnInit {
   deletePost(post: IPost) {
     this.PostToDelete.emit(post);
   }
+
+  // onComment(comment){
+  //   this.comment.emit(comment);
+  // }
+  onCommentClick(){
+    this.commentClicked.emit();
+  }
+
+
 
   public toggleSelected() {
     this.selected = !this.selected;

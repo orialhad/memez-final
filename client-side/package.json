@@ -22,6 +22,7 @@
     "@angular/platform-browser": "~9.1.12",
     "@angular/platform-browser-dynamic": "~9.1.12",
     "@angular/router": "~9.1.12",
+    "@ctrl/ngx-emoji-mart": "^4.1.1",
     "@types/component-emitter": "^1.2.10",
     "@types/socket.io-client": "^1.4.34",
     "angular-cropperjs": "^1.0.2",

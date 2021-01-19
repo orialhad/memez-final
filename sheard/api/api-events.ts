@@ -6,9 +6,8 @@ export type APIEvent =
     | 'getLikes'
     | 'unlike'
     | 'createLike'
-    // | 'createUser'
     | 'getUsers'
     | 'editProfilePic'
-
-
+    | 'createComment'
+    | 'deleteComment'
     ;

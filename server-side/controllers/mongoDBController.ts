@@ -4,10 +4,9 @@ import {IUser} from '../../sheard/interfaces/IUser';
 import {IPost} from '../../sheard/interfaces/IPost';
 import {ILike} from '../../sheard/interfaces/ILike';
 import {config} from '../config/config';
+import {IComment} from "../../sheard/interfaces/IComment";
 // import {Grid} from 'gridfs-stream';
-
 import Grid = require('gridfs-stream');
-import {response} from 'express';
 
 const fs = require('fs');
 
@@ -37,7 +36,7 @@ export interface IMongoDBController extends IBaseController {
 
     getPostLikes(post_id: string): Promise<ILike[]>;
 
-    getPostUsers(user_id: string): Promise<IUser>
+    getUsersFor(user_id: string): Promise<IUser>
 
     getLikes(): Promise<ILike[]>;
 
@@ -55,6 +54,12 @@ export interface IMongoDBController extends IBaseController {
 
     getPostsWithData(): Promise<IPost[]>;
 
+    createComment(comment: IComment): Promise<any>;
+
+    deleteComment(comment_id: string): Promise<any>
+
+    getPostComments(comment_id: string): Promise<IComment[]>
+
     // getLastUpload(): Promise<any>
 
     close(): Promise<any>
@@ -70,6 +75,7 @@ export class MongoDBController extends BaseController implements IMongoDBControl
     likesCollection: Collection;
     postsCollection: Collection;
     usersCollection: Collection;
+    commentsCollection: Collection;
     gfs;
     gridFSBucket;
 
@@ -105,7 +111,8 @@ export class MongoDBController extends BaseController implements IMongoDBControl
                 This.likesCollection = This.db.collection('likes');
                 This.postsCollection = This.db.collection('posts');
                 This.usersCollection = This.db.collection('users');
-                // This.uploadCollection = This.db.collection('upload');
+                This.commentsCollection = This.db.collection('comments');
+
                 This.gfs.collection('uploads');
 
                 resolve();
@@ -169,15 +176,15 @@ export class MongoDBController extends BaseController implements IMongoDBControl
 
     async getPostsWithData(): Promise<IPost[]> {
         const
-            posts: IPost[] = await this.getPosts(),
-            postsWithData  = await Promise.all(
-                posts.map(async post => {
-                    post.likes = await this.getPostLikes(post._id.toString());
-                    post.postedBy = await this.getPostUsers(post.postedBy_id);
-                    return post;
-                })
-            );
-        return postsWithData;
+            posts: IPost[] = await this.getPosts();
+        return await Promise.all(
+            posts.map(async post => {
+                post.likes = await this.getPostLikes(post._id.toString());
+                post.postedBy = await this.getUsersFor(post.postedBy_id);
+                post.comments = await this.getPostComments(post._id.toString());
+                return post;
+            })
+        );
     }
 
 
@@ -197,17 +204,15 @@ export class MongoDBController extends BaseController implements IMongoDBControl
         return this.likesCollection.find({'postLiked._id': post_id}).toArray();
     }
 
-    async getPostUsers(user_id: string): Promise<IUser> {
+    async getUsersFor(user_id: string): Promise<IUser> {
         const id = new ObjectID(user_id);
         return this.usersCollection.findOne({_id: id});
     }
 
     //likes
     async getLikes(): Promise<ILike[]> {
-        console.log();
         return this.likesCollection.find({}).toArray();
     }
-
 
     async createLike(like: ILike): Promise<any> {
         return this.likesCollection.insertOne(like);
@@ -236,6 +241,33 @@ export class MongoDBController extends BaseController implements IMongoDBControl
             });
         });
     }
+
+    async createComment(comment: IComment): Promise<any> {
+        return await this.commentsCollection.insertOne(comment)
+    }
+
+    async deleteComment(comment_id: string): Promise<any> {
+        const
+            commentId = new ObjectID(comment_id),
+            comment   = await this.commentsCollection.deleteOne({_id: commentId});
+        return comment.result;
+    }
+
+    async getPostComments(comment_id: string): Promise<IComment[]> {
+        const
+            comments: IComment[] = await this.commentsCollection.find({postCommentedId: comment_id}).toArray();
+        return await Promise.all(
+            comments.map(async comment => {
+                comment.userCommented = await this.getUsersFor(comment.userCommentedId);
+                return comment;
+            })
+        );
+
+
+        // return this.commentsCollection.find({postCommentedId: comment_id}).toArray()
+    }
+
+
 
     // async getLastUpload() {
     //     return new Promise((resolve, reject) => {

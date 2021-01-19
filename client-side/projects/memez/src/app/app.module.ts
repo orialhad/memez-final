@@ -24,6 +24,8 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { UploadComponent } from './reusable-components/upload/upload.component';
 import {ImageCropperModule} from 'ngx-image-cropper';
 import {AngularCropperjsModule} from 'angular-cropperjs';
+import { CommentsDialogComponent } from './reusable-components/comments-dialog/comments-dialog.component';
+import {PickerModule} from "@ctrl/ngx-emoji-mart";
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import {AngularCropperjsModule} from 'angular-cropperjs';
     SignupComponent,
     NavBarComponent,
     UploadComponent,
+    CommentsDialogComponent,
 
   ],
   imports: [
@@ -55,7 +58,8 @@ import {AngularCropperjsModule} from 'angular-cropperjs';
     MatListModule,
     FileUploadModule,
     ImageCropperModule,
-    AngularCropperjsModule
+    AngularCropperjsModule,
+    PickerModule
   ],
   providers: [],
   bootstrap: [LayoutComponent]

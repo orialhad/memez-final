@@ -11,6 +11,7 @@ import {IUploadController} from './upload.controller';
 import {logoutHandler, signupHandler} from '../handlers/ajax/authHandler';
 import {IAuthController} from './auth.controller';
 import {getFileHandler, uploadHandler} from '../handlers/ajax/upload.handler';
+import {ICommentController} from "./comment.controller";
 
 
 export interface IMainController extends IBaseController {
@@ -19,6 +20,7 @@ export interface IMainController extends IBaseController {
     authController: IAuthController
     uploadController: IUploadController
     likeController: ILikeController
+    commentController:ICommentController
     httpController: IHttpController
     mongoDbController: IMongoDBController
 
@@ -31,6 +33,7 @@ export class MainController extends BaseController implements IMainController {
         public userController: IUserController,
         public likeController: ILikeController,
         public postController: IPostController,
+        public commentController: ICommentController,
         public authController: IAuthController,
         public uploadController: IUploadController,
         public httpController: IHttpController,
@@ -42,6 +45,7 @@ export class MainController extends BaseController implements IMainController {
         this.likeController.main = this;
         this.postController.main = this;
         this.authController.main = this;
+        this.commentController.main = this;
         this.uploadController.main = this;
         this.httpController.main = this;
         this.mongoDbController.main = this;

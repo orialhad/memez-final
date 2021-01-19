@@ -9,7 +9,7 @@ import {autorun} from 'mobx';
   providedIn: 'root'
 })
 export class LikeStore {
-  @observable likes: ILike[] = [];
+  // @observable likes: ILike[] = [];
 
   constructor(
     public root: RootStore
@@ -20,10 +20,11 @@ export class LikeStore {
     });
   }
 
-  @action
-  async getLikes() {
-    return this.likes = await this.root.likeAdapter.getLikes();
-  }
+  // @action
+  // async getLikes() {
+  //   return this.likes = await this.root.likeAdapter.getLikes();
+  // }
+
 
   @action
   async createLike(post: IPost) {
