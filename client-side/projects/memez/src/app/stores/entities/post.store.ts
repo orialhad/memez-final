@@ -46,6 +46,7 @@ export class PostStore {
     };
     await this.root.postAdapter.createPost(newPost);
     this.root.ups.newFileName = undefined;
+    this.new_post = '';
   }
 
   @action
