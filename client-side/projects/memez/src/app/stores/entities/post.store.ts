@@ -60,7 +60,7 @@ export class PostStore {
   @computed get filteredPosts() {
     return this.searchTerm ?
            this.reversedPosts.filter((post) => {
-             return post.content.includes(this.searchTerm) || post.postedBy.username.includes(this.searchTerm);
+             return post.content?.includes(this.searchTerm)|| post.postedBy.username.includes(this.searchTerm);
            }) : this.reversedPosts;
   }
 

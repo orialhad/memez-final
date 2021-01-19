@@ -21,8 +21,8 @@
              class="user-name-input">
       <div
         class="password-error"
-        *ngIf="signupForm.get('password').hasError('strong') && !signupForm.pristine">
-        Must contain at least 1 number 1 lowercase 1 uppercase letter.
+        *ngIf="(password_1.hasError('strong')|| password.value.length < 6 )&& !password_1.pristine">
+        Password must contain at least 6 characters contain at least 1 number 1 lowercase 1 uppercase letter.
       </div>
       <input #password2
              type="password"
@@ -32,7 +32,7 @@
       ></div>
     <ng-container *mobxAutorun>
       <div
-        *ngIf="password.value !== password2.value && !signupForm.get('password2').pristine"
+        *ngIf="password.value !== password2.value && !password_2.pristine"
         class="password-error">
         Passwords doesn't match !
       </div>

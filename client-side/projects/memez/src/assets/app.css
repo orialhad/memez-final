@@ -722,6 +722,8 @@ mem-singup {
   margin-top: 5px;
   font-size: 12px;
   color: red;
+  width: 300px;
+  text-wrap: normal;
 }
 
 input.navbar-search-input {
