@@ -10,25 +10,29 @@
     </div>
     <div class="login-details"
          [formGroup]="signupForm">
+      <input #email
+             type="email"
+             placeholder="Enter your email address"
+             class="signup-inputs">
       <input #username
              type="text"
-             placeholder="enter your name"
-             class="user-name-input">
+             placeholder="choose username"
+             class="signup-inputs">
       <input #password
              type="password"
              formControlName="password"
              placeholder="enter your password"
-             class="user-name-input">
+             class="signup-inputs">
       <div
         class="password-error"
         *ngIf="(password_1.hasError('strong')|| password.value.length < 6 )&& !password_1.pristine">
-        Password must contain at least 6 characters contain at least 1 number 1 lowercase 1 uppercase letter.
+        Password must contain at least 6 characters , 1 number ,1 lowercase & 1 uppercase letter.
       </div>
       <input #password2
              type="password"
              formControlName="password2"
              placeholder="enter same password"
-             class="user-name-input"
+             class="signup-inputs"
       ></div>
     <ng-container *mobxAutorun>
       <div
@@ -39,8 +43,8 @@
 
     </ng-container>
     <button class="signup-button"
-            [disabled]="!signupForm.valid || signupForm.pristine"
-            (click)="sus.signUpUser(username.value,password.value,password2.value)">
+            [disabled]="!signupForm.valid || signupForm.pristine || password.value !== password2.value"
+            (click)="sus.signUpUser(username.value,password.value,password2.value,email.value)">
       Sign Up
     </button>
 

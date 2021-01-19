@@ -19,10 +19,10 @@ export class SignupStore {
     window['sus'] = this;
   }
 
-  @action async signUpUser(username: string,password:string,password2:string){
+  @action async signUpUser(username: string,password:string,password2:string, email){
     username = username.toLowerCase()
     if(password === password2) {
-       await this.root.authService.signup(username, password)
+       await this.root.authService.signup(username, password,email)
        await this.loginNavigation()
       console.log("User Created")
     }else {

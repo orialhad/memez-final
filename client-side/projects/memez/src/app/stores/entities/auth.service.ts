@@ -42,8 +42,8 @@ export class AuthService {
     return await this.root.authAdapter.validate(username, password);
   }
 
-  public async signup(username, password) {
-    return await this.root.authAdapter.signup(username, password);
+  public async signup(username, password, email) {
+    return await this.root.authAdapter.signup(username, password, email);
   }
 
 }

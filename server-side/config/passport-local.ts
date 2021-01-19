@@ -3,6 +3,7 @@ import * as passport from 'passport';
 import * as PassportLocal from 'passport-local';
 import * as bcrypt from 'bcrypt';
 import {IMongoDBController} from '../controllers/mongoDbcontroller';
+import {IUser} from "../../sheard/interfaces/IUser";
 
 
 const LocalStrategy = PassportLocal.Strategy;
@@ -14,7 +15,9 @@ const LocalStrategy = PassportLocal.Strategy;
 
 export const getLocalStrategy = (db: IMongoDBController) => new LocalStrategy(
     async (username, password, done) => {
-        const user = await db.getUserByName(username);
+        let re = /\S+@\S+\.\S+/,
+              user:IUser;
+        re.test(username) ?  user = await db.getUserByEmail(username):  user = await db.getUserByName(username)
         if (!user) {
             console.log('ERROR: no user found');
             return done('unauthorized access', false);

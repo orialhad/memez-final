@@ -27,8 +27,8 @@ export class AuthAdapter extends BaseAjaxAdapter {
     return await this.post(`auth/login`, {'username': username, 'password': password});
   }
 
-  async signup(username, password) {
-    return await this.post('auth/signup', {'username': username, 'password': password},);
+  async signup(username, password, email) {
+    return await this.post('auth/signup', {'username': username, 'password': password,'email':email});
   }
 
 

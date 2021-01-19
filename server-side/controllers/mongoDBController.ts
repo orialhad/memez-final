@@ -29,6 +29,8 @@ export interface IMongoDBController extends IBaseController {
 
     getUserByName(userName): Promise<IUser>;
 
+    getUserByEmail(email): Promise<IUser>;
+
     editProfilePic(id, avatar): Promise<any>
 
     getPosts(): Promise<IPost[]>;
@@ -88,7 +90,7 @@ export class MongoDBController extends BaseController implements IMongoDBControl
                 useUnifiedTopology: true
             });
 
-            this.client.connect(function(err) {
+            this.client.connect(function (err) {
                 if (err) {
                     console.error('Mongo Err', err);
                     return reject();
@@ -132,6 +134,15 @@ export class MongoDBController extends BaseController implements IMongoDBControl
     async getUserByName(username): Promise<IUser> {
         try {
             return await this.usersCollection.findOne({username});
+        } catch (err) {
+            console.log('no such user ', err);
+        }
+        return;
+    }
+
+    async getUserByEmail(email): Promise<IUser> {
+        try {
+            return await this.usersCollection.findOne({email});
         } catch (err) {
             console.log('no such user ', err);
         }

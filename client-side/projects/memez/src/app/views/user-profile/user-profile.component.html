@@ -17,9 +17,9 @@
       <div class="user-name">{{us.root.lis.currentUser.username.toUpperCase()}}</div>
       <div class="user-details">
         <mat-list>
-          <mat-list-item>Information</mat-list-item>
-          <mat-list-item>About</mat-list-item>
-          <mat-list-item>User</mat-list-item>
+          <mat-list-item >{{us.root.lis.currentUser.email ? us.root.lis.currentUser.email: 'Email Address'}}</mat-list-item>
+          <mat-list-item>Name</mat-list-item>
+          <mat-list-item>Age</mat-list-item>
         </mat-list>
       </div>
     </div>

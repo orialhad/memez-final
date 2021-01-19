@@ -19,13 +19,14 @@ export const logoutHandler = async function(this: IMainController, req: Request,
 
 export const signupHandler = async function(this: IMainController, req: Request, res: Response) {
 
-    const user: IUser = {username: req.body.username, password: req.body.password, avatar: ''};
+    const user: IUser = {username: req.body.username, password: req.body.password, avatar: '',email:req.body.email};
 
     try {
         //chek if already exist
         const exist = await this.userController.getUserByName(req.body.username);
         if (!exist) {
             user.password = await this.authController.generateHash(req.body.password);
+
             res.status(200).json({'statusCode': 400, msg: 'user created'});
             if (user.password) {
                 return await this.userController.createUser(user);
