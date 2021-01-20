@@ -792,7 +792,7 @@ input.navbar-search-input:focus {
   z-index: 1000;
   position: relative;
   /*left: 400px;*/
-  bottom: 151px;
+  bottom: 80px;
   font-size: 25px;
   font-weight: bold;
   border: #000000 solid 1px;
