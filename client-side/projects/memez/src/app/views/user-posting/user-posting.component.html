@@ -10,9 +10,12 @@
          class="upload-done">
       <img src="../../../assets/images/done.png" alt="done">
     </div>
+
     <div *ngIf="ps.root.ups.loading"
          class="upload-loading">
-      <div class="loader"></div>
+      <mat-spinner diameter="34">
+      </mat-spinner>
+<!--      <div class="loader"></div>-->
     </div>
   </div>
 

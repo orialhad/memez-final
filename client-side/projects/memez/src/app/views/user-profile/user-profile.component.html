@@ -4,7 +4,8 @@
     <div class="image-and-apply">
       <div class="user-image"
            (click)="us.openUploadDialogProfile()">
-        <img src="{{us.root.lis.currentUser.avatar}}">
+        <img *ngIf="us.root.lis.currentUser.avatar"
+          src="{{us.root.lis.currentUser.avatar}}">
       </div>
       <div class="apply-button">
         <button

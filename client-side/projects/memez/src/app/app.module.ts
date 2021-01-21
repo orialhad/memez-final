@@ -26,6 +26,7 @@ import {ImageCropperModule} from 'ngx-image-cropper';
 import {AngularCropperjsModule} from 'angular-cropperjs';
 import { CommentsDialogComponent } from './reusable-components/comments-dialog/comments-dialog.component';
 import {PickerModule} from "@ctrl/ngx-emoji-mart";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -41,26 +42,27 @@ import {PickerModule} from "@ctrl/ngx-emoji-mart";
     CommentsDialogComponent,
 
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MobxAngularModule,
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatIconModule,
-    FormsModule,
-    MatDialogModule,
-    MatListModule,
-    FileUploadModule,
-    ImageCropperModule,
-    AngularCropperjsModule,
-    PickerModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MobxAngularModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatIconModule,
+        FormsModule,
+        MatDialogModule,
+        MatListModule,
+        FileUploadModule,
+        ImageCropperModule,
+        AngularCropperjsModule,
+        PickerModule,
+        MatProgressSpinnerModule
+    ],
   providers: [],
   bootstrap: [LayoutComponent]
 })

@@ -10,8 +10,7 @@ import {Router} from '@angular/router';
 })
 export class LoginStore {
   @observable currentUser: IUser
-  @observable username: string;
-  @observable password: string;
+
 
 
   constructor(
@@ -24,8 +23,8 @@ export class LoginStore {
 
 
   @action
-  async loginVerification() {
-    this.root.authService.validate(this.username, this.password)
+  async loginVerification(username,password) {
+    this.root.authService.validate(username, password)
       .then((response) => {
         this.root.authService.setUserInfo({'user': response['user']});
         this.router.navigate(['feed']);
@@ -33,27 +32,19 @@ export class LoginStore {
     return
   }
 
-  // await this.root.us.getUsers()
-  // this.root.us.users.find(user => user?.username?.toLowerCase() === username?.toLowerCase())
-
 
   @action
-  async loginHandler() {
+  async loginHandler(username,password) {
     await this.root.us.getUsers()
-    // this.currentUser =  JSON.parse(localStorage.getItem('userInfo')).user
-    await this.loginVerification()
-
-
+    await this.loginVerification(username,password)
 
   }
-
 
 
   async signOutNavigation() {
     this.currentUser = null;
     await this.router.navigateByUrl(``)
   }
-
 
   async signUpNavigation() {
     await this.router.navigateByUrl(`signup`)

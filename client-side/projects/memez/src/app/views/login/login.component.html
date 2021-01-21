@@ -9,16 +9,16 @@
     </div>
 
     <div class="login-details">
-      <input [(ngModel)]="lis.username"
+      <input #username
               name="username"
               type="text" placeholder="Username or Email" class="signup-inputs">
-      <input [(ngModel)]="lis.password"
+      <input #password
              name="password"
              type="password" placeholder="Password" class="signup-inputs"
-             (keyup.enter)="lis.loginHandler()">
+             (keyup.enter)="lis.loginHandler(username.value,password.value)">
     </div>
     <button
-      class="login-button" (click)="lis.loginHandler()">login
+      class="login-button" (click)="lis.loginHandler(username.value,password.value)">login
     </button>
 
     <div class="new-account" (click)="lis.signUpNavigation()">Create New Account</div>

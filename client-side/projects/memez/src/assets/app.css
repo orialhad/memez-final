@@ -77,14 +77,14 @@ mem-nav-bar {
 }
 
 .nav-user-profile-img {
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
   border-radius: 100%;
   border: black solid 1px;
   margin-left: 15px;
   background-image: url("../assets/images/generic-avatar.png");
   background-repeat: no-repeat;
-  background-size: 30px;
+  background-size: 40px;
   background-position: center;
   background-color: white;
 
@@ -95,8 +95,8 @@ mem-nav-bar {
 }
 
 .nav-user-profile img {
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
   border-radius: 100%;
 }
 
@@ -249,7 +249,7 @@ img.post-content:hover {
 }
 
 
-.post-like {
+.like-comment-length {
   display: flex;
   align-items: center;
 }
@@ -412,7 +412,7 @@ input[type="file"] + label {
 /* LIKE BUTTON*/
 
 
-.like-btn:hover {
+.like-comment-btn:hover {
   cursor: pointer;
 
 }
@@ -830,8 +830,6 @@ cursor: pointer;
 }
 
 
-mat-dialog-container#mat-dialog-0 {
-}
 
 mem-comments-dialog.ng-star-inserted {
     height: 100%;
@@ -876,12 +874,7 @@ mem-comments-dialog.ng-star-inserted {
     /* border: 1px solid gray; */
 }
 
-.single-comment img{
-  height: 30px;
-  width: 30px;
-  margin: 0 5px;
-  border-radius: 100%;
-}
+
 
 
 .comment {
@@ -925,9 +918,29 @@ mem-comments-dialog.ng-star-inserted {
 }
 
 
-.comment-user-img {
+.comment-user-info {
     display: flex;
     align-items: center;
+  justify-content: center;
+}
+
+.comment-user-img{
+  height: 30px;
+  width: 30px;
+  margin: 1px 5px;
+  border-radius: 100%;
+  border: black solid 1px;
+  background-image: url("../assets/images/generic-avatar.png");
+  background-repeat: no-repeat;
+  background-size: 30px;
+  background-position: center;
+  background-color: white;
+}
+
+.comment-user-img img{
+  height: 30px;
+  width: 30px;
+  border-radius: 100%;
 }
 
 .comment_btn:hover {
@@ -973,6 +986,13 @@ border: #b1dbea 1px solid;
   flex-direction: row-reverse;
 }
 
-.single-comment.current .comment-user .comment-user-img{
+.single-comment.current .comment-user .comment-user-info{
   flex-direction: row-reverse;
+}
+
+
+
+
+circle.ng-star-inserted {
+    stroke: #77bbd6 !important;
 }
