@@ -61,6 +61,7 @@ mem-nav-bar {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  background: #77bbd64f;
   /* border: solid green 1px; */
   /* width: 1000%; */
 }
