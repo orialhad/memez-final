@@ -872,13 +872,14 @@ mem-comments-dialog.ng-star-inserted {
 .single-comment {
     padding: 10px;
     height: 100px;
+    /* width: 90%; */
     /* border: 1px solid gray; */
 }
 
 .single-comment img{
   height: 30px;
   width: 30px;
-  margin-left: 5px;
+  margin: 0 5px;
   border-radius: 100%;
 }
 
@@ -890,6 +891,7 @@ mem-comments-dialog.ng-star-inserted {
     justify-content: space-between;
     height: 100%;
     background: #ceebf775;
+    width: 95%;
 }
 
 .comment-content {
@@ -903,7 +905,7 @@ mem-comments-dialog.ng-star-inserted {
 .comment-time {
     font-size: 10px;
     color: #524747;
-    margin-right: 5px;
+    margin: 0 5px;
 }
 
 .comment-user {
@@ -951,6 +953,26 @@ mem-comments-dialog.ng-star-inserted {
 }
 
 hr{
-width: 100%;
-border: #b1dbea 1px solid;
+width: 100%;
+border: #b1dbea 1px solid;
+}
+
+
+
+
+
+.single-comment.current  {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+    /* width: 90%; */
+}
+
+
+.single-comment.current .comment-user {
+  flex-direction: row-reverse;
+}
+
+.single-comment.current .comment-user .comment-user-img{
+  flex-direction: row-reverse;
 }

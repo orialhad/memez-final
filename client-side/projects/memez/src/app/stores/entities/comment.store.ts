@@ -53,8 +53,10 @@ export class CommentStore {
       height: '700px'
     })
     dialogRef.componentInstance.post = await this.root.ps.getPostById(post_id)
+    dialogRef.componentInstance.currentUser = this.root.lis.currentUser;
     dialogRef.componentInstance.newComment.subscribe(async () => {
-        this.comment = dialogRef.componentInstance.comment
+        this.comment = dialogRef.componentInstance.comment;
+
         await this.root.cms.createComment(post_id, this.comment)
         dialogRef.close()
       }

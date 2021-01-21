@@ -33,6 +33,8 @@
       [currentUser]="us.root.lis.currentUser"
       (postLiked)="us.root.lks.handleLike($event)"
       (PostToDelete)="us.root.ps.deletePost($event)"
+      (commentClicked)="us.root.cms.openCommentsDialog(post._id)"
+      (comment)="us.root.cms.createComment(post._id,$event)"
     ></mem-post>
   </div>
 

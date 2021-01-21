@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IComment} from "../../../../../../../sheard/interfaces/IComment";
 import {IPost} from "../../../../../../../sheard/interfaces/IPost";
 import {observable} from "mobx-angular";
+import {IUser} from "../../../../../../../sheard/interfaces/IUser";
 
 @Component({
   selector: 'mem-comments-dialog',
@@ -14,6 +15,8 @@ export class CommentsDialogComponent implements OnInit {
   @Output() newComment = new EventEmitter();
 
   comment: string
+
+  currentUser:IUser = undefined;
 
   constructor() { }
 

@@ -1,7 +1,8 @@
 <div class="comments-wrapper">
   <div class="comments-container" >
     <div class="single-comment"
-           *ngFor="let comment of post.comments.slice().reverse()">
+           *ngFor="let comment of post.comments.slice().reverse()"
+         [ngClass]="currentUser.username === comment.userCommented.username ? 'current': 'single-comment'">
       <div class="comment">
         <div class="comment-user">
           <div class="comment-user-img">
