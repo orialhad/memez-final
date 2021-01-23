@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 })
 export class LoginStore {
   @observable currentUser: IUser
-
+  @observable wrongDetails: boolean = false
 
 
   constructor(
@@ -23,7 +23,7 @@ export class LoginStore {
 
 
   @action
-  async loginVerification(username,password) {
+  async login(username, password) {
     this.root.authService.validate(username, password)
       .then((response) => {
         this.root.authService.setUserInfo({'user': response['user']});
@@ -32,13 +32,6 @@ export class LoginStore {
     return
   }
 
-
-  @action
-  async loginHandler(username,password) {
-    await this.root.us.getUsers()
-    await this.loginVerification(username,password)
-
-  }
 
 
   async signOutNavigation() {

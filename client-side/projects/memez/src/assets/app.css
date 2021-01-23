@@ -727,7 +727,7 @@ mem-singup {
   justify-content: center;
 }
 
-.password-error{
+.details-error{
   margin-top: 5px;
   font-size: 12px;
   color: red;

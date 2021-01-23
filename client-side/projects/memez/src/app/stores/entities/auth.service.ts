@@ -39,7 +39,12 @@ export class AuthService {
   }
 
   public async validate(username, password) {
+    try{
     return await this.root.authAdapter.validate(username, password);
+  }catch (e) {
+      this.root.lis.wrongDetails = true
+      console.error(e)
+    }
   }
 
   public async signup(username, password, email) {

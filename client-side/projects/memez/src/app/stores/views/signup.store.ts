@@ -23,7 +23,7 @@ export class SignupStore {
     username = username.toLowerCase()
     if(password === password2) {
        await this.root.authService.signup(username, password, email)
-        await this.root.lis.loginHandler(username,password)
+        await this.root.lis.login(username,password)
       console.log("User Created")
     }else {
       console.log("Password doesn't match")

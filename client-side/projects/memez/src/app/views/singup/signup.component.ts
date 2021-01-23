@@ -26,9 +26,9 @@ export class SignupComponent implements OnInit {
       password2:new FormControl('',
         [Validators.required]),
       username:new FormControl('',
-        [Validators.minLength(3)]),
-      email:new FormControl('',
-        [Validators.email]),
+        [Validators.minLength(3),Validators.maxLength(12)]),
+      email_add:new FormControl('',
+        [Validators.required,Validators.email]),
     });
 
 
@@ -44,8 +44,8 @@ export class SignupComponent implements OnInit {
   }
   get password_2() {
     return this.signupForm.get('password2')
-  }get email() {
-    return this.signupForm.get('email')
+  }get email_add() {
+    return this.signupForm.get('email_add')
   }
 
 

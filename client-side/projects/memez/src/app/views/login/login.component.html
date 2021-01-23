@@ -15,10 +15,17 @@
       <input #password
              name="password"
              type="password" placeholder="Password" class="signup-inputs"
-             (keyup.enter)="lis.loginHandler(username.value,password.value)">
+             (keyup.enter)="lis.login(username.value,password.value)">
     </div>
+    <ng-container *mobxAutorun>
+      <div
+        *ngIf="lis.wrongDetails"
+        class="details-error">
+        Invalid Username/Password
+      </div>
+    </ng-container>
     <button
-      class="login-button" (click)="lis.loginHandler(username.value,password.value)">login
+      class="login-button" (click)="lis.login(username.value,password.value)">login
     </button>
 
     <div class="new-account" (click)="lis.signUpNavigation()">Create New Account</div>

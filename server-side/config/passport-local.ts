@@ -19,10 +19,10 @@ export const getLocalStrategy = (db: IMongoDBController) => new LocalStrategy(
               user:IUser;
         re.test(username) ?  user = await db.getUserByEmail(username):  user = await db.getUserByName(username)
         if (!user) {
-            console.log('ERROR: no user found');
+            // console.log('ERROR: no user found');
             return done('unauthorized access', false);
         }
-        console.log('checking username: ' + user.username);
+        // console.log('checking username: ' + user.username);
         if (await bcrypt.compare(password, user.password)) {
             done(null, user)
         } else {
@@ -32,7 +32,7 @@ export const getLocalStrategy = (db: IMongoDBController) => new LocalStrategy(
 );
 
 export const isLoggedIn = (req, res,next)=>{
-    console.log('session ', req.session);
+    // console.log('session ', req.session);
     if (req.isAuthenticated()) {
         return  next();
     }
@@ -55,9 +55,9 @@ passport.deserializeUser(function (user, done) {
 
 export const auth = ()=> {
     return (req, res, next) => {
-        console.log('Authenticating... (username and password)');
+        // console.log('Authenticating... (username and password)');
         passport.authenticate('local', (error, user, info) => {
-            console.log('B4: ' + JSON.stringify(user));
+            // console.log('B4: ' + JSON.stringify(user));
             if (error) {
                 res.status(400).json({'statusCode': 400, 'message': error});
             }
