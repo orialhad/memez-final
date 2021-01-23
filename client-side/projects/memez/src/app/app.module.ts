@@ -27,6 +27,7 @@ import {AngularCropperjsModule} from 'angular-cropperjs';
 import { CommentsDialogComponent } from './reusable-components/comments-dialog/comments-dialog.component';
 import {PickerModule} from "@ctrl/ngx-emoji-mart";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         ImageCropperModule,
         AngularCropperjsModule,
         PickerModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        FontAwesomeModule
     ],
   providers: [],
   bootstrap: [LayoutComponent]
