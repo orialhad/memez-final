@@ -18,6 +18,13 @@
         </div>
         <div class="comment-content">{{comment.content}}</div>
       </div>
+
+      <div *ngIf="currentUser?._id === comment?.userCommentedId"
+           class="delete_comment"
+           (click)="onDelete(comment._id)">
+        <mat-icon class="gray_icon">delete</mat-icon>
+      </div>
+
     </div>
   </div>
 
@@ -34,3 +41,4 @@
 </div>
 
 <!--<emoji-mart title="Pick your emoji…" emoji="point_up"></emoji-mart>-->
+

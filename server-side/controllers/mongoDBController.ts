@@ -65,6 +65,7 @@ export interface IMongoDBController extends IBaseController {
     close(): Promise<any>
 
 
+    deletePostComments(post_id: string): Promise<any>;
 }
 
 
@@ -193,11 +194,24 @@ export class MongoDBController extends BaseController implements IMongoDBControl
             const id           = new ObjectID(post_id),
                   postToDelete = await this.postsCollection.deleteOne({_id: id});
             await this.deletePostLikes(post_id);
+            await this.deletePostComments(post_id);
             return postToDelete.result;
         } catch (e) {
-            console.log(e);
+            console.error(e);
 
         }
+    }
+    async deletePostLikes(post_id: string): Promise<any> {
+        try{
+            return await this.likesCollection.deleteMany({'postLiked._id': post_id});
+        }catch (e) {
+            console.error(e)
+        }
+
+    }
+
+    async deletePostComments(post_id: string): Promise<any> {
+        return await this.commentsCollection.deleteMany({postCommentedId: post_id});
     }
 
     async getPostLikes(post_id: string): Promise<ILike[]> {
@@ -225,9 +239,7 @@ export class MongoDBController extends BaseController implements IMongoDBControl
         return like.result;
     }
 
-    async deletePostLikes(post_id: string): Promise<any> {
-        return await this.likesCollection.deleteMany({'postLiked._id': post_id});
-    }
+
 
     async getFile(filename): Promise<any> {
         return new Promise((resolve, reject) => {

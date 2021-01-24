@@ -975,9 +975,9 @@ hr{width: 100%;border: #b1dbea 1px solid;color: brown;}
 
 .single-comment.current  {
   display: flex;
-  flex-direction: column-reverse;
-  align-items: flex-end;
-    /* width: 90%; */
+  flex-direction: row-reverse;
+  align-items: center;
+  /* width: 90%; */
 }
 
 
@@ -994,4 +994,19 @@ hr{width: 100%;border: #b1dbea 1px solid;color: brown;}
 
 circle.ng-star-inserted {
     stroke: #77bbd6 !important;
+}
+
+.delete_comment{
+  margin-right: 10px;
+}
+
+.delete_comment:hover{
+  cursor: pointer;
+}
+
+.gray_icon{
+  color: #e7eaee;
+}
+.gray_icon:hover{
+  color: black;
 }
