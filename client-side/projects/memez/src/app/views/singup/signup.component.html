@@ -14,7 +14,7 @@
              type="email"
              formControlName = "email_add"
              placeholder="Enter your email address"
-             class="signup-inputs">
+             class="signup-login-inputs">
       <ng-container *mobxAutorun>
         <div
           *ngIf="email_add.invalid && !email_add.pristine"
@@ -28,12 +28,12 @@
       <input #username
              type="text"
              placeholder="choose username"
-             class="signup-inputs">
+             class="signup-login-inputs">
       <input #password
              type="password"
              formControlName="password"
              placeholder="enter your password"
-             class="signup-inputs">
+             class="signup-login-inputs">
       <ng-container *mobxAutorun>
         <div
           class="details-error"
@@ -45,8 +45,8 @@
              type="password"
              formControlName="password2"
              placeholder="enter same password"
-             class="signup-inputs"
-      ></div>
+             class="signup-login-inputs"
+      >
     <ng-container *mobxAutorun>
       <div
         *ngIf="password.value !== password2.value && !password_2.pristine"
@@ -54,11 +54,15 @@
         Passwords doesn't match !
       </div>
     </ng-container>
-    <button class="signup-button"
-            [disabled]="!signupForm.valid || signupForm.pristine || password.value !== password2.value"
-            (click)="sus.signUpUser(username.value,password.value,password2.value,email.value)">
-      Sign Up
-    </button>
+
+    </div>
+    <div class="log-sig-btn">
+      <button class="login-signup-button"
+              [disabled]="!signupForm.valid || signupForm.pristine || password.value !== password2.value"
+              (click)="sus.signUpUser(username.value,password.value,password2.value,email.value)">
+        Sign Up
+      </button>
+    </div>
 
   </div>
 

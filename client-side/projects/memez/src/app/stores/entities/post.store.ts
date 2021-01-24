@@ -88,8 +88,8 @@ export class PostStore {
 
   @action async openUploadDialogPosting() {
     let dialogRef = this.dialog.open(UploadComponent, {
-      width : '800px',
-      height: '840px'
+      width : '900px',
+      height: '700px'
     })
     dialogRef.componentInstance.uploadedFiles.subscribe(() => {
       this.newFile = dialogRef.componentInstance.resultImage

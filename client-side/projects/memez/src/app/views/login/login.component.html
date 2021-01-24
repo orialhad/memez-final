@@ -10,11 +10,11 @@
 
     <div class="login-details">
       <input #username
-              name="username"
-              type="text" placeholder="Username or Email" class="signup-inputs">
+             name="username"
+             type="text" placeholder="Username or Email" class="signup-login-inputs">
       <input #password
              name="password"
-             type="password" placeholder="Password" class="signup-inputs"
+             type="password" placeholder="Password" class="signup-login-inputs"
              (keyup.enter)="lis.login(username.value,password.value)">
     </div>
     <ng-container *mobxAutorun>
@@ -24,9 +24,13 @@
         Invalid Username/Password
       </div>
     </ng-container>
-    <button
-      class="login-button" (click)="lis.login(username.value,password.value)">login
-    </button>
+
+
+    <div class="log-sig-btn">
+      <button
+        class="login-signup-button" (click)="lis.login(username.value,password.value)">login
+      </button>
+    </div>
 
     <div class="new-account" (click)="lis.signUpNavigation()">Create New Account</div>
 
