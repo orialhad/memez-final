@@ -1,33 +1,30 @@
 //region Imports
-import * as express from 'express';
-import {Express, Request, Response} from 'express';
-import * as bodyParser from 'body-parser';
-import * as cors from 'cors';
+import * as express                      from 'express';
+import {Express, Request, Response}      from 'express';
+import * as bodyParser                   from 'body-parser';
+import * as cors                         from 'cors';
 import {BaseController, IBaseController} from './base.controller';
-import * as events from 'events';
-import {config} from '../config/config';
-import * as passport from 'passport';
-import {auth, getLocalStrategy} from '../config/passport-local';
-import session = require('express-session');
-import expressSanitizer = require( 'express-sanitizer');
-import {IPost} from '../../sheard/interfaces/IPost';
+import * as events                       from 'events';
+import {config}                          from '../config/config';
+import * as passport                     from 'passport';
+import {auth, getLocalStrategy}          from '../config/passport-local';
+import * as session                      from 'express-session';
+// import expressSanitizer from  'express-sanitizer';
+
+import expressSanitizer = require('express-sanitizer');
+import {IPost}                           from '../../sheard/interfaces/IPost';
 import dayjs = require('dayjs');
-import cookieParser = require('cookie-parser')
-
-
+import cookieParser = require('cookie-parser');
 
 
 // socket.io
 import {Server as IOServer, Socket as SocketIO_Socket} from 'socket.io';
-import * as http from 'http';
-import * as socketio from 'socket.io';
-import {APIEvent} from '../../sheard/api/api-events';
-import {event_mapper} from '../handlers/socket/event-mapper';
+import * as http                                       from 'http';
+import * as socketio                                   from 'socket.io';
+import {APIEvent}                                      from '../../sheard/api/api-events';
+import {event_mapper}                                  from '../handlers/socket/event-mapper';
 
 //endregion
-
-
-
 
 
 export interface IHttpController extends IBaseController {
@@ -41,22 +38,28 @@ export class HttpController extends BaseController implements IHttpController {
     private io_server: IOServer;
     private http_server: http.Server;
 
-    express_app: Express = express();
+    express_app: Express        = express();
     events: events.EventEmitter = new events.EventEmitter();
 
     constructor() {
         super();
     }
 
+
     async init() {
-        this.express_app.use(session({secret: 'blahblahblah', resave: true, saveUninitialized: true, cookie: { maxAge: 7000000 }}));
-        this.express_app.use(expressSanitizer());
+        this.express_app.use(session({
+            secret           : 'blahblahblah',
+            resave           : false,
+            saveUninitialized: true,
+            cookie           : {maxAge: 6000000}
+        }));
         this.express_app.use(bodyParser.urlencoded({extended: false}));
         this.express_app.use(bodyParser.json());
-        this.express_app.use(cookieParser())
         this.express_app.use(cors());
         this.express_app.use(passport.initialize());
         this.express_app.use(passport.session());
+        this.express_app.use(expressSanitizer());
+
         passport.use(getLocalStrategy(this.main.mongoDbController));
 
         this.registerEndpoints();
@@ -77,12 +80,12 @@ export class HttpController extends BaseController implements IHttpController {
             This.sockets.push(socket);
             const idx = This.sockets.indexOf(socket);
             socket.send('Hi There How R U today ? ');
-            console.log(`SOCKET CONNECTED to slot ${idx}. Total ${This.sockets.length-1} clients connected`);
+            console.log(`SOCKET CONNECTED to slot ${idx}. Total ${This.sockets.length - 1} clients connected`);
             console.log(socket.connected, 'socket.connected');
 
             socket.on('disconnected', () => {
                 This.sockets.splice(idx, 1);
-                console.log(`SOCKET CONNECTED to slot ${idx}. Total ${This.sockets.length-1} clients connected`);
+                console.log(`SOCKET CONNECTED to slot ${idx}. Total ${This.sockets.length - 1} clients connected`);
             });
 
             socket.on('ping', async () => {
@@ -106,8 +109,6 @@ export class HttpController extends BaseController implements IHttpController {
     }
 
 
-
-
     registerEndpoints() {
         // //get all users
         // this.express_app.get('/api/users', (req: Request, res: Response) => {
@@ -117,8 +118,9 @@ export class HttpController extends BaseController implements IHttpController {
         // this.express_app.get('/api/users/:id', (req: Request, res: Response) => {
         //     this.events.emit('user', req, res);
         // });
-        // // get current user
-        // this.express_app.get('/api/users/:id', (req: Request, res: Response) => {
+        // get current user
+        // this.express_app.get('/api/current_user', (req: Request, res: Response) => {
+        //     console.log('3', req.session);
         //     this.events.emit('get_current', req, res);
         // });
         //create new user

@@ -4,8 +4,13 @@
     <div class="image-and-apply">
       <div class="user-image"
            (click)="us.openUploadDialogProfile()">
-        <img *ngIf="us.root.lis.currentUser.avatar"
-          src="{{us.root.lis.currentUser.avatar}}">
+        <img *ngIf="us.root.lis.currentUser?.avatar"
+             src="{{us.root.lis.currentUser.avatar}}">
+      </div>
+      <div *ngIf="us.root.ups.loading"
+           class="apply-button">
+        <mat-spinner diameter="25">
+        </mat-spinner>
       </div>
       <div class="apply-button">
         <button
@@ -15,10 +20,42 @@
       </div>
     </div>
     <div class="user-details-all">
-      <div class="user-name">{{us.root.lis.currentUser.username.toUpperCase()}}</div>
+      <div class="user-name">{{us.root.lis.currentUser?.username.toUpperCase()}}</div>
       <div class="user-details">
         <mat-list>
-          <mat-list-item >{{us.root.lis.currentUser.email ? us.root.lis.currentUser.email: 'Email Address'}}</mat-list-item>
+          <mat-list-item
+            class="user-email"
+            (click)="us.toggleEdit()">
+            {{us.root.lis.currentUser?.email ? us.root.lis.currentUser.email : 'Email Address'}}
+          </mat-list-item>
+          <div class="edit-user-details"
+               *ngIf="us.isEditEmail">
+
+            <form class="form">
+              <mat-form-field class="editEmail">
+                <mat-label>Edit Email</mat-label>
+                <input type="email" matInput
+                       #editEmail
+                       (keyup.enter)="us.editEmail(us.root.lis.currentUser._id,editEmail.value)"
+                       [formControl]="emailFormControl"
+                       [errorStateMatcher]="matcher"
+                       placeholder="Ex. Blah@gmail.com">
+                <mat-hint></mat-hint>
+                <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                  Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="emailFormControl.hasError('required')">
+                  Email is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </form>
+
+            <button type="submit"
+                    [disabled]="!editEmail.value"
+                    (click)="us.editEmail(us.root.lis.currentUser._id,editEmail.value)"
+            >Apply
+            </button>
+          </div>
           <mat-list-item>Name</mat-list-item>
           <mat-list-item>Age</mat-list-item>
         </mat-list>

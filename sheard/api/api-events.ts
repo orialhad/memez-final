@@ -7,7 +7,10 @@ export type APIEvent =
     | 'unlike'
     | 'createLike'
     | 'getUsers'
+    | 'getUser'
+    | 'usersUpdate'
     | 'editProfilePic'
+    | 'editEmail'
     | 'createComment'
     | 'deleteComment'
     ;

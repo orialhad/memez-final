@@ -7,9 +7,9 @@ import {IUserController} from './user.controller';
 import {editProfilePicHandler, getUsersHandler} from '../handlers/ajax/user.handler';
 import {createPostHandler, deletePostHandler, getPostsHandler,} from '../handlers/ajax/post.ajax.handler';
 import {createLikeHandler, getLikesHandler, unLikeHandler,} from '../handlers/ajax/like.ajax.handler';
-import {IUploadController} from './upload.controller';
-import {logoutHandler, signupHandler} from '../handlers/ajax/authHandler';
-import {IAuthController} from './auth.controller';
+import {IUploadController}                                from './upload.controller';
+import {getCurrUserHandler, logoutHandler, signupHandler} from '../handlers/ajax/authHandler';
+import {IAuthController}                                  from './auth.controller';
 import {getFileHandler, uploadHandler} from '../handlers/ajax/upload.handler';
 import {ICommentController} from "./comment.controller";
 
@@ -63,6 +63,14 @@ export class MainController extends BaseController implements IMainController {
     }
 
     addEventListeners() {
+        this.httpController.events.addListener('signup', signupHandler.bind(this));
+        this.httpController.events.addListener('upload_file', uploadHandler.bind(this));
+        this.httpController.events.addListener('logout', logoutHandler.bind(this));
+        this.httpController.events.addListener('get_file', getFileHandler.bind(this));
+        this.httpController.events.addListener('get_current', getCurrUserHandler.bind(this));
+
+
+
         // this.httpController.events.addListener('all_users', getUsersHandler.bind(this));
         // this.httpController.events.addListener('edit_profile_pic', editProfilePicHandler.bind(this));
         // this.httpController.events.addListener('all_posts', getPostsHandler.bind(this));
@@ -71,13 +79,6 @@ export class MainController extends BaseController implements IMainController {
         // this.httpController.events.addListener('all_likes', getLikesHandler.bind(this));
         // this.httpController.events.addListener('create_like', createLikeHandler.bind(this));
         // this.httpController.events.addListener('delete_like', unLikeHandler.bind(this));
-        this.httpController.events.addListener('signup', signupHandler.bind(this));
-        this.httpController.events.addListener('upload_file', uploadHandler.bind(this));
-        this.httpController.events.addListener('logout', logoutHandler.bind(this));
-        this.httpController.events.addListener('get_file', getFileHandler.bind(this));
-
-
-        // this.httpController.events.addListener('get_current', getCurrUSerHandler.bind(this))
         // this.httpController.events.addListener('get_last_file', getLastUploadHandler.bind(this))
         // this.httpController.events.addListener('user', getUserByIdHandler.bind(this))
         // this.httpController.events.addListener('post_likes', getPostLikes.bind(this))

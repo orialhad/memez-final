@@ -26,6 +26,7 @@ export class LoginStore {
   async login(username, password) {
     this.root.authService.validate(username, password)
       .then((response) => {
+        this.currentUser = response['user']
         this.root.authService.setUserInfo({'user': response['user']});
         this.router.navigate(['feed']);
       })

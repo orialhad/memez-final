@@ -17,7 +17,9 @@ export class AuthAdapter extends BaseAjaxAdapter {
   // async login(user: IUser) {
   //   return await this.post('login', user);
   // }
-
+  async getCurrent() {
+    return await this.get(`current_user`);
+  }
   async logout() {
     return await this.get('logout');
   }
@@ -28,6 +30,11 @@ export class AuthAdapter extends BaseAjaxAdapter {
 
   async signup(username, password, email) {
     return await this.post('auth/signup', {'username': username, 'password': password,'email':email});
+  }
+
+  async getPostByID(post_id: string) {
+    return await this.get(`posts/${post_id} `);
+
   }
 
 

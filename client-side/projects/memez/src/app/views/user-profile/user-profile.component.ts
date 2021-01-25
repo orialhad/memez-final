@@ -1,5 +1,16 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {UserStore} from '../../stores/entities/user.store';
+import {UserStore}                                  from '../../stores/entities/user.store';
+import {ErrorStateMatcher}                                   from '@angular/material/core';
+import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+
+}
+
 
 @Component({
   selector: 'mem-user-profile',
@@ -9,12 +20,25 @@ import {UserStore} from '../../stores/entities/user.store';
 })
 export class UserProfileComponent implements OnInit {
 
+
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+
+  matcher = new MyErrorStateMatcher();
+
   constructor(
     public us: UserStore
-  ) { }
+  ) {
+    setTimeout(async () => {
+      await this.us.getCurrentUser();
+      await this.us.root.ps.getPosts();
+    }, 200);
+  }
 
-  ngOnInit(): void {
-    this.us.root.us.getCurrentUser()
+  async ngOnInit(): Promise<void> {
+
   }
 
 }

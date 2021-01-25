@@ -1,8 +1,8 @@
 <div class="user-new-post" *mobxAutorun>
-  <div class="new-post-heading">MEME of the day; </div>
-    <input  [(ngModel)]="ps.new_post"
-           class="newPostInput"
-           placeholder="Enter new Post">
+  <div class="new-post-heading">MEME of the day;</div>
+  <input [(ngModel)]="ps.new_post"
+         class="newPostInput"
+         placeholder="Enter new Post">
 
   <div class="upload_dialog_btn" *mobxAutorun>
     <button (click)="ps.openUploadDialogPosting()">Upload File</button>
@@ -15,7 +15,6 @@
          class="upload-loading">
       <mat-spinner diameter="34">
       </mat-spinner>
-<!--      <div class="loader"></div>-->
     </div>
   </div>
 
@@ -25,5 +24,5 @@
       [disabled]="ps.new_post === '' && !ps.root.ups.newFileName"
       (click)="ps.createPost(ps.new_post)">POST
     </button>
-</ng-container>
+  </ng-container>
 </div>

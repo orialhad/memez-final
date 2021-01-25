@@ -339,7 +339,7 @@ mem-user-posting {
   border-radius: 15px;
 }
 
-.example-form {
+.form {
   min-width: 500px;
   max-width: 700px;
   width: 100%;
@@ -511,6 +511,7 @@ mem-user-profile {
   flex-direction: row;
   border-radius: 15px;
   width: 100%;
+  /* height: 252px; */
   margin: 40px 0 40px 0;
   background: white;
 }
@@ -557,6 +558,7 @@ mem-user-profile {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 5px;
 }
 
 .apply-button button {
@@ -1010,3 +1012,22 @@ circle.ng-star-inserted {
 .gray_icon:hover{
   color: black;
 }
+
+
+.edit-user-details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.editEmail {
+    margin: 0 10px;
+    /* width: 150px; */
+}
+.user-email:hover{
+  cursor: pointer;
+}
+
+button {}
+
+.mat-form-field-infix.ng-tns-c101-0 {}

@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {RootStore} from '../root.store';
+import {Injectable}                   from '@angular/core';
+import {RootStore}                    from '../root.store';
 import {action, computed, observable} from 'mobx-angular';
-import {IUser} from '../../../../../../../sheard/interfaces/IUser';
-import {autorun} from 'mobx';
-import {BaseUrl} from '../../config/config';
-import {UploadComponent} from '../../reusable-components/upload/upload.component';
-import {MatDialog} from '@angular/material/dialog';
+import {IUser}                        from '../../../../../../../sheard/interfaces/IUser';
+import {autorun}                      from 'mobx';
+import {BaseUrl}                      from '../../config/config';
+import {UploadComponent}              from '../../reusable-components/upload/upload.component';
+import {MatDialog}                    from '@angular/material/dialog';
 
 
 @Injectable({
@@ -13,8 +13,9 @@ import {MatDialog} from '@angular/material/dialog';
 })
 export class UserStore {
   @observable users: IUser[] = [];
-
   @observable userProfileImage: File;
+
+  @observable isEditEmail: boolean = false;
 
   constructor(
     public root: RootStore,
@@ -22,9 +23,7 @@ export class UserStore {
   ) {
     this.root.us = this;
     window['us'] = this;
-    autorun(() => {
-
-    });
+    this.listenToUserUpdate();
   }
 
 
@@ -40,20 +39,35 @@ export class UserStore {
       id     = user._id,
       avatar = BaseUrl + '/image/' + filename;
     await this.root.userAdapter.editProfilePic(id, avatar);
-    this.updateLocaleStorage(avatar);
-    this.root.lis.currentUser.avatar = avatar;
+    // this.updateLocaleStorage(avatar);
+    await this.getCurrentUser()
     this.root.ups.newFileName = undefined;
   }
 
-  @action updateLocaleStorage(avatar) {
-    const currentLocalStorage = JSON.parse(localStorage.getItem('userInfo')).user;
-    const updatedLocalStorage = JSON.stringify({user: {...currentLocalStorage, avatar: avatar}});
-    localStorage.setItem('userInfo', updatedLocalStorage);
+
+  @action
+  async editEmail(userId: string, email: string) {
+    try {
+      await this.root.userAdapter.editEmail(userId, email);
+    }catch (e) {
+     console.error(e)
+    }
+    this.isEditEmail = false;
+    await this.getCurrentUser();
   }
 
 
-  @action getCurrentUser() {
-    this.root.lis.currentUser = JSON.parse(localStorage.getItem('userInfo')).user;
+  // @action updateLocaleStorage(avatar) {
+  //   const currentLocalStorage = JSON.parse(localStorage.getItem('userInfo')).user;
+  //   const updatedLocalStorage = JSON.stringify({user: {...currentLocalStorage, avatar: avatar}});
+  //   localStorage.setItem('userInfo', updatedLocalStorage);
+  // }
+
+
+  @action
+  async getCurrentUser() {
+    const id = JSON.parse(localStorage.getItem('userInfo')).user._id;
+    this.root.lis.currentUser = await this.root.userAdapter.getUserById(id)
   }
 
   @computed get currentUserPosts() {
@@ -74,6 +88,16 @@ export class UserStore {
       this.root.ups.onUpload(this.userProfileImage).then();
     });
     dialogRef1.afterClosed().subscribe(() => {
+    });
+  }
+
+  @action toggleEdit(){
+    this.isEditEmail ? this.isEditEmail = false : this.isEditEmail = true
+  }
+
+  listenToUserUpdate() {
+    this.root.socketAdapter.listenToEvent('usersUpdate', user => {
+      this.root.lis.currentUser = user;
     });
   }
 

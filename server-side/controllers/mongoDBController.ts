@@ -1,14 +1,18 @@
-import {BaseController, IBaseController} from './base.controller';
+import {BaseController, IBaseController}            from './base.controller';
 import {Collection, Db, GridFSBucket, MongoClient,} from 'mongodb';
-import {IUser} from '../../sheard/interfaces/IUser';
-import {IPost} from '../../sheard/interfaces/IPost';
-import {ILike} from '../../sheard/interfaces/ILike';
-import {config} from '../config/config';
-import {IComment} from "../../sheard/interfaces/IComment";
+import {IUser}                                      from '../../sheard/interfaces/IUser';
+import {IPost}                                      from '../../sheard/interfaces/IPost';
+import {ILike}                                      from '../../sheard/interfaces/ILike';
+import {config}                                     from '../config/config';
+import {IComment}                                   from '../../sheard/interfaces/IComment';
+
+
 // import {Grid} from 'gridfs-stream';
 import Grid = require('gridfs-stream');
+import * as session                                 from 'express-session';
 
-const fs = require('fs');
+const fs         = require('fs');
+const MongoStore = require('connect-mongo')(session);
 
 const
     mongo       = require('mongodb'),
@@ -22,9 +26,11 @@ export interface IMongoDBController extends IBaseController {
     // run(): Promise<void>;
     // gfs: any;
 
+    sessionStore: any;
+
     getUsers(): Promise<IUser[]>;
 
-    getUser(id): Promise<IUser>;
+    getUserById(id): Promise<IUser>;
 
     getUserByName(userName): Promise<IUser>;
 
@@ -64,8 +70,9 @@ export interface IMongoDBController extends IBaseController {
 
     close(): Promise<any>
 
-
     deletePostComments(post_id: string): Promise<any>;
+
+    editEmail(id: string, email: string): Promise<any>;
 }
 
 
@@ -79,6 +86,8 @@ export class MongoDBController extends BaseController implements IMongoDBControl
     commentsCollection: Collection;
     gfs;
     gridFSBucket;
+    sessionStore;
+
 
     // uploadCollection: Collection;
 
@@ -97,7 +106,7 @@ export class MongoDBController extends BaseController implements IMongoDBControl
                 useUnifiedTopology: true
             });
 
-            this.client.connect(function (err) {
+            this.client.connect(function(err) {
                 if (err) {
                     console.error('Mongo Err', err);
                     return reject();
@@ -105,16 +114,18 @@ export class MongoDBController extends BaseController implements IMongoDBControl
                 console.log('Connected successfully to Mongo');
                 This.db = This.client.db(config.dbName);
 
+
                 //This.gfs = Grid(This.db, This.client);
-                This.gfs = Grid(This.db, mongo);
+                This.gfs          = Grid(This.db, mongo);
                 This.gridFSBucket = new GridFSBucket(This.db, {bucketName: 'uploads'});
 
-                This.likesCollection = This.db.collection('likes');
-                This.postsCollection = This.db.collection('posts');
-                This.usersCollection = This.db.collection('users');
+                This.likesCollection    = This.db.collection('likes');
+                This.postsCollection    = This.db.collection('posts');
+                This.usersCollection    = This.db.collection('users');
                 This.commentsCollection = This.db.collection('comments');
 
                 This.gfs.collection('uploads');
+                This.sessionStore = new MongoStore({client:This.client  , collection: 'sessions' })
 
                 resolve();
             });
@@ -134,7 +145,7 @@ export class MongoDBController extends BaseController implements IMongoDBControl
         return this.usersCollection.find({}).toArray();
     }
 
-    async getUser(id): Promise<IUser> {
+    async getUserById(id): Promise<IUser> {
         const userId = new ObjectID(id);
         return await this.usersCollection.findOne({_id: userId});
     }
@@ -146,9 +157,10 @@ export class MongoDBController extends BaseController implements IMongoDBControl
             console.log('no such user ', err);
         }
         return;
+
     }
 
-    async getUserByEmail(email): Promise<IUser> {
+    async getUserByEmail(email: string): Promise<IUser> {
         try {
             return await this.usersCollection.findOne({email});
         } catch (err) {
@@ -161,7 +173,16 @@ export class MongoDBController extends BaseController implements IMongoDBControl
         const _id = new ObjectID(id);
         return await this.usersCollection.updateOne(
             {_id: _id}, {$set: {avatar: avatar}});
+    }
 
+    async editEmail(id: string, email: string): Promise<any> {
+        const _id = new ObjectID(id);
+        if (this.validateEmail(email)) {
+            return await this.usersCollection.updateOne(
+                {_id: _id}, {$set: {email: email}});
+        } else {
+            console.error('this is not a valid email');
+        }
     }
 
 
@@ -180,7 +201,7 @@ export class MongoDBController extends BaseController implements IMongoDBControl
             posts: IPost[] = await this.getPosts();
         return await Promise.all(
             posts.map(async post => {
-                post.likes = await this.getPostLikes(post._id.toString());
+                post.likes    = await this.getPostLikes(post._id.toString());
                 post.postedBy = await this.getUsersFor(post.postedBy_id);
                 post.comments = await this.getPostComments(post._id.toString());
                 return post;
@@ -201,11 +222,12 @@ export class MongoDBController extends BaseController implements IMongoDBControl
 
         }
     }
+
     async deletePostLikes(post_id: string): Promise<any> {
-        try{
+        try {
             return await this.likesCollection.deleteMany({'postLiked._id': post_id});
-        }catch (e) {
-            console.error(e)
+        } catch (e) {
+            console.error(e);
         }
 
     }
@@ -240,7 +262,6 @@ export class MongoDBController extends BaseController implements IMongoDBControl
     }
 
 
-
     async getFile(filename): Promise<any> {
         return new Promise((resolve, reject) => {
             this.gfs.files.findOne({filename: filename}, (err, file) => {
@@ -255,7 +276,7 @@ export class MongoDBController extends BaseController implements IMongoDBControl
     }
 
     async createComment(comment: IComment): Promise<any> {
-        return await this.commentsCollection.insertOne(comment)
+        return await this.commentsCollection.insertOne(comment);
     }
 
     async deleteComment(comment_id: string): Promise<any> {
@@ -274,11 +295,12 @@ export class MongoDBController extends BaseController implements IMongoDBControl
                 return comment;
             })
         );
-
-
-        // return this.commentsCollection.find({postCommentedId: comment_id}).toArray()
     }
 
+    validateEmail(email) {
+        const re = /^[a-z][a-zA-Z0-9_.]*(\.[a-zA-Z][a-zA-Z0-9_.]*)?@[a-z][a-zA-Z-0-9]*\.[a-z]+(\.[a-z]+)?$/;
+        return re.test(email);
+    }
 
 
     // async getLastUpload() {

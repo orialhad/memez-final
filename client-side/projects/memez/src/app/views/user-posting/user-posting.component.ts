@@ -1,5 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {PostStore}                               from '../../stores/entities/post.store';
+import {Component, OnInit}       from '@angular/core';
+import {PostStore}               from '../../stores/entities/post.store';
+import {FormControl, Validators} from '@angular/forms';
+
 
 @Component({
   selector   : 'mem-user-posting',
@@ -8,23 +10,15 @@ import {PostStore}                               from '../../stores/entities/pos
 
 })
 export class UserPostingComponent implements OnInit {
-  // @Output() newPost = new EventEmitter();
-
 
 
   constructor(
     public ps: PostStore
   ) {
-
   }
 
   ngOnInit(): void {
   }
 
-  // userNewPost(val) {
-  //   this.newPost.emit(val);
-  //
-  //
-  // }
 
 }
