@@ -39,9 +39,8 @@ export class UserStore {
       id     = user._id,
       avatar = BaseUrl + '/image/' + filename;
     await this.root.userAdapter.editProfilePic(id, avatar);
-    // this.updateLocaleStorage(avatar);
-    await this.getCurrentUser()
     this.root.ups.newFileName = undefined;
+    // await this.getCurrentUser()
   }
 
 
@@ -53,7 +52,7 @@ export class UserStore {
      console.error(e)
     }
     this.isEditEmail = false;
-    await this.getCurrentUser();
+    // await this.getCurrentUser();
   }
 
 

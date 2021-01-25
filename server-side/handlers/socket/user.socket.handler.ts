@@ -29,9 +29,11 @@ export async function editProfilePicHandler(this: HttpController, socket, data, 
     try {
         const
             updatedUser = await this.main.userController.editProfilePic(data.id, data.avatar),
-            posts       = await this.main.postController.getPostsWithData();
+            posts       = await this.main.postController.getPostsWithData(),
+            user        = await this.main.userController.getUserById(data.id);
         socket.emit('editProfilePic', updatedUser, req_id);
         socket.broadcast.emit('postsUpdate', posts);
+        socket.broadcast.emit('usersUpdate', user);
     } catch (e) {
         socket.emit('editProfilePic', {msg: `Something went wrong` + e}, req_id);
     }
