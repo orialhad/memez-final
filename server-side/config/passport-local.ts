@@ -42,8 +42,6 @@ export const isLoggedIn = (req, res,next)=>{
 
 passport.serializeUser( (user , done)=> {
     if (user) {
-        console.log("serializeUser" + user)
-        console.log("serializeUser" + JSON.stringify(user))
         return done(null, user);
     }
 

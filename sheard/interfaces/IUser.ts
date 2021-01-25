@@ -7,7 +7,7 @@ export interface IUser {
     email?: string;
     _id?: string;
     name?: string
-    age?: number;
+    dob?: string;
     avatar?: string;
     posts?: IPost[]
     likes?: ILike[]

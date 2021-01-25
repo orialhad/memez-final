@@ -1,6 +1,4 @@
 import {HttpController} from '../../controllers/http.controller';
-import * as dayjs       from 'dayjs';
-import {IUser}          from '../../../sheard/interfaces/IUser';
 
 
 export async function getUsersHandler(this: HttpController, socket, data, req_id) {
@@ -24,14 +22,13 @@ export async function getUserHandler(this: HttpController, socket, data, req_id)
 }
 
 
-
 export async function editProfilePicHandler(this: HttpController, socket, data, req_id) {
     try {
         const
-            updatedUser = await this.main.userController.editProfilePic(data.id, data.avatar),
-            posts       = await this.main.postController.getPostsWithData(),
-            user        = await this.main.userController.getUserById(data.id);
-        socket.emit('editProfilePic', updatedUser, req_id);
+            updateUser = await this.main.userController.editProfilePic(data.id, data.avatar),
+            posts      = await this.main.postController.getPostsWithData(),
+            user       = await this.main.userController.getUserById(data.id);
+        socket.emit('editProfilePic', updateUser, req_id);
         socket.broadcast.emit('postsUpdate', posts);
         socket.broadcast.emit('usersUpdate', user);
     } catch (e) {
@@ -42,18 +39,26 @@ export async function editProfilePicHandler(this: HttpController, socket, data, 
 
 export async function editEmailHandler(this: HttpController, socket, data, req_id) {
     try {
-        const
-            email_exist = await this.main.userController.getUserByEmail(data.email),
-            updatedUser = await this.main.userController.editEmail(data.id, data.email),
-            user        = await this.main.userController.getUserById(data.id);
-        if (!email_exist) {
-            socket.emit('editEmail', updatedUser, req_id);
-            socket.broadcast.emit('usersUpdate', user);
+        const re = /^[a-z][a-zA-Z0-9_.]*(\.[a-zA-Z][a-zA-Z0-9_.]*)?@[a-z][a-zA-Z-0-9]*\.[a-z]+(\.[a-z]+)?$/;
+        if (re.test(data.email)) {
+            const email_exist = await this.main.userController.getUserByEmail(data.email);
+            if (!email_exist) {
+                console.log(JSON.stringify(data));
+
+                const updateUser = await this.main.userController.editEmail(data.id, data.email),
+                      user       = await this.main.userController.getUserById(data.id);
+                socket.emit('editEmail', updateUser, req_id);
+                socket.broadcast.emit('usersUpdate', user);
+            } else {
+                socket.broadcast.emit('errorHandler', `This email is already in use ! `);
+                console.error('already in database');
+            }
         } else {
-            socket.emit('editEmail', 'Error!!!!', req_id);
-            console.error('already in database');
+            socket.broadcast.emit('errorHandler', `This  is not a valid Email !!! `);
         }
     } catch (e) {
         console.error('already in database');
     }
+
+
 }

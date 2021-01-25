@@ -2,15 +2,15 @@
   <div class="comments-container">
     <div class="single-comment"
          *ngFor="let comment of post.comments.slice().reverse()"
-         [ngClass]="currentUser.username === comment.userCommented.username ? 'current': 'single-comment'">
+         [ngClass]="currentUser.username === comment.userCommented?.username ? 'current': 'single-comment'">
       <div class="comment">
         <div class="comment-user">
           <div class="comment-user-info">
             <div class="comment-user-img">
-              <img *ngIf="comment.userCommented.avatar"
+              <img *ngIf="comment.userCommented?.avatar"
               src="{{comment.userCommented.avatar}}" alt="user avatar">
             </div>
-            <div class="comment-user-name">{{comment.userCommented.username}}</div>
+            <div class="comment-user-name">{{comment.userCommented?.username}}</div>
           </div>
           <div class="comment-time">
             {{comment.time}} - {{comment.date}}

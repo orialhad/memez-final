@@ -88,15 +88,11 @@ export class HttpController extends BaseController implements IHttpController {
                 console.log(`SOCKET CONNECTED to slot ${idx}. Total ${This.sockets.length - 1} clients connected`);
             });
 
-            socket.on('ping', async () => {
-                socket.emit('pong', 'pong');
-            });
             Object
                 .entries(event_mapper)
                 .forEach(([event, fn]) => {
                     socket.on(event, fn.bind(This, socket));
                 });
-
         });
 
 
@@ -110,6 +106,35 @@ export class HttpController extends BaseController implements IHttpController {
 
 
     registerEndpoints() {
+
+        //login
+        this.express_app.post('/api/auth/login', auth(), (req: Request, res: Response) => {
+            res.status(200).json({'statusCode': 200, 'user': req.user});
+        });
+        //logout
+        this.express_app.get('/api/logout', (req, res) => {
+            this.events.emit('logout', req, res);
+        });
+        //create new user
+        this.express_app.post('/api/auth/signup', (req: Request, res: Response) => {
+            this.events.emit('signup', req, res);
+        });
+        // upload a file
+        this.express_app.post('/api/uploads', (req: Request, res: Response,) => {
+            this.events.emit('upload_file', req, res);
+        });
+        // get a file
+        this.express_app.get('/api/image/:filename', (req: Request, res: Response,) => {
+            this.events.emit('get_file', req, res);
+        });
+        // get last file uploaded
+        this.express_app.get('/api/images', (req: Request, res: Response,) => {
+            this.events.emit('get_last_file', req, res);
+        });
+
+
+        //  AJAX (old) EVENTS
+
         // //get all users
         // this.express_app.get('/api/users', (req: Request, res: Response) => {
         //     this.events.emit('all_users', req, res);
@@ -123,10 +148,6 @@ export class HttpController extends BaseController implements IHttpController {
         //     console.log('3', req.session);
         //     this.events.emit('get_current', req, res);
         // });
-        //create new user
-        this.express_app.post('/api/auth/signup', (req: Request, res: Response) => {
-            this.events.emit('signup', req, res);
-        });
         // //egit profile pic
         // this.express_app.post('/api/editProfilePic/:id', (req: Request, res: Response) => {
         //     this.events.emit('edit_profile_pic', req, res);
@@ -168,34 +189,6 @@ export class HttpController extends BaseController implements IHttpController {
         // this.express_app.get('/api/likes/:post_id', (req: Request, res: Response) => {
         //     this.events.emit('post_likes', req, res);
         // });
-
-        // upload a file
-        this.express_app.post('/api/uploads', (req: Request, res: Response,) => {
-            this.events.emit('upload_file', req, res);
-
-        });
-        // get a file
-        this.express_app.get('/api/image/:filename', (req: Request, res: Response,) => {
-            this.events.emit('get_file', req, res);
-        });
-
-
-        // get last file uploaded
-        this.express_app.get('/api/images', (req: Request, res: Response,) => {
-            this.events.emit('get_last_file', req, res);
-        });
-
-        //login
-        this.express_app.post('/api/auth/login', auth(), (req: Request, res: Response) => {
-            res.status(200).json({'statusCode': 200, 'user': req.user});
-        });
-
-        //logout
-        this.express_app.get('/api/logout', (req, res) => {
-            console.log('performing logout');
-            this.events.emit('logout', req, res);
-        });
-
     }
 
 

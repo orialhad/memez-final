@@ -19,7 +19,6 @@ export class PostStore {
   @observable new_post: string = '';
 
 
-
   constructor(
     public root: RootStore,
     public dialog: MatDialog
@@ -29,7 +28,6 @@ export class PostStore {
     this.listenToPostsUpdate();
   }
 
-
   @action
   async getPosts() {
     this.posts = await this.root.postAdapter.getPosts();
@@ -38,7 +36,6 @@ export class PostStore {
   @action getPostById(post_id: string) {
     return this.posts.find(post => post_id === post._id)
   }
-
 
   @action
   async createPost(content: string) {
@@ -76,7 +73,6 @@ export class PostStore {
     setTimeout(() => {
       this.searchTerm = value;
     }, 1000);
-
   }
 
 
@@ -96,11 +92,7 @@ export class PostStore {
       this.root.ups.onUpload(this.newFile).then()
     })
     await dialogRef.afterClosed().toPromise()
-
   }
-
-
-
 
   listenToPostsUpdate() {
     this.root.socketAdapter.listenToEvent('postsUpdate', posts => {

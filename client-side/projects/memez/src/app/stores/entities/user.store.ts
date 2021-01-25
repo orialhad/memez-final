@@ -24,6 +24,7 @@ export class UserStore {
     this.root.us = this;
     window['us'] = this;
     this.listenToUserUpdate();
+    this.listenToErrors();
   }
 
 
@@ -40,19 +41,13 @@ export class UserStore {
       avatar = BaseUrl + '/image/' + filename;
     await this.root.userAdapter.editProfilePic(id, avatar);
     this.root.ups.newFileName = undefined;
-    // await this.getCurrentUser()
   }
 
 
   @action
   async editEmail(userId: string, email: string) {
-    try {
-      await this.root.userAdapter.editEmail(userId, email);
-    }catch (e) {
-     console.error(e)
-    }
     this.isEditEmail = false;
-    // await this.getCurrentUser();
+    return await this.root.userAdapter.editEmail(userId, email);
   }
 
 
@@ -65,14 +60,14 @@ export class UserStore {
 
   @action
   async getCurrentUser() {
-    const id = JSON.parse(localStorage.getItem('userInfo')).user._id;
-    this.root.lis.currentUser = await this.root.userAdapter.getUserById(id)
+    const id                  = JSON.parse(localStorage.getItem('userInfo')).user._id;
+    this.root.lis.currentUser = await this.root.userAdapter.getUserById(id);
   }
 
   @computed get currentUserPosts() {
     const current = this.root.lis.currentUser;
     if (current) {
-      const currentPosts = this.root.ps.posts.filter(ele => ele.postedBy._id === current._id);
+      const currentPosts = this.root.ps.posts.filter(post => post.postedBy?._id === current._id);
       return currentPosts.reverse();
     }
   }
@@ -90,13 +85,19 @@ export class UserStore {
     });
   }
 
-  @action toggleEdit(){
-    this.isEditEmail ? this.isEditEmail = false : this.isEditEmail = true
+  @action toggleEdit() {
+    this.isEditEmail ? this.isEditEmail = false : this.isEditEmail = true;
   }
 
   listenToUserUpdate() {
     this.root.socketAdapter.listenToEvent('usersUpdate', user => {
       this.root.lis.currentUser = user;
+    });
+  }
+
+  listenToErrors() {
+    this.root.socketAdapter.listenToEvent('errorHandler', msg => {
+      alert(msg);
     });
   }
 

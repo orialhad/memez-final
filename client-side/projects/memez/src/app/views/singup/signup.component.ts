@@ -15,7 +15,6 @@ export class SignupComponent implements OnInit {
 
   constructor(
     public sus: SignupStore,
-    public fb: FormBuilder
 
   ) { }
 
@@ -31,23 +30,18 @@ export class SignupComponent implements OnInit {
         [Validators.required,Validators.email]),
     });
 
-
-
   }
-
   get name() {
     return this.signupForm.get('name')
   }
-
   get password_1() {
     return this.signupForm.get('password')
   }
   get password_2() {
     return this.signupForm.get('password2')
-  }get email_add() {
+  }
+  get email_add() {
     return this.signupForm.get('email_add')
   }
-
-
 
 }

@@ -6,13 +6,10 @@ import {ILike}                                      from '../../sheard/interface
 import {config}                                     from '../config/config';
 import {IComment}                                   from '../../sheard/interfaces/IComment';
 
-
 // import {Grid} from 'gridfs-stream';
 import Grid = require('gridfs-stream');
-import * as session                                 from 'express-session';
 
-const fs         = require('fs');
-const MongoStore = require('connect-mongo')(session);
+const fs = require('fs');
 
 const
     mongo       = require('mongodb'),
@@ -26,7 +23,6 @@ export interface IMongoDBController extends IBaseController {
     // run(): Promise<void>;
     // gfs: any;
 
-    sessionStore: any;
 
     getUsers(): Promise<IUser[]>;
 
@@ -64,15 +60,15 @@ export interface IMongoDBController extends IBaseController {
 
     deleteComment(comment_id: string): Promise<any>
 
-    getPostComments(comment_id: string): Promise<IComment[]>
-
-    // getLastUpload(): Promise<any>
-
-    close(): Promise<any>
+    getPostComments(comment_id: string): Promise<IComment[]>;
 
     deletePostComments(post_id: string): Promise<any>;
 
     editEmail(id: string, email: string): Promise<any>;
+
+    close(): Promise<any>
+
+
 }
 
 
@@ -86,17 +82,12 @@ export class MongoDBController extends BaseController implements IMongoDBControl
     commentsCollection: Collection;
     gfs;
     gridFSBucket;
-    sessionStore;
-
-
-    // uploadCollection: Collection;
 
 
     constructor() {
         super();
 
     }
-
 
     async init(): Promise<void> {
         const This = this;
@@ -113,9 +104,6 @@ export class MongoDBController extends BaseController implements IMongoDBControl
                 }
                 console.log('Connected successfully to Mongo');
                 This.db = This.client.db(config.dbName);
-
-
-                //This.gfs = Grid(This.db, This.client);
                 This.gfs          = Grid(This.db, mongo);
                 This.gridFSBucket = new GridFSBucket(This.db, {bucketName: 'uploads'});
 
@@ -123,15 +111,13 @@ export class MongoDBController extends BaseController implements IMongoDBControl
                 This.postsCollection    = This.db.collection('posts');
                 This.usersCollection    = This.db.collection('users');
                 This.commentsCollection = This.db.collection('comments');
-
                 This.gfs.collection('uploads');
-                This.sessionStore = new MongoStore({client:This.client  , collection: 'sessions' })
 
                 resolve();
             });
         });
     }
-
+        // monogo controllers !
     //users
     async createUser(user: IUser): Promise<any> {
         try {
@@ -157,7 +143,6 @@ export class MongoDBController extends BaseController implements IMongoDBControl
             console.log('no such user ', err);
         }
         return;
-
     }
 
     async getUserByEmail(email: string): Promise<IUser> {
@@ -168,23 +153,17 @@ export class MongoDBController extends BaseController implements IMongoDBControl
         }
         return;
     }
-
     async editProfilePic(id: string, avatar: string): Promise<any> {
         const _id = new ObjectID(id);
         return await this.usersCollection.updateOne(
             {_id: _id}, {$set: {avatar: avatar}});
     }
-
     async editEmail(id: string, email: string): Promise<any> {
         const _id = new ObjectID(id);
-        if (this.validateEmail(email)) {
-            return await this.usersCollection.updateOne(
-                {_id: _id}, {$set: {email: email}});
-        } else {
-            console.error('this is not a valid email');
-        }
+        return await this.usersCollection.updateOne(
+            {_id: _id},
+            {$set: {email: email}});
     }
-
 
     //posts
 
@@ -209,7 +188,6 @@ export class MongoDBController extends BaseController implements IMongoDBControl
         );
     }
 
-
     async deletePost(post_id: string): Promise<any> {
         try {
             const id           = new ObjectID(post_id),
@@ -222,7 +200,6 @@ export class MongoDBController extends BaseController implements IMongoDBControl
 
         }
     }
-
     async deletePostLikes(post_id: string): Promise<any> {
         try {
             return await this.likesCollection.deleteMany({'postLiked._id': post_id});
@@ -231,7 +208,6 @@ export class MongoDBController extends BaseController implements IMongoDBControl
         }
 
     }
-
     async deletePostComments(post_id: string): Promise<any> {
         return await this.commentsCollection.deleteMany({postCommentedId: post_id});
     }
@@ -296,22 +272,6 @@ export class MongoDBController extends BaseController implements IMongoDBControl
             })
         );
     }
-
-    validateEmail(email) {
-        const re = /^[a-z][a-zA-Z0-9_.]*(\.[a-zA-Z][a-zA-Z0-9_.]*)?@[a-z][a-zA-Z-0-9]*\.[a-z]+(\.[a-z]+)?$/;
-        return re.test(email);
-    }
-
-
-    // async getLastUpload() {
-    //     return new Promise((resolve, reject) => {
-    //         this.gfs.files.find({}).toArray((err, files) => {
-    //             let lastFile = files.reduce((a, b) => (a.uploadDate > b.uploadDate ? a : b));
-    //             const readstream = this.gridFSBucket.openDownloadStream(lastFile._id);
-    //             resolve(readstream);
-    //         });
-    //     });
-    // }
 
 
     close(): Promise<any> {

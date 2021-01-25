@@ -21,7 +21,6 @@ export class UploadStore {
     window['ups'] = this;
   }
 
-
   @action
   async onUpload(file) {
     this.file = file;

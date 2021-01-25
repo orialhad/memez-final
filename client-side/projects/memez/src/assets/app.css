@@ -1031,3 +1031,9 @@ circle.ng-star-inserted {
 button {}
 
 .mat-form-field-infix.ng-tns-c101-0 {}
+
+
+.mat-form-field-flex.ng-tns-c101-0 {
+    width: 180px;
+    height: 48px;
+}

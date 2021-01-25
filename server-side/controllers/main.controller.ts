@@ -1,17 +1,14 @@
-import {IMongoDBController} from './mongoDBController';
-import {IHttpController} from './http.controller';
-import {BaseController, IBaseController} from './base.controller';
-import {IPostController} from './post.controller';
-import {ILikeController} from './like.controller';
-import {IUserController} from './user.controller';
-import {editProfilePicHandler, getUsersHandler} from '../handlers/ajax/user.handler';
-import {createPostHandler, deletePostHandler, getPostsHandler,} from '../handlers/ajax/post.ajax.handler';
-import {createLikeHandler, getLikesHandler, unLikeHandler,} from '../handlers/ajax/like.ajax.handler';
+import {IMongoDBController}                               from './mongoDBController';
+import {IHttpController}                                  from './http.controller';
+import {BaseController, IBaseController}                  from './base.controller';
+import {IPostController}                                  from './post.controller';
+import {ILikeController}                                  from './like.controller';
+import {IUserController}                                  from './user.controller';
 import {IUploadController}                                from './upload.controller';
 import {getCurrUserHandler, logoutHandler, signupHandler} from '../handlers/ajax/authHandler';
 import {IAuthController}                                  from './auth.controller';
-import {getFileHandler, uploadHandler} from '../handlers/ajax/upload.handler';
-import {ICommentController} from "./comment.controller";
+import {getFileHandler, uploadHandler}                    from '../handlers/ajax/upload.handler';
+import {ICommentController}                               from './comment.controller';
 
 
 export interface IMainController extends IBaseController {
@@ -40,7 +37,6 @@ export class MainController extends BaseController implements IMainController {
         public mongoDbController: IMongoDBController
     ) {
         super();
-
         this.userController.main = this;
         this.likeController.main = this;
         this.postController.main = this;
@@ -55,13 +51,9 @@ export class MainController extends BaseController implements IMainController {
     async init(): Promise<void> {
         await this.httpController.init();
         await this.mongoDbController.init();
-
-
         this.addEventListeners();
 
-
     }
-
     addEventListeners() {
         this.httpController.events.addListener('signup', signupHandler.bind(this));
         this.httpController.events.addListener('upload_file', uploadHandler.bind(this));

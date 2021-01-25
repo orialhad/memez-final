@@ -30,7 +30,6 @@
           </mat-list-item>
           <div class="edit-user-details"
                *ngIf="us.isEditEmail">
-
             <form class="form">
               <mat-form-field class="editEmail">
                 <mat-label>Edit Email</mat-label>
@@ -40,7 +39,6 @@
                        [formControl]="emailFormControl"
                        [errorStateMatcher]="matcher"
                        placeholder="Ex. Blah@gmail.com">
-                <mat-hint></mat-hint>
                 <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
                   Please enter a valid email address
                 </mat-error>
@@ -56,8 +54,7 @@
             >Apply
             </button>
           </div>
-          <mat-list-item>Name</mat-list-item>
-          <mat-list-item>Age</mat-list-item>
+
         </mat-list>
       </div>
     </div>

@@ -17,17 +17,21 @@ import { SignupComponent } from './views/singup/signup.component';
 import { NavBarComponent } from './views/nav-bar/nav-bar.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatListModule} from '@angular/material/list';
-import { FileUploadModule } from 'ng2-file-upload';
-import { UploadComponent } from './reusable-components/upload/upload.component';
-import {ImageCropperModule} from 'ngx-image-cropper';
-import {AngularCropperjsModule} from 'angular-cropperjs';
+import {MatIconModule}             from '@angular/material/icon';
+import {MatDialogModule}           from '@angular/material/dialog';
+import {MatListModule}             from '@angular/material/list';
+import { FileUploadModule }        from 'ng2-file-upload';
+import { UploadComponent }         from './reusable-components/upload/upload.component';
+import {ImageCropperModule}        from 'ngx-image-cropper';
+import {AngularCropperjsModule}    from 'angular-cropperjs';
 import { CommentsDialogComponent } from './reusable-components/comments-dialog/comments-dialog.component';
-import {PickerModule} from "@ctrl/ngx-emoji-mart";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {PickerModule}              from "@ctrl/ngx-emoji-mart";
+import {MatProgressSpinnerModule}  from "@angular/material/progress-spinner";
+import { FontAwesomeModule }       from '@fortawesome/angular-fontawesome';
+import {MatDatepickerModule}       from '@angular/material/datepicker';
+import {MatNativeDateModule}       from '@angular/material/core';
+
+
 
 @NgModule({
   declarations: [
@@ -63,7 +67,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         AngularCropperjsModule,
         PickerModule,
         MatProgressSpinnerModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
     ],
   providers: [],
   bootstrap: [LayoutComponent]
