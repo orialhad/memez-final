@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {RootStore} from '../root.store';
+import {Injectable}         from '@angular/core';
+import {RootStore}          from '../root.store';
 import {action, observable} from 'mobx-angular';
-import {Router} from '@angular/router';
+import {Router}             from '@angular/router';
 
 
 @Injectable({
@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 })
 export class SignupStore {
   @observable newUser: string = ``;
+  @observable inUse: boolean  = false;
 
 
   constructor(
@@ -19,19 +20,24 @@ export class SignupStore {
     window['sus'] = this;
   }
 
-  @action async signUpUser(username: string,password:string,password2:string, email){
-    username = username.toLowerCase()
-    if(password === password2) {
-       await this.root.authService.signup(username, password, email)
-        await this.root.lis.login(username,password)
-      console.log("User Created")
-    }else {
-      console.log("Password doesn't match")
+  @action
+  async signUpUser(username: string, password: string, password2: string, email: string) {
+    username = username.toLowerCase();
+    if (password === password2) {
+      await this.root.authService.signup(username, password, email);
+      if (!this.inUse) {
+        await this.root.lis.login(username, password);
+      }
+    } else {
+      console.log('Password doesn\'t match');
     }
+
   }
 
-  @action async loginNavigation() {
-    await this.router.navigateByUrl(``)
+  @action
+  async loginNavigation() {
+    await this.router.navigateByUrl(``);
   }
+
 
 }

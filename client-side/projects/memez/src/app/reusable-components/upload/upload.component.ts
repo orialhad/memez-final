@@ -41,7 +41,6 @@ export class UploadComponent implements OnInit {
       || this.newFile.type === 'image/jpeg'
       || this.newFile.type === 'image/gif'
     ) {
-      console.log(this.newFile.type);
       this.toUrl();
     } else {
       this.newFile = undefined
@@ -54,7 +53,6 @@ export class UploadComponent implements OnInit {
     //check if file exist
     if (this.newFile) {
       //check if file gif
-      console.log(this.resultImage);
       if (this.newFile.type === 'image/gif' || this.result === undefined) {
         this.resultImage = this.newFile;
         this.uploadedFiles.emit(this.resultImage);

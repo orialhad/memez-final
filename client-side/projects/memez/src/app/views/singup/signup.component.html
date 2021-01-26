@@ -12,13 +12,12 @@
          [formGroup]="signupForm">
       <input #email
              type="email"
-             formControlName = "email_add"
+             formControlName="email_add"
              placeholder="Enter your email address"
              class="signup-login-inputs">
       <ng-container *mobxAutorun>
         <div
           *ngIf="email_add.invalid && !email_add.pristine"
-
           class="details-error">
           This is not a valid Email !
         </div>
@@ -47,13 +46,21 @@
              placeholder="enter same password"
              class="signup-login-inputs"
       >
-    <ng-container *mobxAutorun>
-      <div
-        *ngIf="password.value !== password2.value && !password_2.pristine"
-        class="details-error">
-        Passwords doesn't match !
-      </div>
-    </ng-container>
+      <ng-container *mobxAutorun>
+        <div
+          *ngIf="password.value !== password2.value && !password_2.pristine"
+          class="details-error">
+          Passwords doesn't match !
+        </div>
+      </ng-container>
+      <ng-container *mobxAutorun>
+        <div
+          *ngIf="sus.inUse === true"
+          class="details-error">
+          Username or Email Is Already Used !
+        </div>
+      </ng-container>
+
 
     </div>
     <div class="log-sig-btn">

@@ -1,4 +1,4 @@
-<div class="navbar-wrapper" >
+<div class="navbar-wrapper">
   <div class="navbar-title"
        (click)="root.lis.root.lys.homeNavigation()">
   </div>
@@ -17,16 +17,16 @@
   <div class="nav-user-profile">
     <button mat-button [matMenuTriggerFor]="menu">{{root.lis.currentUser.username.toUpperCase()}}</button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="root.lis.root.lys.userProfileNavigation()" >User Profile</button>
-      <button mat-menu-item (click)="root.lis.root.authService.logout()" >Log Out</button>
+      <button mat-menu-item (click)="root.lis.root.lys.userProfileNavigation()">User Profile</button>
+      <button mat-menu-item (click)="root.lis.root.authService.logout()">Log Out</button>
     </mat-menu>
     <div class="nav-user-profile-img"
          (click)="root.lis.root.lys.userProfileNavigation()">
 
-      <ng-container *ngIf="root.lis.currentUser.avatar" >
+      <ng-container *mobxAutorun>
 
-      <img *mobxAutorun
-              src="{{root.lis.currentUser.avatar}}">
+        <img *ngIf="root.lis.currentUser?.avatar"
+             src="{{root.lis.currentUser.avatar}}">
       </ng-container>
     </div>
   </div>
