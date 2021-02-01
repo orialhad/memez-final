@@ -103,7 +103,7 @@ export class MongoDBController extends BaseController implements IMongoDBControl
                     return reject();
                 }
                 console.log('Connected successfully to Mongo');
-                This.db = This.client.db(config.dbName);
+                This.db           = This.client.db(config.dbName);
                 This.gfs          = Grid(This.db, mongo);
                 This.gridFSBucket = new GridFSBucket(This.db, {bucketName: 'uploads'});
 
@@ -117,7 +117,8 @@ export class MongoDBController extends BaseController implements IMongoDBControl
             });
         });
     }
-        // monogo controllers !
+
+    // monogo controllers !
     //users
     async createUser(user: IUser): Promise<any> {
         try {
@@ -153,11 +154,13 @@ export class MongoDBController extends BaseController implements IMongoDBControl
         }
         return;
     }
+
     async editProfilePic(id: string, avatar: string): Promise<any> {
         const _id = new ObjectID(id);
         return await this.usersCollection.updateOne(
             {_id: _id}, {$set: {avatar: avatar}});
     }
+
     async editEmail(id: string, email: string): Promise<any> {
         const _id = new ObjectID(id);
         return await this.usersCollection.updateOne(
@@ -180,9 +183,10 @@ export class MongoDBController extends BaseController implements IMongoDBControl
             posts: IPost[] = await this.getPosts();
         return await Promise.all(
             posts.map(async post => {
-                post.likes    = await this.getPostLikes(post._id.toString());
-                post.postedBy = await this.getUsersFor(post.postedBy_id);
-                post.comments = await this.getPostComments(post._id.toString());
+                post.likes             = await this.getPostLikes(post._id.toString());
+                post.postedBy          = await this.getUsersFor(post.postedBy_id);
+                post.postedBy.password = '';
+                post.comments          = await this.getPostComments(post._id.toString());
                 return post;
             })
         );
@@ -200,6 +204,7 @@ export class MongoDBController extends BaseController implements IMongoDBControl
 
         }
     }
+
     async deletePostLikes(post_id: string): Promise<any> {
         try {
             return await this.likesCollection.deleteMany({'postLiked._id': post_id});
@@ -208,6 +213,7 @@ export class MongoDBController extends BaseController implements IMongoDBControl
         }
 
     }
+
     async deletePostComments(post_id: string): Promise<any> {
         return await this.commentsCollection.deleteMany({postCommentedId: post_id});
     }

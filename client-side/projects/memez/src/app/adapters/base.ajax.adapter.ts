@@ -1,8 +1,9 @@
-import {IBaseAdapter} from '../types/interfaces/IBaseAdapter';
+import {IBaseAdapter}                                     from '../types/interfaces/IBaseAdapter';
 import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {IUser} from '..../../../../sheard/interfaces/IUser';
-import {Observable} from 'rxjs';
-import {BaseUrl} from '../config/config';
+import {IUser}                                            from '..../../../../sheard/interfaces/IUser';
+import {Observable}                                       from 'rxjs';
+import {BaseUrl}                                          from '../config/config';
+import {APIEvent}                                         from '../../../../../../sheard/api/api-events';
 
 
 export abstract class BaseAjaxAdapter implements IBaseAdapter {
@@ -54,5 +55,12 @@ export abstract class BaseAjaxAdapter implements IBaseAdapter {
     return this.http
                .delete(`${this.BASE_URL}/${path}`)
                .toPromise();
+  }
+  listenToEvent<T = any>(event_name: APIEvent, fn: Function): void {
+    return;
+  }
+
+  stopListeningToEvent<T = any>(event_name: APIEvent): void {
+    return;
   }
 }

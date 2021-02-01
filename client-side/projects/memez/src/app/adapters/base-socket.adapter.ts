@@ -1,10 +1,11 @@
 import * as io                    from 'socket.io-client';
-import {Injectable}               from '@angular/core';
 import {Socket as SocketIOClient} from 'socket.io-client';
+import {Injectable}               from '@angular/core';
 import {v4 as uuidv4}             from 'uuid';
-import * as Emitter               from 'component-emitter';
-import {APIEvent}                 from '../../../../../../sheard/api/api-events';
-import {IBaseAdapter}             from '../../../../../../sheard/interfaces/IBaseAdapter';
+
+import {APIEvent}     from '../../../../../../sheard/api/api-events';
+import {IBaseAdapter} from '../../../../../../sheard/interfaces/IBaseAdapter';
+import * as Emitter        from 'component-emitter';
 
 
 const URL = 'http://localhost:4300';

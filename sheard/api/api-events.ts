@@ -11,7 +11,6 @@ export type APIEvent =
     | 'usersUpdate'
     | 'editProfilePic'
     | 'editEmail'
-    | 'editAge'
     | 'createComment'
     | 'deleteComment'
     | 'errorHandler'

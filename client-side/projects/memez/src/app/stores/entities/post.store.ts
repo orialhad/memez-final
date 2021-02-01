@@ -1,19 +1,19 @@
-import {Injectable} from '@angular/core';
-import {RootStore} from '../root.store';
+import {Injectable}                   from '@angular/core';
+import {RootStore}                    from '../root.store';
 import {action, computed, observable} from 'mobx-angular';
-import {IPost} from '../../../../../../../sheard/interfaces/IPost';
-import {BaseUrl} from '../../config/config';
-import * as dayjs from 'dayjs';
-import {MatDialog} from '@angular/material/dialog';
-import {UploadComponent} from '../../reusable-components/upload/upload.component';
-import {CommentsDialogComponent} from "../../reusable-components/comments-dialog/comments-dialog.component";
+import {IPost}                        from '../../../../../../../sheard/interfaces/IPost';
+import {BaseUrl}                      from '../../config/config';
+import * as dayjs                     from 'dayjs';
+import {MatDialog}                    from '@angular/material/dialog';
+import {UploadComponent}              from '../../reusable-components/upload/upload.component';
+import {CommentsDialogComponent}      from '../../reusable-components/comments-dialog/comments-dialog.component';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostStore {
-  @observable posts: IPost[] = [];
+  @observable posts: IPost[]   = [];
   @observable searchTerm: string;
   @observable newFile: File;
   @observable new_post: string = '';
@@ -30,11 +30,19 @@ export class PostStore {
 
   @action
   async getPosts() {
-    this.posts = await this.root.postAdapter.getPosts();
+    const posts = await this.root.postAdapter.getPosts();
+    return Promise.all(
+      posts.map(async post => {
+        post.image = 'http://localhost:4300' + post.image;
+
+        this.posts = posts
+
+      })
+    );
   }
 
   @action getPostById(post_id: string) {
-    return this.posts.find(post => post_id === post._id)
+    return this.posts.find(post => post_id === post._id);
   }
 
   @action
@@ -49,7 +57,7 @@ export class PostStore {
     };
     await this.root.postAdapter.createPost(newPost);
     this.root.ups.newFileName = undefined;
-    this.new_post = '';
+    this.new_post             = '';
   }
 
   @action
@@ -63,9 +71,9 @@ export class PostStore {
 
   @computed get filteredPosts() {
     return this.searchTerm ?
-      this.reversedPosts.filter((post) => {
-        return post.content?.includes(this.searchTerm) || post.postedBy.username.includes(this.searchTerm);
-      }) : this.reversedPosts;
+           this.reversedPosts.filter((post) => {
+             return post.content?.includes(this.searchTerm) || post.postedBy.username.includes(this.searchTerm);
+           }) : this.reversedPosts;
   }
 
   @action
@@ -78,20 +86,21 @@ export class PostStore {
 
   @computed get reversedPosts() {
     return this.posts
-      .slice()
-      .reverse();
+               .slice()
+               .reverse();
   }
 
-  @action async openUploadDialogPosting() {
+  @action
+  async openUploadDialogPosting() {
     let dialogRef = this.dialog.open(UploadComponent, {
       width : '900px',
       height: '700px'
-    })
+    });
     dialogRef.componentInstance.uploadedFiles.subscribe(() => {
-      this.newFile = dialogRef.componentInstance.resultImage
-      this.root.ups.onUpload(this.newFile).then()
-    })
-    await dialogRef.afterClosed().toPromise()
+      this.newFile = dialogRef.componentInstance.resultImage;
+      this.root.ups.onUpload(this.newFile).then();
+    });
+    await dialogRef.afterClosed().toPromise();
   }
 
   listenToPostsUpdate() {
