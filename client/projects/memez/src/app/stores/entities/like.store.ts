@@ -41,8 +41,6 @@ export class LikeStore {
       await this.unLike(alreadyLiked._id);
     } else {
       await this.createLike(post);
-    }
-    // await this.root.ps.getPosts();
-  }
+    }}
 }
 
