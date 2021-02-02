@@ -4,8 +4,12 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/client-side/projects/memez/src/app/old.ignore" />
+      <excludeFolder url="file://$MODULE_DIR$/client/projects/memez/src/app/mocks" />
+      <excludeFolder url="file://$MODULE_DIR$/client/projects/memez/src/app/old.ignore" />
+      <excludeFolder url="file://$MODULE_DIR$/client/projects/memez/src/app/types" />
       <excludeFolder url="file://$MODULE_DIR$/dist" />
       <excludeFolder url="file://$MODULE_DIR$/server-side/models" />
+      <excludeFolder url="file://$MODULE_DIR$/server/models" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
     </content>

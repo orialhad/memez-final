@@ -1,9 +1,9 @@
-import {IUser} from "./IUser";
+import {IUser} from './IUser';
 
 export interface IComment {
     _id?: string;
     date: string;
-    time:string
+    time: string
     content: string;
     userCommentedId: string;
     userCommented?: IUser;

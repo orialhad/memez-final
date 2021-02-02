@@ -1,0 +1,44 @@
+<div class="comments-wrapper">
+  <div class="comments-container">
+    <div class="single-comment"
+         *ngFor="let comment of post.comments.slice().reverse()"
+         [ngClass]="currentUser.username === comment.userCommented?.username ? 'current': 'single-comment'">
+      <div class="comment">
+        <div class="comment-user">
+          <div class="comment-user-info">
+            <div class="comment-user-img">
+              <img *ngIf="comment.userCommented?.avatar"
+              src="{{comment.userCommented.avatar}}">
+            </div>
+            <div class="comment-user-name">{{comment.userCommented?.username}}</div>
+          </div>
+          <div class="comment-time">
+            {{comment.time}} - {{comment.date}}
+          </div>
+        </div>
+        <div class="comment-content">{{comment.content}}</div>
+      </div>
+
+      <div *ngIf="currentUser?._id === comment?.userCommentedId"
+           class="delete_comment"
+           (click)="onDelete(comment._id)">
+        <mat-icon class="gray_icon">delete</mat-icon>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="newComment-wrapper">
+    <div class="newComment">
+      <input type="text" #newComment
+             (keydown.enter)="onComment(newComment.value)">
+      <button type="button"
+              [disabled]="!newComment.value"
+              (click)="onComment(newComment.value)">Comment
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
