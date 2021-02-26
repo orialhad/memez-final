@@ -34,7 +34,7 @@ export class UserProfileComponent implements OnInit {
     setTimeout(async () => {
       await this.us.getCurrentUser();
       await this.us.root.ps.getPosts();
-    }, 200);
+    }, 2000);
   }
 
   async ngOnInit(): Promise<void> {
