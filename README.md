@@ -2,9 +2,10 @@
 
 This project was generated with:
 
- Angular 
- NodeJS
- Express
+ Angular, 
+ Mobex, 
+ NodeJS, 
+ Express, 
  MongoDB
 
 # Local
