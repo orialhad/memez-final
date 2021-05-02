@@ -3,7 +3,7 @@
 This project was generated with:
 
  Angular, 
- Mobex, 
+ MobX, 
  NodeJS, 
  Express, 
  MongoDB
