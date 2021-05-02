@@ -1,4 +1,3 @@
-
 import {
   Component,
   ElementRef,
@@ -7,15 +6,15 @@ import {
   OnInit,
   Output,
   ViewChild
-}              from '@angular/core';
+} from '@angular/core';
 import {IPost} from '../../../../../../../sheard/interfaces/IPost';
 import {IUser} from '../../../../../../../sheard/interfaces/IUser';
 
 
 @Component({
-  selector   : 'mem-post',
+  selector: 'mem-post',
   templateUrl: './post.component.html',
-  styleUrls  : ['./post.component.css']
+  styleUrls: ['./post.component.css']
 })
 
 
@@ -24,10 +23,10 @@ export class PostComponent implements OnInit {
 
   @Input() post: IPost;
   @Input() currentUser: IUser;
-  @Output() postLiked      = new EventEmitter();
-  @Output() PostToDelete   = new EventEmitter();
+  @Output() postLiked = new EventEmitter();
+  @Output() PostToDelete = new EventEmitter();
   @Output() commentClicked = new EventEmitter();
-  @Output() comment        = new EventEmitter();
+  @Output() comment = new EventEmitter();
 
   @Input() selected: boolean;
   @Output() selectedChange = new EventEmitter<boolean>();
@@ -65,9 +64,8 @@ export class PostComponent implements OnInit {
     this.status = false;
   }
 
-  closeModal(event) {
-    window.onclick = (event) => {
-      this.status = false;
-    };
+  closeModal() {
+    this.status = false;
   }
+
 }

@@ -1,3 +1,4 @@
-export const inProduction = false
+export const BaseUrl =  'http://localhost:4300';
 
-export const BaseUrl = inProduction ?  '' : 'http://localhost:4300';
+
+
