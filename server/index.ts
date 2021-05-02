@@ -1,12 +1,15 @@
-import {MainController} from './controllers/main.controller';
-import {UserController} from './controllers/user.controller';
-import {PostController} from './controllers/post.controller';
-import {HttpController} from './controllers/http.controller';
+//region imports
+import {MainController}    from './controllers/main.controller';
+import {UserController}    from './controllers/user.controller';
+import {PostController}    from './controllers/post.controller';
+import {HttpController}    from './controllers/http.controller';
 import {MongoDBController} from './controllers/mongoDBController';
-import {LikeController} from './controllers/like.controller';
-import {UploadController} from './controllers/upload.controller';
-import {AuthController} from './controllers/auth.controller';
-import {CommentController} from "./controllers/comment.controller";
+import {LikeController}    from './controllers/like.controller';
+import {UploadController}  from './controllers/upload.controller';
+import {AuthController}    from './controllers/auth.controller';
+import {CommentController} from './controllers/comment.controller';
+
+//endregion
 
 (async () => {
     const
@@ -29,14 +32,14 @@ import {CommentController} from "./controllers/comment.controller";
             mongoDBController
         );
     try {
-        await mainController.init()
+        await mainController.init();
         console.log('main controller has initialized');
     } catch (e) {
         console.log(`failed to initialize main controller ${e} `);
     }
 
 
-})()
+})();
 
 
 function onExit(err) {
@@ -52,4 +55,4 @@ export const processMgmt = () => {
     proc.on('uncaughtException', onExit);
     proc.on('exit', onExit);
     proc.on('SIGINT', onExit);
-}
+};

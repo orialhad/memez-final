@@ -1,5 +1,8 @@
+//region imports
 import {BaseController, IBaseController} from './base.controller';
 import {IUser}                           from '../../sheard/interfaces/IUser';
+
+//endregion
 
 export interface IUserController extends IBaseController {
 

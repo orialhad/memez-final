@@ -1,5 +1,9 @@
+//region imports
 import {BaseController, IBaseController} from './base.controller';
 import {IPost}                           from '../../sheard/interfaces/IPost';
+
+//endregion
+
 
 export interface IPostController extends IBaseController {
 

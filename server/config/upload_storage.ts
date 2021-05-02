@@ -1,9 +1,12 @@
+//region imports
 import {config}  from './config';
 import * as path from 'path';
 import util = require('util');
 import multer = require('multer');
 import GridFsStorage = require('multer-gridfs-storage');
 import crypto = require('crypto');
+
+//endregion
 
 const storage = new GridFsStorage({
     url    : config.URL,

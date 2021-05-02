@@ -1,8 +1,9 @@
+//region Imports
 import {Injectable} from '@angular/core';
 import {RootStore}  from '../root.store';
 import {IPost}      from '../../../../../../../sheard/interfaces/IPost';
 import {action}     from 'mobx-angular';
-import {MatDialog}  from '@angular/material/dialog';
+//endregion
 
 @Injectable({
   providedIn: 'root'

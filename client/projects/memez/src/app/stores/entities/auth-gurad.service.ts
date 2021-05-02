@@ -1,6 +1,8 @@
+//region Imports
 import {Injectable}          from '@angular/core';
 import {CanActivate, Router} from '@angular/router';
 import {RootStore}           from '../root.store';
+//endregion
 
 @Injectable({
   providedIn: 'root'

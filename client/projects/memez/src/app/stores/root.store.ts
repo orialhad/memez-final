@@ -1,3 +1,4 @@
+//region Imports
 import {Injectable}        from '@angular/core';
 import {PostStore}         from './entities/post.store';
 import {UserStore}         from './entities/user.store';
@@ -17,6 +18,7 @@ import {AuthGuardService}  from './entities/auth-gurad.service';
 import {BaseSocketAdapter} from '../adapters/base-socket.adapter';
 import {CommentStore}      from './entities/comment.store';
 import {CommentAdapter}    from '../adapters/comment.adapter';
+//endregion
 
 
 @Injectable({

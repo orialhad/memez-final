@@ -1,3 +1,4 @@
+//region imports
 import {BaseController, IBaseController}            from './base.controller';
 import {Collection, Db, GridFSBucket, MongoClient,} from 'mongodb';
 import {IUser}                                      from '../../sheard/interfaces/IUser';
@@ -6,6 +7,7 @@ import {ILike}                                      from '../../sheard/interface
 import {config}                                     from '../config/config';
 import {IComment}                                   from '../../sheard/interfaces/IComment';
 import Grid = require('gridfs-stream');
+//endregion
 
 
 const

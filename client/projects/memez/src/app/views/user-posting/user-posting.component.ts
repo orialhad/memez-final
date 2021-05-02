@@ -1,5 +1,8 @@
+//region Imports
 import {Component, OnInit} from '@angular/core';
 import {PostStore}         from '../../stores/entities/post.store';
+
+//endregion
 
 
 @Component({

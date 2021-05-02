@@ -1,4 +1,4 @@
-export const BaseUrl =  'http://localhost:4300';
+export const BaseUrl = 'http://localhost:4300';
 
 
 

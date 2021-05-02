@@ -1,6 +1,8 @@
+//region Imports
 import {Injectable} from '@angular/core';
 import {RootStore}  from '../root.store';
 import {Router}     from '@angular/router';
+//endregion
 
 
 @Injectable({

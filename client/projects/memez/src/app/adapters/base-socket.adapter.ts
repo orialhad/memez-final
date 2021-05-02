@@ -1,4 +1,4 @@
-//endregion
+//region Imports
 import * as io                    from 'socket.io-client';
 import {Socket as SocketIOClient} from 'socket.io-client';
 import {Injectable}               from '@angular/core';
@@ -7,7 +7,6 @@ import {APIEvent}                 from '../../../../../../sheard/api/api-events'
 import {IBaseAdapter}             from '../../../../../../sheard/interfaces/IBaseAdapter';
 import * as Emitter               from 'component-emitter';
 import {BaseUrl}                  from '../config/config';
-
 //endregion
 
 

@@ -1,6 +1,8 @@
+//region imports
 import {HttpController} from '../../controllers/http.controller';
-import * as dayjs       from 'dayjs';
 import {IPost}          from '../../../sheard/interfaces/IPost';
+
+//endregion
 
 
 export async function getPostsHandler(this: HttpController, socket, data, req_id) {
@@ -16,8 +18,8 @@ export async function createPostHandler(this: HttpController, socket, data, req_
     const post: IPost = {
         content    : data.content,
         postedBy_id: data.postedBy_id,
-        date       : dayjs().format(`DD.MM.YY`),
-        time       : dayjs().format(`HH:mm.ss`),
+        date       : data.date,
+        time       : data.time,
         likes      : [],
         comments   : [],
         image      : data.image

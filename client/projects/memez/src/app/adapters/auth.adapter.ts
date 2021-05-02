@@ -1,6 +1,8 @@
+//region Imports
 import {Injectable}      from '@angular/core';
 import {BaseAjaxAdapter} from './base.ajax.adapter';
 import {HttpClient}      from '@angular/common/http';
+//endregion
 
 @Injectable({
   providedIn: 'root'

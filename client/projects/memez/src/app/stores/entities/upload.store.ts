@@ -1,6 +1,9 @@
-import {Injectable} from '@angular/core';
-import {RootStore} from '../root.store';
+//region Imports
+import {Injectable}         from '@angular/core';
+import {RootStore}          from '../root.store';
 import {action, observable} from 'mobx-angular';
+
+//endregion
 
 
 @Injectable({
@@ -22,11 +25,11 @@ export class UploadStore {
 
   @action
   async onUpload(file) {
-    this.file = file;
-    this.loading = true;
+    this.file      = file;
+    this.loading   = true;
     const formData = new FormData();
     formData.append('file', this.file);
-    const upload = await this.root.uploadAdapter.uploadFile(formData);
+    const upload     = await this.root.uploadAdapter.uploadFile(formData);
     this.newFileName = upload.filename;
     this.loading     = false;
   }

@@ -1,3 +1,4 @@
+//region imports
 import {IMongoDBController}              from './mongoDBController';
 import {IHttpController}                 from './http.controller';
 import {BaseController, IBaseController} from './base.controller';
@@ -9,6 +10,8 @@ import {logoutHandler, signupHandler}    from '../handlers/ajax/authHandler';
 import {IAuthController}                 from './auth.controller';
 import {getFileHandler, uploadHandler}   from '../handlers/ajax/upload.handler';
 import {ICommentController}              from './comment.controller';
+
+//endregion
 
 
 export interface IMainController extends IBaseController {

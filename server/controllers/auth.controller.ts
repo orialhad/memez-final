@@ -1,5 +1,7 @@
+//region Imports
 import {BaseController, IBaseController} from './base.controller';
 import * as bcrypt                       from 'bcrypt';
+//endregion
 
 const saltRounds = 10;
 

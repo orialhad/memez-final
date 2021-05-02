@@ -1,7 +1,10 @@
+//region Imports
 import {ChangeDetectionStrategy, Component, OnInit}          from '@angular/core';
 import {UserStore}                                           from '../../stores/entities/user.store';
 import {ErrorStateMatcher}                                   from '@angular/material/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+
+//endregion
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {

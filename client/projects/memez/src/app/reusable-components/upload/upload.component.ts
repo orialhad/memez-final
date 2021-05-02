@@ -1,6 +1,8 @@
+//region Imports
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {CropperComponent, ImageCropperResult}               from 'angular-cropperjs';
 import {DomSanitizer}                                       from '@angular/platform-browser';
+//endregion
 
 export interface DialogData {
   newFile: File;
@@ -18,7 +20,7 @@ export class UploadComponent implements OnInit {
   blobFile: any;
   @Output() uploadedFiles = new EventEmitter();
 
-  config           = {preview:'.preview'};
+  config           = {preview: '.preview'};
   imageUrl: string;
   resultImage: File;
   result: any;
@@ -93,7 +95,7 @@ export class UploadComponent implements OnInit {
   toUrl() {
     if (this.newFile === undefined) {
       return;
-    }else {
+    } else {
       let newBlob    = new Blob([this.newFile], {type: this.newFile.type});
       let urlCreator = window.URL;
       this.blobFile  = this.sanitizer.bypassSecurityTrustUrl(

@@ -1,6 +1,8 @@
+//region Imports
 import {Injectable}        from '@angular/core';
 import {BaseSocketAdapter} from './base-socket.adapter';
 import {ILike}             from '../../../../../../sheard/interfaces/ILike';
+//endregion
 
 @Injectable({
   providedIn: 'root'

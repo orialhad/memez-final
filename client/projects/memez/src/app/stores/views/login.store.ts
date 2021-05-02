@@ -1,8 +1,10 @@
+//region Imports
 import {Injectable}         from '@angular/core';
 import {RootStore}          from '../root.store';
 import {action, observable} from 'mobx-angular';
 import {IUser}              from '../../../../../../../sheard/interfaces/IUser';
 import {Router}             from '@angular/router';
+//endregion
 
 
 @Injectable({

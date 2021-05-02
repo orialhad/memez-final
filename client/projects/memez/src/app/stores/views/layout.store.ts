@@ -1,7 +1,9 @@
+//region Imports
 import {Injectable} from '@angular/core';
 import {RootStore}  from '../root.store';
 import {Router}     from '@angular/router';
 import {autorun}    from 'mobx';
+//endregion
 
 @Injectable({
   providedIn: 'root'

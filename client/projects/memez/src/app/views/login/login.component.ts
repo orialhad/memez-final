@@ -1,6 +1,10 @@
+//region Imports
+
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {LoginStore}                                 from '../../stores/views/login.store';
 import {FormControl, FormGroup, Validators}         from '@angular/forms';
+
+//endregion
 
 @Component({
   selector       : 'mem-login',

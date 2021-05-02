@@ -1,9 +1,12 @@
+//region imports
 import {APIEvent}                                                from '../../../sheard/api/api-events';
 import {Socket as SocketIO_Socket}                               from 'socket.io/dist/socket';
 import {createPostHandler, deletePostHandler, getPostsHandler}   from './post.socket.handler';
 import {createLikeHandler, unlikeHandler}                        from './like.socket.handler';
 import {editEmailHandler, editProfilePicHandler, getUserHandler} from './user.socket.handler';
 import {createCommentHandler, deleteCommentHandler}              from './comment.socket.handler';
+//endregion
+
 
 export const event_mapper: { [event_name in APIEvent]: (socket: SocketIO_Socket, data: any, req_id: string) => void } = {
 

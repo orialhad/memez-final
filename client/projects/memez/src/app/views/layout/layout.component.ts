@@ -1,3 +1,4 @@
+//region Imports
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {LayoutStore}                                from '../../stores/views/layout.store';
 import {LikeStore}                                  from '../../stores/entities/like.store';
@@ -9,6 +10,8 @@ import {LoginStore}                                 from '../../stores/views/log
 import {UploadStore}                                from '../../stores/entities/upload.store';
 import {AuthService}                                from '../../stores/entities/auth.service';
 import {CommentStore}                               from '../../stores/entities/comment.store';
+
+//endregion
 
 @Component({
   selector       : 'mem-layout',

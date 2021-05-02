@@ -1,4 +1,7 @@
+//region imports
 import {IMainController} from './main.controller';
+
+//endregion
 
 export interface IBaseController {
     main: IMainController

@@ -1,20 +1,13 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild
-} from '@angular/core';
-import {IPost} from '../../../../../../../sheard/interfaces/IPost';
-import {IUser} from '../../../../../../../sheard/interfaces/IUser';
-
+//region Imports
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {IPost}                                                                 from '../../../../../../../sheard/interfaces/IPost';
+import {IUser}                                                                 from '../../../../../../../sheard/interfaces/IUser';
+//endregion
 
 @Component({
-  selector: 'mem-post',
+  selector   : 'mem-post',
   templateUrl: './post.component.html',
-  styleUrls: ['./post.component.css']
+  styleUrls  : ['./post.component.css']
 })
 
 
@@ -23,10 +16,10 @@ export class PostComponent implements OnInit {
 
   @Input() post: IPost;
   @Input() currentUser: IUser;
-  @Output() postLiked = new EventEmitter();
-  @Output() PostToDelete = new EventEmitter();
+  @Output() postLiked      = new EventEmitter();
+  @Output() PostToDelete   = new EventEmitter();
   @Output() commentClicked = new EventEmitter();
-  @Output() comment = new EventEmitter();
+  @Output() comment        = new EventEmitter();
 
   @Input() selected: boolean;
   @Output() selectedChange = new EventEmitter<boolean>();

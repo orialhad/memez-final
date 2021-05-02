@@ -1,6 +1,9 @@
+//region imports
 import {IMainController}   from '../../controllers/main.controller';
 import {Request, Response} from 'express';
 import {IUser}             from '../../../sheard/interfaces/IUser';
+
+//endregion
 
 export const logoutHandler = async function(this: IMainController, req: Request, res: Response) {
     req.logout();

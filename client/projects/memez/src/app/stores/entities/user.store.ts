@@ -1,3 +1,4 @@
+//region Imports
 import {Injectable}                   from '@angular/core';
 import {RootStore}                    from '../root.store';
 import {action, computed, observable} from 'mobx-angular';
@@ -5,6 +6,7 @@ import {IUser}                        from '../../../../../../../sheard/interfac
 import {BaseUrl}                      from '../../config/config';
 import {UploadComponent}              from '../../reusable-components/upload/upload.component';
 import {MatDialog}                    from '@angular/material/dialog';
+//endregion
 
 
 @Injectable({

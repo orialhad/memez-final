@@ -1,8 +1,8 @@
+//region Imports
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {IComment}                                       from '../../../../../../../sheard/interfaces/IComment';
 import {IPost}                                          from '../../../../../../../sheard/interfaces/IPost';
-import {observable}                                     from 'mobx-angular';
 import {IUser}                                          from '../../../../../../../sheard/interfaces/IUser';
+//endregion
 
 @Component({
   selector   : 'mem-comments-dialog',

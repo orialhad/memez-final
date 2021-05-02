@@ -1,7 +1,10 @@
+//region Imports
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {SignupStore}                                from '../../stores/views/signup.store';
 import {FormControl, FormGroup, Validators}         from '@angular/forms';
 import {PasswordValidator}                          from './password.validator';
+
+//endregion
 
 
 @Component({

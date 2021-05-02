@@ -1,7 +1,9 @@
+//region Imports
 import {Injectable} from '@angular/core';
 import {RootStore}  from '../root.store';
 import {action}     from 'mobx-angular';
 import {IPost}      from '../../../../../../../sheard/interfaces/IPost';
+//endregion
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +42,7 @@ export class LikeStore {
       await this.unLike(alreadyLiked._id);
     } else {
       await this.createLike(post);
-    }}
+    }
+  }
 }
 

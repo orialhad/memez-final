@@ -9,13 +9,12 @@ import {config}                                        from '../config/config';
 import * as passport                                   from 'passport';
 import {auth, getLocalStrategy}                        from '../config/passport-local';
 import * as session                                    from 'express-session';
-
-import expressSanitizer = require('express-sanitizer');
 // socket.io
 import * as socketio                                   from 'socket.io';
 import {Server as IOServer, Socket as SocketIO_Socket} from 'socket.io';
 import * as http                                       from 'http';
 import {event_mapper}                                  from '../handlers/socket/event-mapper';
+import expressSanitizer = require('express-sanitizer');
 
 
 //endregion

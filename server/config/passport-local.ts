@@ -5,6 +5,7 @@ import * as bcrypt          from 'bcrypt';
 import {IMongoDBController} from '../controllers/mongoDbcontroller';
 import {IUser}              from '../../sheard/interfaces/IUser';
 //endregion
+
 const LocalStrategy = PassportLocal.Strategy;
 
 export const getLocalStrategy = (db: IMongoDBController) => new LocalStrategy(

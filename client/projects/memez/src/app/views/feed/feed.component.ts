@@ -1,5 +1,8 @@
+//region Imports
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FeedStore}                                  from '../../stores/views/feed.store';
+
+//endregion
 
 @Component({
   selector       : 'mem-feed',

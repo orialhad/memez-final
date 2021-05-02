@@ -9,6 +9,7 @@
       <excludeFolder url="file://$MODULE_DIR$/client/projects/memez/src/app/types" />
       <excludeFolder url="file://$MODULE_DIR$/dist" />
       <excludeFolder url="file://$MODULE_DIR$/server-side/models" />
+      <excludeFolder url="file://$MODULE_DIR$/server/handlers/ajax/old" />
       <excludeFolder url="file://$MODULE_DIR$/server/models" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
